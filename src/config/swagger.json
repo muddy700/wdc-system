@@ -1,0 +1,744 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "SE-GRMS APIs",
+    "description": "APIs for Stakeholder Engagement and Grievances redress Mechanism System"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api/v1",
+      "description": "Development Server"
+    },
+    {
+      "url": "https://se-grms-api.herokuapp.com/api/v1",
+      "description": "Live Server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "REST API-Endpoints For Authentication"
+    },
+    {
+      "name": "Access-Control",
+      "description": "REST API-Endpoints For Managing Access"
+    },
+    {
+      "name": "Users",
+      "description": "REST API-Endpoints For Users"
+    },
+    {
+      "name": "Audit Trail",
+      "description": "REST API-Endpoints For Audit Trail"
+    }
+  ],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Authenticate normal user credentials",
+        "description": "Get access token for normal user",
+        "requestBody": {
+          "description": "Login Info",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/LoginInfo"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "401": {
+            "description": "Failed. Unauthorized"
+          }
+        }
+      }
+    },
+    "/auth/staff/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Authenticate staff credentials",
+        "description": "Get access token for staff",
+        "requestBody": {
+          "description": "Login Info",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/LoginInfo"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "401": {
+            "description": "Failed. Unauthorized"
+          }
+        }
+      }
+    },
+    "/auth/change-password": {
+      "parameters": [
+        {
+          "name": "authorization",
+          "in": "header",
+          "type": "string",
+          "description": "Authorization scheme and access token"
+        }
+      ],
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Change User Password",
+        "description": "",
+        "requestBody": {
+          "description": "Passwords Info",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/ChangePasswordInfo"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "401": {
+            "description": "Failed. Unauthorized"
+          }
+        }
+      }
+    },
+    "/auth/forgot-password": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Request Password Reset",
+        "description": "",
+        "requestBody": {
+          "description": "Requestor Info",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/ForgotPasswordInfo"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "401": {
+            "description": "Failed. Unauthorized"
+          }
+        }
+      }
+    },
+    "/auth/reset-password": {
+      "parameters": [
+        {
+          "name": "authorization",
+          "in": "header",
+          "type": "string",
+          "description": "Authorization scheme and access token"
+        }
+      ],
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Reset Password",
+        "description": "",
+        "requestBody": {
+          "description": "Requestor Info",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/ResetPasswordInfo"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "401": {
+            "description": "Failed. Unauthorized"
+          }
+        }
+      }
+    },
+    "/access-control/permissions": {
+      "parameters": [
+        {
+          "name": "authorization",
+          "in": "header",
+          "type": "string",
+          "description": "Authorization scheme and access token"
+        }
+      ],
+      "get": {
+        "tags": ["Access-Control"],
+        "summary": "Retrieve all permissions",
+        "description": "",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "401": {
+            "description": "Failed. Unauthorized"
+          },
+          "403": {
+            "description": "Failed. Forbidden"
+          }
+        }
+      }
+    },
+    "/access-control/roles/{roleId}/staff": {
+      "parameters": [
+        {
+          "name": "roleId",
+          "in": "path",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": ["Access-Control"],
+        "summary": "Retrieve all users with a given role-id",
+        "description": "",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "401": {
+            "description": "Failed. Unauthorized"
+          },
+          "403": {
+            "description": "Failed. Forbidden"
+          }
+        }
+      }
+    },
+    "/access-control/roles/{roleId}/grant-permission": {
+      "parameters": [
+        {
+          "name": "authorization",
+          "in": "header",
+          "type": "string",
+          "description": "Authorization scheme and access token"
+        },
+        {
+          "name": "roleId",
+          "in": "path",
+          "required": true,
+          "description": "ID of a role that we want to match",
+          "type": "string"
+        }
+      ],
+      "patch": {
+        "tags": ["Access-Control"],
+        "summary": "Update Role Permissions",
+        "description": "",
+        "requestBody": {
+          "description": "Permissions Info",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/UpdatePermissions"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "401": {
+            "description": "Failed. Unauthorized"
+          }
+        }
+      }
+    },
+    "/access-control/roles": {
+      "post": {
+        "tags": ["Access-Control"],
+        "summary": "Create a new role",
+        "description": "Add role",
+        "requestBody": {
+          "description": "Role Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Role"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Access-Control"],
+        "summary": "List all roles",
+        "description": "Get all roles in system",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string",
+            "description": "Authorization scheme and access token"
+          },
+          {
+            "name": "searchQuery",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": { "$ref": "#/components/schemas/Role" }
+          },
+          "500": {
+            "description": "Failed. Internal Server Error"
+          }
+        }
+      }
+    },
+    "/audit-trail": {
+      "get": {
+        "tags": ["Audit Trail"],
+        "summary": "List all system logs",
+        "description": "Get all system logs of all users",
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "500": {
+            "description": "Failed. Internal Server Error"
+          }
+        }
+      }
+    },
+    "/access-control/roles/{roleId}": {
+      "parameters": [
+        {
+          "name": "roleId",
+          "in": "path",
+          "required": true,
+          "description": "ID of a role that we want to match",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": ["Access-Control"],
+        "summary": "Get a role with a given ID",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "$ref": "#/components/schemas/Role"
+            }
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. Role not found"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Access-Control"],
+        "summary": "Update a role with a given ID",
+        "description": "",
+        "requestBody": {
+          "description": "Role Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Role"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. Role not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Access-Control"],
+        "summary": "Delete a role with a given ID",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. Role not found"
+          }
+        }
+      }
+    },
+    "/users/invite": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Create new staff",
+        "description": "Add staff",
+        "requestBody": {
+          "description": "User Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Create new user",
+        "description": "Add user",
+        "requestBody": {
+          "description": "User Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Users"],
+        "summary": "List all users",
+        "description": "Get all users in system",
+        "parameters": [
+          {
+            "name": "searchQuery",
+            "in": "query",
+            "required": true,
+            "description": "user-name, role, or phone number of a user that we want to match",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "500": {
+            "description": "Failed. Internal Server Error"
+          }
+        }
+      }
+    },
+    "/users/phone-number": {
+      "parameters": [
+        {
+          "name": "phoneNumber",
+          "in": "query",
+          "required": true,
+          "description": "phoneNumber of a user that we want to match",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get user with a given phoneNumber",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. User not found"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "ID of a user that we want to match",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get user with a given ID",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. User not found"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Users"],
+        "summary": "Update user with a given ID",
+        "description": "",
+        "requestBody": {
+          "description": "User Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. User not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Users"],
+        "summary": "Delete user with a given ID",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. User not found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "LoginInfo": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "required": true,
+          "example": "jdoe@gmail.com"
+        },
+        "password": {
+          "type": "string",
+          "required": true,
+          "example": "12345678"
+        }
+      }
+    },
+    "ChangePasswordInfo": {
+      "type": "object",
+      "properties": {
+        "oldPassword": {
+          "type": "string",
+          "required": true,
+          "example": "12345678"
+        },
+        "password": {
+          "type": "string",
+          "required": true,
+          "example": "jdoe@12345"
+        }
+      }
+    },
+    "ForgotPasswordInfo": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "required": true,
+          "example": "jdoe@gmail.com"
+        },
+        "userType": {
+          "type": "string",
+          "required": true,
+          "example": "user"
+        }
+      }
+    },
+    "ResetPasswordInfo": {
+      "type": "object",
+      "properties": {
+        "password": {
+          "type": "string",
+          "required": true,
+          "example": "jdoe@ipf#12345"
+        }
+      }
+    },
+    "UpdatePermissions": {
+      "type": "object",
+      "properties": {
+        "permissions": {
+          "type": "object",
+          "properties": {
+            "added": { "type": "array", "items": {} },
+            "removed": { "type": "array", "items": {} }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Role": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "required": true,
+            "example": "Admin"
+          },
+          "description": {
+            "type": "string",
+            "example": "Super user used to onboard others"
+          },
+          "permissions": {
+            "type": "array",
+            "items": {}
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "required": true,
+            "example": "John"
+          },
+          "middleName": { "type": "string", "example": "M" },
+          "lastName": { "type": "string", "required": true, "example": "Doe" },
+          "email": {
+            "type": "string",
+            "required": true,
+            "example": "jd@gmail.com"
+          },
+          "phoneNumber": {
+            "type": "string",
+            "required": true,
+            "example": "0789101112"
+          },
+          "gender": { "type": "string", "example": "M" },
+          "password": {
+            "type": "string",
+            "required": true,
+            "example": "password",
+            "format": "password"
+          },
+          "type": { "type": "string", "example": "user" },
+          "company": { "type": "string", "example": "iPF" },
+          "lastLocation": { "type": "string", "example": "magomeni" },
+          "status": { "type": "number", "example": 1 },
+          "role": { "type": "string", "example": "role-id" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,282 @@
+Project Name: Stakeholder Engagement and Grievance Redress Mechanism System(SE-GRMS)
+
+<===== System Users With Their Functions =======>
+
+Keys:
+  -WB: World Bank
+  -CEO: Chief Executive Officer
+  -SE: Stakeholder Engagement
+  -PIU: Project Implementatoin Unit
+
+1. WB:
+    A: Admin:
+        -Manage System.
+
+    B: CEO:
+        -View top-level summary and report.
+
+    C: Manager:
+        -Top-level project and PIU Management.
+          ie..Create PIU and project.
+        -View summary and progress of project.
+
+2. Project Implementatoin Unit(PIU):
+    A: Admin:
+        -Manage System.
+
+    B: CEO:
+        -View PIU-level summary and report.
+
+    C: Project Manager:
+        -Create stakeholders with their engagement plans.
+        -View summary and progress of project.
+        -Fill commitments made by stakeholders, staff or contractor
+
+    D: Grievance Officer:
+        -View and resolve grievance
+
+    E: Operational Manager / Other-staff(On-site):
+        -Update SE-Implementation
+          -Create and attend meetings with stakeholders and / or contractor
+          -Fill grievance
+
+    E: Contractor:
+        -Fill grievance
+
+<===== Database Design =====>
+
+1. Database Tables(14):
+    -Users
+    -Roles
+    -PIU
+    -Projects
+    -Sub-Project
+    -Contractor
+    -Stakeholders
+    -Stakeholder-Engagement-Plan
+    -Meetings
+    -Commitments
+    -Grievances
+    -Department
+    -Permissions
+    -Audit-Trail
+
+2.  Properties/Fields(for each table):
+
+    => User:
+        -role: (id)
+        -firstName 
+        -middleName 
+        -lastName 
+        -gender 
+        -email 
+        -password 
+        -phoneNumber 
+        -status: one-of-these => [active, inactive, suspended]
+        -firstTimeLoginFlag;
+        -type: one-of-these => [root-admin, piu-admin, root-manager, piu-manager, root-ceo, piu-ceo, operational-manager, other-staff]
+        -project: (id), null-for-WB-staff
+        -piu: (id), null-for-WB-staff
+        -Address: {Country, Region, District, Street, postalCodes}
+        -lastLocation
+
+    => Role:
+        -name
+        -description
+        -status: one-of-these => [active, inactive]
+        -permissions: array [ids]
+
+    => Permission:       
+        -moduleName
+        -displayName
+        -genericName
+        
+    => Project:
+        -name
+        -abbreviation
+        -budget
+        -startDate
+        -endDate
+        -progress
+        -attachments: array [{
+            type..ie image / pdf, title, description, url
+        }]
+
+    => PIU:
+        -registeredName
+        -abbreviation
+        -yearFound / yearStarted
+        -registrationNumber
+        -project: array [ids]
+        -location: { name, latitude, longitude }
+        -Address: {Country, Region, District, Street, postalCodes}
+        -vision,
+        -mission
+        -phoneNumber,
+        -email
+        -logo
+        -websiteLink
+        -contactPerson: {name, gender, disability, physicalAddress, position, description, email, phoneNumber,}
+        -socialMedias: array [{ name, url }]
+        -sectors: array [education, health, technology,]
+        -branches: array [{
+          -location: { name, latitude, longitude }
+          -Address: {Country, Region, District, Street, postalCodes}
+          }]
+
+    => ContractorProfile:
+        -registeredName
+        -abbreviation
+        -email
+        -phoneNumber
+        -logo
+        -websiteLink
+        -project: (id)
+        -user: (id)
+        -contactPerson: {name, gender, disability, physicalAddress, position, description, email, phoneNumber,}
+        -location: { name, latitude, longitude }
+        -Address: {Country, Region, District, Street, postalCodes}
+
+    => Stakeholder:
+    # - For all types
+        -project: (id)
+        -name
+        -scope: one-of-these => [internal, external]
+        -type: one-of-these => [group, individual, organization]
+        -classification: one-of-these => [NGOs, private-sector, village-leader, community-representative, community-member]
+        -role / relationshipWithProject: one-of-these => [1: advisor, 2: supplier, 3: approver, 4: Beneficiary]
+        -description
+        -concern
+        -goals: array []
+        -sectors: array []
+        -levelOfInterest: one-of-these => [1: weak, 2: medium, 3: strong]
+        -levelOfInfluence: one-of-these => [1: weak, 2: medium, 3: strong]
+        -location: { name, latitude, longitude }
+        -Address: {Country, Region, District, Street, postalCodes}
+        -phoneNumber,
+        -email
+        -bestMethodOfContact: one-of-these => [0: email, 1: phoneNumber, 2: whatsapp, 3: zoom]
+        
+        # -For group / organization
+        -contactPerson: {name, gender, disability, physicalAddress, position, description, email, phoneNumber}
+        -logo
+        -websiteLink
+
+    # - For individual
+        -gender
+        -disability
+        -company: {
+            name, logo, websiteLink, email, phoneNumber
+          }
+        -position(in the company)
+
+    # => Contact History:
+    #     -contactPerson:(id)
+    #     -staff:(id)
+    #     -date
+    #     -time
+    #     -Agenda
+    #     -channel: one-of-these => [email, phone, physical]
+    
+    => Stakeholder-Engagement-Plan:
+        -project: (id)
+        -stakeholder:(id)
+        -activity
+        -frequency: one-of-these => [monthly, once, weekly, everyday, and other]
+        -channel: one-of-these => [email, phone, physical, zoom, whatsapp, and other]
+        -startingDate
+        -projectPhase: ie.. preparation, implementation
+
+    =>Event (Reminders and report on participants):
+        -Title
+        -description
+        -type: one-of-these => [seminar, workshop, Meeting]
+        -mainAgenda
+        -otherAgendas: array []
+        - grievances: array[grievance-ids]
+        -participants: array [stakeholder-ids, contractor-ids, user-ids]
+        -date
+        -startingTime
+        -endingTime
+        - extraTime(in-minutes)
+        -channel: one-of-these => [email, phone, physical, zoom,whatsapp]
+        -location: { name, latitude, longitude }
+        -attachments: array [{like photos-of-meeting, meeting-summary(qn & ans by whom in pdf)
+            type:..ie image / pdf, title, description, url
+        }]
+        -setReminder: boolean
+        -notifyParticipants: boolean
+
+    => Commitment: (With Email remainder. Also we can get summary like in grievances)
+        -actor: one-of-these => [stakeholder-id, user-id, contractor-id ]
+        -project: (id)
+        -activity
+	    -projectPhase
+        -description
+        -fromMeeting: meeting-id
+        -startDate
+        -endDate
+        -status: one-of-these => [pending, inprogress, delivered]
+        -completedOn
+        -attachments: array [{
+          type..ie image / pdf, title, description, url
+        }]
+        -comments: array [{
+          -author / commentor / user / stakeholder / contractor,
+          -message
+          }]
+        
+    => Grievance:
+        -project: (id)
+        -reporter: one-of-these [stakeholder-id, user-id, contractor-id]
+        -complainer: {Full-Name, email, phoneNumber}
+        -nature: one-of-these => [discipline, demotion, classification-desputes, denial-of-benefits, and-other]
+        -department: department-id
+        - fromMeeting: array[meeting-ids]
+        -description
+        -frequencyOfIncident: one-of-these => [
+         1 => -one-time-incident(put-date), 
+         >1 => -happened-more-than-one(put frequency of occurance), 
+         0 -on-going(currently-experiencing-problem)
+        ]
+        -dateOfIncident
+        -complainerSuggestions
+        -attachments: array [{
+          type:..ie image / pdf, title, description, url
+        }]
+        -status: one-of-these => [received, under-investigation, resolution-inprogress, resolved]
+        -estimatedResolveDate
+        -resolvedOn
+
+    => Department:
+        -name
+        -description
+        -piu: (id)
+
+    => Sub-Project:
+        -name,
+        -description
+        -parentProject: (id)
+
+    => Audit-Trail:
+        -actor: user-id
+        -activity
+        -browser
+        -operatingSystem
+        -ipAddress
+        -request
+
+<===== Queries =====>
+
+// 1. Is there a need to put all two fields separate(contactPerson and relationshipHolder)
+//2. Is there any possibility for WB to finance the same PIU in more than one project?
+//3. Receiving Grievances through text, how-does-it-work-with-system?
+//4. A summary of grievances per sub-project (can be public or private);
+//5. It should be able to store interactions (questions raised and answers provided & by whom);
+  -Should be text-written or summarized in pdf and upload a pdf file with all interactions
+  - (b-coz fetching them in the system as they occur it's very rare)
+//6. Is there any possibility for a project to have more than one contractor?
+
+1. add relationshipHolder
+- 2. add project phase
+3. 

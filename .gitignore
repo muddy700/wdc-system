@@ -1,0 +1,11 @@
+node_modules
+coverage
+.env
+dist
+# Project-Info.txt
+npm-debug.log
+
+.idea
+.vscode
+apidoc
+.DS_Store
