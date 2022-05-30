@@ -1,11 +1,11 @@
-import express from "express";
-import dotenv from "dotenv";
-import cors from "cors";
-import morgan from "morgan";
-import helment from "helmet";
-import useragent from "express-useragent";
 import i18n from "i18n";
 import path from "path";
+import cors from "cors";
+import dotenv from "dotenv";
+import morgan from "morgan";
+import helment from "helmet";
+import express from "express";
+import useragent from "express-useragent";
 
 dotenv.config();
 
@@ -36,9 +36,14 @@ export const middlewaresConfig = (app: express.Application) => {
   //check api status
   app.get("/", (_, res) => {
     res.status(200).json({
-      Success: true,
-      Message: "Connected Successfull. ✅✅ ",
-      Hint: "Add '/api/v1/doc' on url to see documentation",
+      success: true,
+      message: "Connected Successfull. ✅✅ ",
+      data: {
+        appName: "SE-GRMS",
+        appDescription:
+          "Stakeholder Management and Grievance Redress Mechanism System",
+      },
+      hint: "Add '/api/v1/doc' on url to see documentation",
     });
   });
 };

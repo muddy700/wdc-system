@@ -10,6 +10,7 @@ interface IConstants {
   PERPAGE: any;
   EMAIL_URL: any;
   EMAIL_SENDER: any;
+  APP_DESCRIPTION: any;
   //   OTP_EXPIRATION_TIME: any;
   //   SMS_URL: any;
   //   SMS_SENDER_ID: any;
@@ -23,6 +24,9 @@ interface IConstants {
 export const constants: IConstants = {
   /** Application name from .env */
   APP_NAME: process.env.APP_NAME || "SE-GRMS",
+
+  /** Application description from .env */
+  APP_DESCRIPTION: process.env.APP_DESCRIPTION,
 
   /** Application port from .env */
   PORT: process.env.NODE_ENV === "test" ? 4000 : process.env.PORT || 3000,
