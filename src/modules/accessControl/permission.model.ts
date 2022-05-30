@@ -9,15 +9,15 @@ export interface IPermission extends Document {
 const PermissionSchema = new Schema({
     displayName: {
         type: String,
-        required: true,
+        required: [true, 'Display name is required!'],
     },
     genericName: {
         type: String,
-        required: true,
+        required: [true, 'Generic name is required!'],
     },
     moduleName: {
         type: String,
-        required: true,
+        required: [true, 'Module name is required!'],
     },
 },
     { timestamps: true }

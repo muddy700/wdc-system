@@ -40,7 +40,7 @@ Keys:
           -Create and attend meetings with stakeholders and / or contractor
           -Fill grievance
 
-    E: Contractor:
+    F: Contractor:
         -Fill grievance
 
 <===== Database Design =====>
@@ -124,18 +124,18 @@ Keys:
           -Address: {Country, Region, District, Street, postalCodes}
           }]
 
-    => ContractorProfile:
-        -registeredName
-        -abbreviation
-        -email
-        -phoneNumber
-        -logo
-        -websiteLink
-        -project: (id)
-        -user: (id)
-        -contactPerson: {name, gender, disability, physicalAddress, position, description, email, phoneNumber,}
-        -location: { name, latitude, longitude }
-        -Address: {Country, Region, District, Street, postalCodes}
+    # => ContractorProfile:
+    #     -registeredName
+    #     -abbreviation
+    #     -email
+    #     -phoneNumber
+    #     -logo
+    #     -websiteLink
+    #     -project: (id)
+    #     -user: (id)
+    #     -contactPerson: {name, gender, disability, physicalAddress, position, description, email, phoneNumber,}
+    #     -location: { name, latitude, longitude }
+    #     -Address: {Country, Region, District, Street, postalCodes}
 
     => Stakeholder:
     # - For all types

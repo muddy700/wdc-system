@@ -11,7 +11,12 @@ export const connectDB = async () => {
   const { DATABASE_URL } = constants;
 
   try {
-    await mongoose.connect(DATABASE_URL, {});
+    await mongoose.connect(DATABASE_URL, {
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+      useNewUrlParser: true,
+      useCreateIndex: true,
+    });
 
     console.log(`Database connected successfully`);
   } catch (e) {
@@ -21,7 +26,12 @@ export const connectDB = async () => {
 
 export const initializeTestDB = async () => {
   try {
-    await mongoose.connect(constants.TEST_DB_URL, {});
+    await mongoose.connect(constants.TEST_DB_URL, {
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+      useNewUrlParser: true,
+      useCreateIndex: true,
+      });
 
     console.log(`Test-Database connected successfully`);
   } catch (e) {

@@ -1,7 +1,7 @@
-# CRM-API
+# SE-GRMS-API
 
 This is the RESTful API repository for the
-Customer Relation management System [UZO](https://fundrequest-api.herokuapp.com/api/v1/doc/#/)
+Stakeholder Engagement and Grievance Redress Mechanism System [SE-GRMS](https://xd.adobe.com/view/c27f15a6-3259-47a9-88d9-7ef011e12973-972c/?fullscreen)
 
 ## Contents
 

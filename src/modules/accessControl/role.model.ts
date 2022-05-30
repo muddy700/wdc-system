@@ -1,38 +1,41 @@
-import { Schema, Document, model } from 'mongoose';
-import { IPermission } from './permission.model';
+import { Schema, Document, model } from "mongoose";
+import { IPermission } from "./permission.model";
 
 export enum ROLE_STATUSES {
-    ACTIVE = 1,
-    INACTIVE = 0
-};
-
-export interface IRole extends Document {
-    name: string,
-    description: string,
-    permissions: Array<IPermission>,
-    status?: number
+  ACTIVE = 1,
+  INACTIVE = 0,
 }
 
-const RoleSchema = new Schema({
+export interface IRole extends Document {
+  name: string;
+  description: string;
+  permissions: Array<IPermission>;
+  status?: number;
+}
+
+const RoleSchema = new Schema(
+  {
     name: {
-        type: String,
-        required: true,
+      type: String,
+      required: [true, "Role name is required!"],
     },
     description: {
-        type: String,
-        required: true,
+      type: String,
+      required: [true, "Role description is required!"],
     },
-    permissions: [{
+    permissions: [
+      {
         type: Schema.Types.ObjectId,
-        ref: 'Permission'
-    }],
+        ref: "Permission",
+      },
+    ],
     status: {
-        type: Number,
-        enum: [ROLE_STATUSES],
-        default: ROLE_STATUSES.ACTIVE
-    }
-},
-    { timestamps: true }
+      type: Number,
+      enum: [ROLE_STATUSES],
+      default: ROLE_STATUSES.ACTIVE,
+    },
+  },
+  { timestamps: true }
 );
 
-export const Role = model<IRole>('Role', RoleSchema);
+export const Role = model<IRole>("Role", RoleSchema);
