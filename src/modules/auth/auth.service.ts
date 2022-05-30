@@ -1,9 +1,9 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { IUser } from "../users/user.model";
 import { constants } from "../../config/constants";
 import { updateUser } from "../users/user.service";
 import { sendEmail } from "../../services/email.service";
-import { IUser, USER_TYPES } from "../users/user.model";
 import { getUserByEmail } from "../users/user.repository";
 
 export const login = async (body: any) => {
@@ -13,13 +13,9 @@ export const login = async (body: any) => {
 
     const { email, password } = body;
 
-    const user = await getUserByEmail(email, USER_TYPES.USER);
+    const user = await getUserByEmail(email);
 
-    if (
-      user &&
-      user.comparePassword(password) &&
-      user.type === USER_TYPES.USER
-    ) {
+    if (user && user.comparePassword(password)) {
       token = await getUserAuthToken(user);
 
       const message = "Logged in successfully.";
@@ -29,54 +25,6 @@ export const login = async (body: any) => {
         statusCode: 401,
         success: false,
         message: i18n.__("wrong-password"),
-        user: {},
-        token,
-      };
-    }
-
-    if (token && !user?.firstTimeLoginFlag) {
-      const firstTimeLoginFlag = user?.firstTimeLoginFlag;
-      response = {
-        statusCode: 403,
-        success: false,
-        message: i18n.__("change-default-password"),
-        user: {},
-        token,
-        firstTimeLoginFlag,
-      };
-    }
-
-    return response;
-  } catch (e) {
-    throw new Error(e.message);
-  }
-};
-
-export const adminLogin = async (body: any) => {
-  try {
-    let token = null;
-    let response;
-    const { email, password } = body;
-
-    const user = await getUserByEmail(email, [
-      USER_TYPES.ROOT,
-      USER_TYPES.STAFF,
-    ]);
-
-    if (
-      user &&
-      user.comparePassword(password) &&
-      (user.type === USER_TYPES.ROOT || user.type === USER_TYPES.STAFF)
-    ) {
-      token = await getUserAuthToken(user);
-
-      const message = "Logged in successfully.";
-      response = { statusCode: 200, success: true, message, user, token };
-    } else {
-      response = {
-        statusCode: 401,
-        success: false,
-        message: i18n.__("invalid-credentials"),
         user: {},
         token,
       };
@@ -119,13 +67,12 @@ export const isAuthenticated = (authorization: any) => {
 export const changePassword = async (
   password: string,
   oldPassword: string,
-  email: string,
-  type: string
+  email: string
 ) => {
   try {
     let response;
 
-    const user = await getUserByEmail(email, type);
+    const user = await getUserByEmail(email);
 
     if (user && user.comparePassword(oldPassword)) {
       await user.changePassword(password);
@@ -149,11 +96,11 @@ export const changePassword = async (
   }
 };
 
-export const forgotPassword = async (email: string, type: any) => {
+export const forgotPassword = async (email: string) => {
   try {
     let token = null;
 
-    const user = await getUserByEmail(email, type);
+    const user = await getUserByEmail(email);
 
     if (!user) {
       throw new Error("User with that email is not found.");
@@ -181,12 +128,11 @@ export const forgotPassword = async (email: string, type: any) => {
 
 export const resetPassword = async (
   email: string,
-  type: any,
   password: string,
   token: string
 ) => {
   try {
-    const user = await getUserByEmail(email, type);
+    const user = await getUserByEmail(email);
 
     if (!user) {
       throw new Error("User with that email is not found.");

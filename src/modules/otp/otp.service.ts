@@ -11,13 +11,12 @@ import { sendEmail } from "../../services/email.service";
 export const createOtp = async (
   body: any,
   isRegistered: string,
-  userType: string
 ) => {
   try {
     const { email: username } = body;
     //TODO:rember to cast string true to boolean
     if (isRegistered === "true") {
-      const user = await getUserByEmail(username, userType);
+      const user = await getUserByEmail(username);
 
       if (!user) {
         throw new Error(i18n.__("unrecognized-user"));
@@ -41,7 +40,7 @@ export const sendOtpViaEmail = async (body: any) => {
     const { email } = body;
     const phoneNumber = email; //assigning email to phoneNumber variable since it has been used throughout the otp module
 
-    const user = await getUserByEmail(phoneNumber, USER_TYPES.STAFF);
+    const user = await getUserByEmail(phoneNumber);
 
     if (!user) {
       throw new Error(i18n.__("unrecognized-user"));
