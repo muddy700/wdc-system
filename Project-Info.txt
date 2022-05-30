@@ -47,7 +47,7 @@ Keys:
 
 1. Database Tables(14):
     -Users
-    -Roles
+    # -Roles
     -PIU
     -Projects
     -Sub-Project
@@ -58,8 +58,8 @@ Keys:
     -Commitments
     -Grievances
     -Department
-    -Permissions
-    -Audit-Trail
+    # -Permissions
+    # -Audit-Trail
 
 2.  Properties/Fields(for each table):
 
@@ -80,20 +80,24 @@ Keys:
         -Address: {Country, Region, District, Street, postalCodes}
         -lastLocation
 
-    => Role:
-        -name
-        -description
-        -status: one-of-these => [active, inactive]
-        -permissions: array [ids]
+    # => Role:
+    #     -name
+    #     -description
+    #     -status: one-of-these => [active, inactive]
+    #     -permissions: array [ids]
 
-    => Permission:       
-        -moduleName
-        -displayName
-        -genericName
+    # => Permission:       
+    #     -moduleName
+    #     -displayName
+    #     -genericName
         
     => Project:
         -name
         -abbreviation
+        - description
+        - continent
+        - country
+        - piu
         -budget
         -startDate
         -endDate
