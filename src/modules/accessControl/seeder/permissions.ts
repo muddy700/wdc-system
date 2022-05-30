@@ -20,6 +20,26 @@ export const PERMISSIONS = [
     displayName: "Can delete users",
   },
   {
+    moduleName: "projects",
+    genericName: "create-projects",
+    displayName: "Can create projects",
+  },
+  {
+    moduleName: "projects",
+    genericName: "read-projects",
+    displayName: "Can view projects",
+  },
+  {
+    moduleName: "projects",
+    genericName: "update-projects",
+    displayName: "Can update projects",
+  },
+  {
+    moduleName: "projects",
+    genericName: "delete-projects",
+    displayName: "Can delete projects",
+  },
+  {
     moduleName: "access-control",
     genericName: "create-roles",
     displayName: "Can create roles",
@@ -61,6 +81,11 @@ export const rootPermissions = [
   "create-users",
   "update-users",
   "delete-users",
+
+  "read-projects",
+  "create-projects",
+  "update-projects",
+  "delete-projects",
 
   "read-permissions",
 
