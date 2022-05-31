@@ -701,9 +701,13 @@
     "Address": {
       "type": "object",
       "properties": {
-        "country": { "type": "string", "example": "Tanzania" },
-        "region": { "type": "string", "example": "Dar" },
-        "district": { "type": "string", "example": "Ilala" },
+        "country": {
+          "type": "string",
+          "example": "Tanzania",
+          "required": true
+        },
+        "region": { "type": "string", "example": "Dar", "required": true },
+        "district": { "type": "string", "example": "Ilala", "required": true },
         "street": { "type": "string", "example": "Mabibo" },
         "postalCode": { "type": "string", "example": "123 Dar" }
       }
@@ -711,7 +715,11 @@
     "Location": {
       "type": "object",
       "properties": {
-        "name": { "type": "string", "example": "Temeke, Tanzania" },
+        "name": {
+          "type": "string",
+          "example": "Temeke, Tanzania",
+          "required": true
+        },
         "latitude": { "type": "string", "example": "123456789" },
         "longitude": { "type": "string", "example": "98765432" }
       }
@@ -737,11 +745,19 @@
     "ContactPerson": {
       "type": "object",
       "properties": {
-        "gender": { "type": "string", "example": "M" },
-        "position": { "type": "string", "example": "CEO" },
+        "gender": { "type": "string", "example": "M", "required": true },
+        "position": { "type": "string", "example": "CEO", "required": true },
         "disability": { "type": "string", "example": "None" },
-        "email": { "type": "string", "example": "user@mail.test" },
-        "name": { "type": "string", "example": "Temeke, Tanzania" },
+        "email": {
+          "type": "string",
+          "example": "user@mail.test",
+          "required": true
+        },
+        "name": {
+          "type": "string",
+          "example": "Temeke, Tanzania",
+          "required": true
+        },
         "phoneNumber": { "type": "string", "example": "255789101112" },
         "physicalAddress": { "type": "string", "example": "123 Kibaha Pwani" },
         "description": { "type": "string", "example": "some description here" }
@@ -863,23 +879,47 @@
         "type": "object",
         "properties": {
           "logo": { "type": "string", "example": "logo-url" },
-          "email": { "type": "string", "example": "user@mail.test" },
-          "vision": { "type": "string", "example": "some vision description here" },
-          "mission": { "type": "string", "example": "some mission description here" },
+          "email": {
+            "type": "string",
+            "example": "user@mail.test",
+            "required": true
+          },
+          "vision": {
+            "type": "string",
+            "example": "some vision description here"
+          },
+          "mission": {
+            "type": "string",
+            "example": "some mission description here"
+          },
           "yearFound": { "type": "number", "example": "2016" },
-          "phoneNumber": { "type": "string", "example": "255789101112" },
+          "phoneNumber": {
+            "type": "string",
+            "example": "255789101112",
+            "required": true
+          },
           "websiteLink": { "type": "string", "example": "link-here" },
-          "registeredName": { "type": "string", "example": "Biashara Plus" },
+          "registeredName": {
+            "type": "string",
+            "example": "Biashara Plus",
+            "required": true
+          },
           "abbreviation": { "type": "string", "example": "BP" },
-          "registrationNumber": { "type": "string", "example": "TZA-2016-00003" },
+          "registrationNumber": {
+            "type": "string",
+            "example": "TZA-2016-00003"
+          },
           "address": {
-            "$ref": "#/definitions/Address"
+            "$ref": "#/definitions/Address",
+            "required": true
           },
           "location": {
-            "$ref": "#/definitions/Location"
+            "$ref": "#/definitions/Location",
+            "required": true
           },
           "contactPerson": {
-            "$ref": "#/definitions/ContactPerson"
+            "$ref": "#/definitions/ContactPerson",
+            "required": true
           },
           "branches": {
             "type": "array",
