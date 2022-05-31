@@ -3,7 +3,7 @@ import * as otpRepository from "./otp.repository";
 import { generateOTP } from "../../utils";
 import { constants } from "../../config/constants";
 import { sendSMS } from "../../services/sms.service";
-import { getUserByPhoneNumber } from "../users/user.service";
+// import { getUserByPhoneNumber } from "../users/user.service";
 import { getUserByEmail } from "../users/user.repository";
 import { USER_TYPES } from "../users/user.model";
 import { sendEmail } from "../../services/email.service";

@@ -1,22 +1,26 @@
-import { ClientSession, Types } from "mongoose";
-import { IUser, User, USER_STATUSES, USER_TYPES } from "./user.model";
+import { IUser, User } from "./user.model";
+// import { ClientSession, Types } from "mongoose";
 
-export const createUserWithDBTransaction = async (
-  body: IUser,
-  session: ClientSession
-) => {
-  let user = (await User.create([body], { session }))[0];
+// export const createUserWithDBTransaction = async (
+//   body: IUser,
+//   session: ClientSession
+// ) => {
+//   let user = (await User.create([body], { session }))[0];
 
-  return user.populate("role").execPopulate();
-};
+//   return user.populate("role").execPopulate();
+// };
 
 export const createUser = async (body: IUser) => {
-  let user = await User.create(body);
+  try {
+    let user = await User.create(body);
 
-  return user.populate("role").execPopulate();
+    return user.populate("role piu project").execPopulate();
+  } catch (e) {
+    throw new Error(e.message);
+  }
 };
 
-export const getCompanyUsers = async (
+export const getUsers = async (
   offset: number,
   perPage: number,
   searchQuery: string,
@@ -131,35 +135,35 @@ export const updateUser = async (userId: string, body: IUser) => {
   }
 };
 
-export const updateUserWithSession = async (
-  userId: string,
-  body: IUser,
-  session: ClientSession
-) => {
-  const user = await User.findOneAndUpdate(
-    { _id: userId },
-    { ...body },
-    { new: true, session }
-  ).populate("role");
+// export const updateUserWithSession = async (
+//   userId: string,
+//   body: IUser,
+//   session: ClientSession
+// ) => {
+//   const user = await User.findOneAndUpdate(
+//     { _id: userId },
+//     { ...body },
+//     { new: true, session }
+//   ).populate("role");
 
-  return user;
-};
+//   return user;
+// };
 
-export const getUserByPhoneNumber = async (phoneNumber: string, type: any) => {
-  try {
-    const userType: any = { type };
+// export const getUserByPhoneNumber = async (phoneNumber: string, type: any) => {
+//   try {
+//     const userType: any = { type };
 
-    if (Array.isArray(type)) {
-      userType.type = { $in: type };
-    }
+//     if (Array.isArray(type)) {
+//       userType.type = { $in: type };
+//     }
 
-    const user = await User.findOne({ phoneNumber, ...userType });
+//     const user = await User.findOne({ phoneNumber, ...userType });
 
-    return user;
-  } catch (e) {
-    throw new Error(e.message);
-  }
-};
+//     return user;
+//   } catch (e) {
+//     throw new Error(e.message);
+//   }
+// };
 
 export const getUserByEmail = async (email: string) => {
   return User.findOne({ email }).populate("role project piu");
@@ -183,7 +187,7 @@ export const newUsers = async (
 
     const newUsers = await User.find({
       ...condition,
-    //   type: USER_TYPES.USER,
+      //   type: USER_TYPES.USER,
       createdAt: { $gt: endDate, $lte: startDate },
     }).sort({ createdAt: -1 });
 

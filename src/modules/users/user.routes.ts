@@ -3,16 +3,16 @@ const router = express.Router();
 import * as UserController from "./user.controller";
 import { checkPermission } from "../accessControl/permissionCheck.middleware";
 
-router.get(
-  "/phone-number",
-  checkPermission("users", "read-users"),
-  UserController.getUserByPhoneNumber
-);
+// router.get(
+//   "/phone-number",
+//   checkPermission("users", "read-users"),
+//   UserController.getUserByPhoneNumber
+// );
 
 router.get(
   "/",
   checkPermission("users", "read-users"),
-  UserController.getCompanyUsers
+  UserController.getUsers
 );
 
 router.post(

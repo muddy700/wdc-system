@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import * as userService from "./user.service";
 import { constants } from "../../config/constants";
 import { logEvent } from "../auditTrail/auditTrail.service";
-import { USER_TYPES } from "./user.model";
 
 const { PERPAGE } = constants;
 
@@ -16,7 +15,7 @@ export const createUser = async (req: Request, res: Response) => {
 
     await logEvent({
       request: req,
-      activity: `Created a user with email  ${user.email}`,
+      activity: `Created a user with email:  ${user.email}`,
     });
 
     return res.status(200).json({ success: true, message, data: user });
@@ -35,7 +34,7 @@ export const createStaff = async (req: Request, res: Response) => {
 
     await logEvent({
       request: req,
-      activity: `Created staff with email  ${user.email}`,
+      activity: `Created staff with email:  ${user.email}`,
     });
 
     return res.status(200).json({ success: true, message, data: user });
@@ -44,14 +43,14 @@ export const createStaff = async (req: Request, res: Response) => {
   }
 };
 
-export const getCompanyUsers = async (req: Request, res: Response) => {
+export const getUsers = async (req: Request, res: Response) => {
   try {
     let { role, searchQuery } = req.query;
     const currentPage = (req.query.currentPage as unknown as number) || 1;
     const perPage = parseInt(PERPAGE);
     const offset = perPage * currentPage - perPage;
 
-    const { data, totalRows } = await userService.getCompanyUsers(
+    const { data, totalRows } = await userService.getUsers(
       offset,
       perPage,
       searchQuery as unknown as string,
@@ -108,7 +107,11 @@ export const deleteUser = async (req: Request, res: Response) => {
 
       return res.status(404).json({ success: false, message, data: user });
     }
-    //logEvent({ request: req, activity: `Deleted user ${user?.firstName ?? user?.displayName} whose phone number is ${user?.phoneNumber} ` });
+
+    await logEvent({
+      request: req,
+      activity: `Deleted a user with email:  ${deletedUser?.email}`,
+    });
 
     const message = "User deleted successfully.";
 
@@ -134,7 +137,11 @@ export const updateUser = async (req: Request, res: Response) => {
 
       return res.status(404).json({ success: false, message, data: user });
     }
-    //logEvent({ request: req, activity: `Deleted user ${user?.firstName ?? user?.displayName} whose phone number is ${user?.phoneNumber} ` });
+
+    await logEvent({
+      request: req,
+      activity: `Updated user with email:  ${user.email}`,
+    });
 
     const message = "User updated successfully.";
 
@@ -149,29 +156,29 @@ export const updateUser = async (req: Request, res: Response) => {
   }
 };
 
-export const getUserByPhoneNumber = async (req: Request, res: Response) => {
-  try {
-    const phoneNumber = req.query.phoneNumber as unknown as string;
+// export const getUserByPhoneNumber = async (req: Request, res: Response) => {
+//   try {
+//     const phoneNumber = req.query.phoneNumber as unknown as string;
 
-    const user = await userService.getUserByPhoneNumber(phoneNumber!, [
-      USER_TYPES.USER,
-      USER_TYPES.STAFF,
-      USER_TYPES.ROOT,
-    ]);
+//     const user = await userService.getUserByPhoneNumber(phoneNumber!, [
+//       USER_TYPES.USER,
+//       USER_TYPES.STAFF,
+//       USER_TYPES.ROOT,
+//     ]);
 
-    if (!user) {
-      const message = `No user found with phoneNumber: ${phoneNumber}`;
+//     if (!user) {
+//       const message = `No user found with phoneNumber: ${phoneNumber}`;
 
-      return res.status(404).json({ success: false, message, data: user });
-    }
+//       return res.status(404).json({ success: false, message, data: user });
+//     }
 
-    const message = "User retrieved successfully.";
+//     const message = "User retrieved successfully.";
 
-    return res.status(200).json({ success: true, message, data: user });
-  } catch (e) {
-    return errorResponse(res, 400, e);
-  }
-};
+//     return res.status(200).json({ success: true, message, data: user });
+//   } catch (e) {
+//     return errorResponse(res, 400, e);
+//   }
+// };
 
 const errorResponse = (res: Response, statusCode: number, error: any) => {
   // Formulate response

@@ -1,9 +1,9 @@
-import { User, USER_STATUSES, USER_TYPES } from "./user.model";
-import * as userRepository from "./user.repository";
-import { sendEmail } from "../../services/email.service";
-import { getUserAuthToken } from "../auth/auth.service";
-import { createOtp } from "../otp/otp.service";
+// import { createOtp } from "../otp/otp.service";
 import { constants } from "../../config/constants";
+import * as userRepository from "./user.repository";
+import { getUserAuthToken } from "../auth/auth.service";
+import { sendEmail } from "../../services/email.service";
+import { USER_STATUSES, USER_TYPES } from "./user.model";
 
 const { EMAIL_URL, EMAIL_SENDER, APP_BASE_URL } = constants;
 
@@ -49,13 +49,13 @@ export const createStaff = async (body: any) => {
   }
 };
 
-export const getCompanyUsers = (
+export const getUsers = (
   offset: number,
   perPage: number,
   keyword: string,
   role: string
 ) => {
-  return userRepository.getCompanyUsers(offset, perPage, keyword, role);
+  return userRepository.getUsers(offset, perPage, keyword, role);
 };
 
 export const getUser = (userId: any) => {
@@ -86,9 +86,9 @@ export const activate = async (userId: string) => {
   return { user, token: await getUserAuthToken(user!) };
 };
 
-export const getUserByPhoneNumber = (phoneNumber: string, userType: any) => {
-  return userRepository.getUserByPhoneNumber(phoneNumber, userType);
-};
+// export const getUserByPhoneNumber = (phoneNumber: string, userType: any) => {
+//   return userRepository.getUserByPhoneNumber(phoneNumber, userType);
+// };
 
 export const getUserByEmail = (email: string) => {
   return userRepository.getUserByEmail(email);

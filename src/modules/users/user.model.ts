@@ -1,20 +1,20 @@
-import { Schema, Document, model, Types } from "mongoose";
 import bcrypt from "bcryptjs";
-// import { ICompany } from "../companies/company.model";
+import { IProject } from "../projects/project.model";
+import { IPiu, AddressSchema } from "../pius/piu.model";
+import { Schema, Document, model, Types } from "mongoose";
 
 export enum USER_TYPES {
   USER = "user",
-  STAFF = "staff",
   ROOT = "root",
+  STAFF = "staff",
 }
 
 export enum USER_STATUSES {
-  INACTIVE = 0,
   ACTIVE = 1,
+  INACTIVE = 0,
   SUSPENDED = 2,
 }
 export interface IUser extends Document {
-  uzoScore: number | undefined;
   firstName?: string;
   middleName?: string;
   lastName?: string;
@@ -28,7 +28,9 @@ export interface IUser extends Document {
   firstTimeLoginFlag: number;
   type?: string;
   token?: string;
-  // company?: ICompany["_id"];
+  project?: IProject["_id"];
+  piu?: IPiu["_id"];
+  address: object;
   createdAt?: Date;
   updatedAt?: Date;
   comparePassword(candidatePassword: string): boolean;
@@ -60,6 +62,7 @@ const UserSchema = new Schema<IUser>(
       //unique: true,
       index: true,
     },
+    address: { type: AddressSchema },
     email: {
       type: String,
       index: true,
@@ -97,9 +100,14 @@ const UserSchema = new Schema<IUser>(
       default: 0,
       index: true,
     },
-    company: {
+    project: {
       type: Schema.Types.ObjectId,
-      ref: "Company",
+      ref: "Project",
+      index: true,
+    },
+    piu: {
+      type: Schema.Types.ObjectId,
+      ref: "Piu",
       index: true,
     },
     lastLocation: {
@@ -132,8 +140,9 @@ UserSchema.methods = {
       middleName: this.middleName,
       gender: this.gender,
       email: this.email,
-      uzoScore: this.uzoScore,
       role: this.role,
+      project: this.project,
+      piu: this.piu,
       phoneNumber: this.phoneNumber,
       type: this.type,
       status: this.status,
