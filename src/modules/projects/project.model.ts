@@ -1,3 +1,4 @@
+import { IPiu } from "../pius/piu.model";
 import { Schema, Document, model } from "mongoose";
 
 // TODO: Change piu from string into [piu-id]
@@ -18,12 +19,12 @@ export interface IAttachment extends Document {
 
 export interface IProject extends Document {
   name: string;
-  piu: string;
   endDate: Date;
   budget: number;
   progres: number;
   country: string;
   startDate: Date;
+  piu: IPiu["_id"];
   continent: string;
   description: string;
   abbreviation: string;
@@ -51,7 +52,6 @@ const AttachmentSchema = new Schema<IAttachment>(
 
 const ProjectSchema = new Schema<IProject>(
   {
-    piu: String,
     endDate: Date,
     budget: Number,
     startDate: Date,
@@ -61,6 +61,7 @@ const ProjectSchema = new Schema<IProject>(
     description: String,
     abbreviation: String,
     attachments: [AttachmentSchema],
+    piu: { type: Schema.Types.ObjectId, ref: "Piu", required: true },
     name: { type: String, required: [true, "Project name is required!"] },
   },
   { timestamps: true }
