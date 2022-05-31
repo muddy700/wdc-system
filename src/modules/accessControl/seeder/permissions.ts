@@ -1,5 +1,25 @@
 export const PERMISSIONS = [
   {
+    moduleName: "pius",
+    genericName: "create-pius",
+    displayName: "Can create pius",
+  },
+  {
+    moduleName: "pius",
+    genericName: "read-pius",
+    displayName: "Can view pius",
+  },
+  {
+    moduleName: "pius",
+    genericName: "update-pius",
+    displayName: "Can update pius",
+  },
+  {
+    moduleName: "pius",
+    genericName: "delete-pius",
+    displayName: "Can delete pius",
+  },
+  {
     moduleName: "users",
     genericName: "create-users",
     displayName: "Can create users",
@@ -72,6 +92,11 @@ export const PERMISSIONS = [
 ];
 
 export const rootPermissions = [
+  "read-pius",
+  "create-pius",
+  "update-pius",
+  "delete-pius",
+
   "read-roles",
   "create-roles",
   "update-roles",
