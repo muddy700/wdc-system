@@ -89,12 +89,17 @@ const PiuSchema = new Schema<IPiu>(
     registrationNumber: String,
     sectors: [{ type: String }],
     email: { type: String, required: true },
-    branches: [{ LocationSchema, AddressSchema }],
     socialMedias: [{ name: String, url: String }],
     phoneNumber: { type: String, required: true },
     registeredName: { type: String, required: true },
     address: { type: AddressSchema, required: true },
     location: { type: LocationSchema, required: true },
+    branches: [
+      {
+        address: { type: AddressSchema, required: true },
+        location: { type: LocationSchema, required: true },
+      },
+    ],
     contactPerson: { type: ContactPersonSchema, required: true },
   },
   { timestamps: true }

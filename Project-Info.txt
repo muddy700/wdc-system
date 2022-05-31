@@ -49,9 +49,9 @@ Keys:
     -Users
     # -Roles
     -PIU
-    -Projects
+    # -Projects
     -Sub-Project
-    -Contractor
+    - Contractor
     -Stakeholders
     -Stakeholder-Engagement-Plan
     -Meetings
@@ -91,42 +91,42 @@ Keys:
     #     -displayName
     #     -genericName
         
-    => Project:
-        -name
-        -abbreviation
-        - description
-        - continent
-        - country
-        - piu
-        -budget
-        -startDate
-        -endDate
-        -progress
-        -attachments: array [{
-            type..ie image / pdf, title, description, url
-        }]
+    # => Project:
+    #     -name
+    #     -abbreviation
+    #     - description
+    #     - continent
+    #     - country
+    #     - piu
+    #     -budget
+    #     -startDate
+    #     -endDate
+    #     -progress
+    #     -attachments: array [{
+    #         type..ie image / pdf, title, description, url
+    #     }]
 
     => PIU:
-        -registeredName
-        -abbreviation
-        -yearFound / yearStarted
-        -registrationNumber
-        -project: array [ids]
-        -location: { name, latitude, longitude }
-        -Address: {Country, Region, District, Street, postalCodes}
-        -vision,
-        -mission
-        -phoneNumber,
-        -email
-        -logo
-        -websiteLink
-        -contactPerson: {name, gender, disability, physicalAddress, position, description, email, phoneNumber,}
-        -socialMedias: array [{ name, url }]
-        -sectors: array [education, health, technology,]
-        -branches: array [{
-          -location: { name, latitude, longitude }
-          -Address: {Country, Region, District, Street, postalCodes}
-          }]
+        # -registeredName
+        # -abbreviation
+        # -yearFound / yearStarted
+        # -registrationNumber
+        - project: array [ids]
+        # -location: { name, latitude, longitude }
+        # -Address: {Country, Region, District, Street, postalCodes}
+        # -vision,
+        # -mission
+        # -phoneNumber,
+        # -email
+        # -logo
+        # -websiteLink
+        # -contactPerson: {name, gender, disability, physicalAddress, position, description, email, phoneNumber,}
+        # -socialMedias: array [{ name, url }]
+        # -sectors: array [education, health, technology,]
+        # -branches: array [{
+        #   -location: { name, latitude, longitude }
+        #   -Address: {Country, Region, District, Street, postalCodes}
+        #   }]
 
     # => ContractorProfile:
     #     -registeredName
@@ -160,6 +160,7 @@ Keys:
         -phoneNumber,
         -email
         -bestMethodOfContact: one-of-these => [0: email, 1: phoneNumber, 2: whatsapp, 3: zoom]
+
         
         # -For group / organization
         -contactPerson: {name, gender, disability, physicalAddress, position, description, email, phoneNumber}
@@ -269,6 +270,11 @@ Keys:
         -operatingSystem
         -ipAddress
         -request
+
+    => Project-Phase:
+        -name
+        - desired-level of engagement
+        - current-level of engagement
 
 <===== Queries =====>
 

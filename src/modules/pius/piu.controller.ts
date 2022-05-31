@@ -7,11 +7,11 @@ export const createPiu = async (req: any, res: Response) => {
     const { body } = req;
     const piu = await PiuService.createPiu(body);
 
-    const message = "Piu created successfully.";
+    const message = "PIU created successfully.";
 
     await logEvent({
       request: req,
-      activity: `Created a piu:  ${piu.registeredName}`,
+      activity: `Created PIU:  ${piu.registeredName}`,
     });
 
     return res.status(200).json({ success: true, message, data: piu });
@@ -29,7 +29,7 @@ export const getPius: RequestHandler = async (req, res) => {
     );
 
     const count = pius.length;
-    const message = "Pius retrieved successfully.";
+    const message = "PIUs retrieved successfully.";
 
     return res.status(200).json({ success: true, message, count, data: pius });
   } catch (e) {
@@ -43,16 +43,16 @@ export const deletePiu = async (req: Request, res: Response) => {
     const piu = await PiuService.deletePiu(piuId);
 
     if (!piu) {
-      const message = `No piu found with id: ${piuId}`;
+      const message = `No PIU found with id: ${piuId}`;
 
       return res.status(404).json({ success: false, message, data: piu });
     }
 
-    const message = "Piu deleted successfully.";
+    const message = "PIU deleted successfully.";
 
     await logEvent({
       request: req,
-      activity: `Deleted a piu:  ${piu.registeredName}`,
+      activity: `Deleted PIU:  ${piu.registeredName}`,
     });
 
     return res.status(200).json({ success: true, message, data: piu });
@@ -67,12 +67,12 @@ export const getpiuById = async (req: Request, res: Response) => {
     const piu = await PiuService.getPiuById(piuId);
 
     if (!piu) {
-      const message = `No piu found with id: ${piuId}`;
+      const message = `No PIU found with id: ${piuId}`;
 
       return res.status(404).json({ success: false, message, data: piu });
     }
 
-    const message = "Piu retrieved successfully.";
+    const message = "PIU retrieved successfully.";
 
     return res.status(200).json({ success: true, message, data: piu });
   } catch (e) {
@@ -88,16 +88,16 @@ export const updatePiu = async (req: any, res: Response) => {
     const piu = await PiuService.updatePiu(piuId, body);
 
     if (!piu) {
-      const message = `No piu found with id: ${piuId}`;
+      const message = `No PIU found with id: ${piuId}`;
 
       return res.status(404).json({ success: false, message, data: piu });
     }
 
-    const message = "Piu updated successfully.";
+    const message = "PIU updated successfully.";
 
     await logEvent({
       request: req,
-      activity: `Updated a piu:  ${piu.registeredName}`,
+      activity: `Updated a PIU:  ${piu.registeredName}`,
     });
 
     return res.status(200).json({ success: true, message, data: piu });
