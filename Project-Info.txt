@@ -46,9 +46,10 @@ Keys:
 <===== Database Design =====>
 
 1. Database Tables(14):
-    -Users
+    # -Users
     # -Roles
-    -PIU
+    # -Permissions
+    # -PIU
     # -Projects
     -Sub-Project
     - Contractor
@@ -58,27 +59,26 @@ Keys:
     -Commitments
     -Grievances
     -Department
-    # -Permissions
     # -Audit-Trail
 
 2.  Properties/Fields(for each table):
 
-    => User:
-        -role: (id)
-        -firstName 
-        -middleName 
-        -lastName 
-        -gender 
-        -email 
-        -password 
-        -phoneNumber 
-        -status: one-of-these => [active, inactive, suspended]
-        -firstTimeLoginFlag;
-        -type: one-of-these => [root-admin, piu-admin, root-manager, piu-manager, root-ceo, piu-ceo, operational-manager, other-staff]
-        -project: (id), null-for-WB-staff
-        -piu: (id), null-for-WB-staff
-        -Address: {Country, Region, District, Street, postalCodes}
-        -lastLocation
+    # => User:
+        # -role: (id)
+        # -firstName 
+        # -middleName 
+        # -lastName 
+        # -gender 
+        # -email 
+        # -password 
+        # -phoneNumber 
+        # -status: one-of-these => [active, inactive, suspended]
+        # -firstTimeLoginFlag;
+        # -type: one-of-these => [root, projectAdmin, rootManager, projectManager, piuStaff]
+        # -project: (id), null-for-WB-staff
+        # -piu: (id), null-for-WB-staff
+        # -Address: {Country, Region, District, Street, postalCodes}
+        # -lastLocation
 
     # => Role:
     #     -name
