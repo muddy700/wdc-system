@@ -29,6 +29,10 @@
       "description": "REST API-Endpoints For Users"
     },
     {
+      "name": "PIUs",
+      "description": "REST API-Endpoints For PIUs"
+    },
+    {
       "name": "Audit Trail",
       "description": "REST API-Endpoints For Audit Trail"
     }
@@ -488,6 +492,55 @@
         }
       }
     },
+    "/pius": {
+      "post": {
+        "tags": ["PIUs"],
+        "summary": "Create new PIU",
+        "description": "Add PIU",
+        "requestBody": {
+          "description": "PIU Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PIU"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          }
+        }
+      },
+      "get": {
+        "tags": ["PIUs"],
+        "summary": "List all PIUs",
+        "description": "Get all PIUs in system",
+        "parameters": [
+          {
+            "name": "searchQuery",
+            "in": "query",
+            "required": true,
+            "description": "registeredName of a PIU that we want to match",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "500": {
+            "description": "Failed. Internal Server Error"
+          }
+        }
+      }
+    },
     "/users/{id}": {
       "parameters": [
         {
@@ -557,6 +610,76 @@
           }
         }
       }
+    },
+    "/pius/{piuId}": {
+      "parameters": [
+        {
+          "name": "piuId",
+          "in": "path",
+          "required": true,
+          "description": "ID of a PIU that we want to match",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": ["PIUs"],
+        "summary": "Get PIU with a given ID",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. PIU not found"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["PIUs"],
+        "summary": "Update PIU with a given ID",
+        "description": "",
+        "requestBody": {
+          "description": "PIU Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PIU"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. PIU not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["PIUs"],
+        "summary": "Delete PIU with a given ID",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. PIU not found"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -573,6 +696,55 @@
           "required": true,
           "example": "12345678"
         }
+      }
+    },
+    "Address": {
+      "type": "object",
+      "properties": {
+        "country": { "type": "string", "example": "Tanzania" },
+        "region": { "type": "string", "example": "Dar" },
+        "district": { "type": "string", "example": "Ilala" },
+        "street": { "type": "string", "example": "Mabibo" },
+        "postalCode": { "type": "string", "example": "123 Dar" }
+      }
+    },
+    "Location": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "example": "Temeke, Tanzania" },
+        "latitude": { "type": "string", "example": "123456789" },
+        "longitude": { "type": "string", "example": "98765432" }
+      }
+    },
+    "SocialMedia": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "example": "instagram" },
+        "url": { "type": "string", "example": "url-to-instagram-profile" }
+      }
+    },
+    "Branch": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "$ref": "#/definitions/Address"
+        },
+        "location": {
+          "$ref": "#/definitions/Location"
+        }
+      }
+    },
+    "ContactPerson": {
+      "type": "object",
+      "properties": {
+        "gender": { "type": "string", "example": "M" },
+        "position": { "type": "string", "example": "CEO" },
+        "disability": { "type": "string", "example": "None" },
+        "email": { "type": "string", "example": "user@mail.test" },
+        "name": { "type": "string", "example": "Temeke, Tanzania" },
+        "phoneNumber": { "type": "string", "example": "255789101112" },
+        "physicalAddress": { "type": "string", "example": "123 Kibaha Pwani" },
+        "description": { "type": "string", "example": "some description here" }
       }
     },
     "ChangePasswordInfo": {
@@ -683,18 +855,48 @@
           "piu": { "type": "string", "example": "piu-id" },
           "project": { "type": "string", "example": "project-id" },
           "address": {
-            "$ref": "#/components/schemas/Address"
+            "$ref": "#/definitions/Address"
           }
         }
       },
-      "Address": {
+      "PIU": {
         "type": "object",
         "properties": {
-          "country": { "type": "string", "example": "Tanzania" },
-          "region": { "type": "string", "example": "Dar" },
-          "district": { "type": "string", "example": "Ilala" },
-          "street": { "type": "string", "example": "Mabibo" },
-          "postalCode": { "type": "string", "example": "123 Dar" }
+          "logo": { "type": "string", "example": "logo-url" },
+          "email": { "type": "string", "example": "user@mail.test" },
+          "vision": { "type": "string", "example": "some vision description here" },
+          "mission": { "type": "string", "example": "some mission description here" },
+          "yearFound": { "type": "number", "example": "2016" },
+          "phoneNumber": { "type": "string", "example": "255789101112" },
+          "websiteLink": { "type": "string", "example": "link-here" },
+          "registeredName": { "type": "string", "example": "Biashara Plus" },
+          "abbreviation": { "type": "string", "example": "BP" },
+          "registrationNumber": { "type": "string", "example": "TZA-2016-00003" },
+          "address": {
+            "$ref": "#/definitions/Address"
+          },
+          "location": {
+            "$ref": "#/definitions/Location"
+          },
+          "contactPerson": {
+            "$ref": "#/definitions/ContactPerson"
+          },
+          "branches": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Branch"
+            }
+          },
+          "socialMedias": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/SocialMedia"
+            }
+          },
+          "sectors": {
+            "type": "array",
+            "items": { "type": "string", "example": "Education" }
+          }
         }
       }
     }
