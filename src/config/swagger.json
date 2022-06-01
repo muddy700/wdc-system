@@ -7,12 +7,12 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000/api/v1",
-      "description": "Development Server"
+      "url": "https://se-grms-staging-api.herokuapp.com/api/v1",
+      "description": "Staging Server"
     },
     {
-      "url": "https://se-grms-api.herokuapp.com/api/v1",
-      "description": "Live Server"
+      "url": "http://localhost:3000/api/v1",
+      "description": "Development Server"
     }
   ],
   "tags": [
