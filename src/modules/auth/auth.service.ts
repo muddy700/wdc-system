@@ -24,7 +24,7 @@ export const login = async (body: any) => {
       response = {
         statusCode: 401,
         success: false,
-        message: i18n.__("wrong-password"),
+        message: i18n.__("wrong-credentials"),
         user: {},
         token,
       };

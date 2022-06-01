@@ -3,6 +3,7 @@
 	"user-exists": "User with this phone number already exists",
 	"suspended-account": "Your account is suspended.",
 	"wrong-password": "Wrong password, Please enter the correct password..",
+	"wrong-credentials": "Invalid email or password.",
 	"invalid-credentials": "Wrong password, Please enter the correct password..",
 	"password-changed": "Password changed successfully.",
 	"change-default-password": "You must change your password before you login for the first time.",
