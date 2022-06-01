@@ -11,6 +11,7 @@ interface IConstants {
   EMAIL_URL: any;
   EMAIL_SENDER: any;
   APP_DESCRIPTION: any;
+  BUGSNAG_API_KEY: any;
   //   OTP_EXPIRATION_TIME: any;
   //   SMS_URL: any;
   //   SMS_SENDER_ID: any;
@@ -58,6 +59,9 @@ export const constants: IConstants = {
 
   /** Email sender from .env */
   EMAIL_SENDER: process.env.EMAIL_SENDER,
+  
+  //Application Bugsnag API Key
+  BUGSNAG_API_KEY: process.env.BUGSNAG_API_KEY,
 
   /** Otp expiration time from .env */
   //   OTP_EXPIRATION_TIME: process.env.OTP_EXPIRATION_TIME || 10,
