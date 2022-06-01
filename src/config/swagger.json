@@ -541,6 +541,55 @@
         }
       }
     },
+    "/projects": {
+      "post": {
+        "tags": ["Projects"],
+        "summary": "Create new Project",
+        "description": "Add Project",
+        "requestBody": {
+          "description": "Project Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Project"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Projects"],
+        "summary": "List all Projects",
+        "description": "Get all Projects in system",
+        "parameters": [
+          {
+            "name": "searchQuery",
+            "in": "query",
+            "required": true,
+            "description": "Name of a Project that we want to match",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "500": {
+            "description": "Failed. Internal Server Error"
+          }
+        }
+      }
+    },
     "/users/{id}": {
       "parameters": [
         {
@@ -607,6 +656,76 @@
           },
           "404": {
             "description": "Failed. User not found"
+          }
+        }
+      }
+    },
+    "/projects/{projectId}": {
+      "parameters": [
+        {
+          "name": "projectId",
+          "in": "path",
+          "required": true,
+          "description": "ID of a project that we want to match",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": ["Projects"],
+        "summary": "Get project with a given ID",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. Project not found"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Projects"],
+        "summary": "Update project with a given ID",
+        "description": "",
+        "requestBody": {
+          "description": "Project Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Project"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. Project not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Projects"],
+        "summary": "Delete project with a given ID",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. Project not found"
           }
         }
       }
@@ -695,6 +814,30 @@
           "type": "string",
           "required": true,
           "example": "12345678"
+        }
+      }
+    },
+    "Attachment": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "required": true,
+          "example": "audio | video | image | pdf"
+        },
+        "title": {
+          "type": "string",
+          "required": true,
+          "example": "Problem of statement"
+        },
+        "description": {
+          "type": "string",
+          "example": "Some description about an attachment"
+        },
+        "url": {
+          "type": "string",
+          "required": true,
+          "example": "Url-to-cloud-storage"
         }
       }
     },
@@ -833,6 +976,59 @@
           "permissions": {
             "type": "array",
             "items": {}
+          }
+        }
+      },
+      "Project": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "required": true,
+            "example": "Iringa Road Construction"
+          },
+          "description": {
+            "type": "string",
+            "example": "Some description for this project goes here."
+          },
+          "abbreviation": {
+            "type": "string",
+            "example": "IRC"
+          },
+          "continent": {
+            "type": "string",
+            "example": "Africa"
+          },
+          "country": {
+            "type": "string",
+            "example": "Tanzania"
+          },
+          "piu": {
+            "type": "string",
+            "required": true,
+            "example": "piu-id"
+          },
+          "budget": {
+            "type": "number",
+            "example": 5000000
+          },
+          "progress": {
+            "type": "number",
+            "example": 50
+          },
+          "startDate": {
+            "type": "date",
+            "example": "2020-06-15"
+          },
+          "endDate": {
+            "type": "date",
+            "example": "2023-02-08"
+          },
+          "attachments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Attachment"
+            }
           }
         }
       },

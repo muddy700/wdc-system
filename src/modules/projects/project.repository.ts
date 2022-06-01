@@ -16,7 +16,7 @@ export const getProjects = async (keyword: string) => {
 
     // TODO: Add description, continent, country and abbreviation in regex
       const projects = Project.find({ name: { $regex: search } })
-        //   .populate("piu");
+          .populate("piu");
 
     return projects;
   } catch (e) {
