@@ -53,7 +53,7 @@ Keys:
     # -Projects
     # -Sub-Project
     - Contractor
-    -Stakeholders
+    # -Stakeholders
     -Stakeholder-Engagement-Plan
     -Meetings
     -Commitments
@@ -141,39 +141,39 @@ Keys:
     #     -location: { name, latitude, longitude }
     #     -Address: {Country, Region, District, Street, postalCodes}
 
-    => Stakeholder:
+    # => Stakeholder:
     # - For all types
-        -project: (id)
-        -name
-        -scope: one-of-these => [internal, external]
-        -type: one-of-these => [group, individual, organization]
-        -classification: one-of-these => [NGOs, private-sector, village-leader, community-representative, community-member]
-        -role / relationshipWithProject: one-of-these => [1: advisor, 2: supplier, 3: approver, 4: Beneficiary]
-        -description
-        -concern
-        -goals: array []
-        -sectors: array []
-        -levelOfInterest: one-of-these => [1: weak, 2: medium, 3: strong]
-        -levelOfInfluence: one-of-these => [1: weak, 2: medium, 3: strong]
-        -location: { name, latitude, longitude }
-        -Address: {Country, Region, District, Street, postalCodes}
-        -phoneNumber,
-        -email
-        -bestMethodOfContact: one-of-these => [0: email, 1: phoneNumber, 2: whatsapp, 3: zoom]
+        # -project: (id)
+        # -name
+        # -scope: one-of-these => [internal, external]
+        # -type: one-of-these => [positional, individual, organizational]
+        - classification: one-of-these => [NGOs, private-sector, village-leader, community-representative, community-member]
+        # -role / relationshipWithProject: one-of-these => [1: advisor, 2: supplier, 3: approver, 4: Beneficiary]
+        # -description
+        # -concern
+        # -goals: array []
+        # -sectors: array []
+        # -levelOfInterest: one-of-these => [1: weak, 2: medium, 3: strong]
+        # -levelOfInfluence: one-of-these => [1: weak, 2: medium, 3: strong]
+        # -location: { name, latitude, longitude }
+        # -Address: {Country, Region, District, Street, postalCodes}
+        # -phoneNumber,
+        # -email
+        # -relationshipHolder
+        # -bestMethodOfContact: one-of-these => [0: email, 1: phoneNumber, 2: whatsapp, 3: zoom]
 
         
         # -For group / organization
-        -contactPerson: {name, gender, disability, physicalAddress, position, description, email, phoneNumber}
-        -logo
-        -websiteLink
+        # -contactPerson: {name, gender, disability, physicalAddress, position, description, email, phoneNumber}
+        # -logo
+        # -websiteLink
 
     # - For individual
-        -gender
-        -disability
-        -company: {
-            name, logo, websiteLink, email, phoneNumber
-          }
-        -position(in the company)
+        # -gender
+        # -disability
+        # -company: {
+        #     name, logo, websiteLink, email, phoneNumber, stakeholderPosition(in the company)
+        #   }
 
     # => Contact History:
     #     -contactPerson:(id)
