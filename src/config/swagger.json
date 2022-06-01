@@ -33,6 +33,14 @@
       "description": "REST API-Endpoints For PIUs"
     },
     {
+      "name": "Projects",
+      "description": "REST API-Endpoints For Projects"
+    },
+    {
+      "name": "Sub-Projects",
+      "description": "REST API-Endpoints For Sub-Projects"
+    },
+    {
       "name": "Audit Trail",
       "description": "REST API-Endpoints For Audit Trail"
     }
@@ -590,6 +598,55 @@
         }
       }
     },
+    "/sub-projects": {
+      "post": {
+        "tags": ["Sub-Projects"],
+        "summary": "Create new Sub-Project",
+        "description": "Add Sub-Project",
+        "requestBody": {
+          "description": "Sub-Project Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubProject"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Sub-Projects"],
+        "summary": "List all Sub-Projects",
+        "description": "Get all Sub-Projects in system",
+        "parameters": [
+          {
+            "name": "searchQuery",
+            "in": "query",
+            "required": true,
+            "description": "Name of a Sub-Project that we want to match",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "500": {
+            "description": "Failed. Internal Server Error"
+          }
+        }
+      }
+    },
     "/users/{id}": {
       "parameters": [
         {
@@ -726,6 +783,76 @@
           },
           "404": {
             "description": "Failed. Project not found"
+          }
+        }
+      }
+    },
+    "/sub-projects/{subProjectId}": {
+      "parameters": [
+        {
+          "name": "subProjectId",
+          "in": "path",
+          "required": true,
+          "description": "ID of a sub-project that we want to match",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": ["Sub-Projects"],
+        "summary": "Get sub-project with a given ID",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. Sub-Project not found"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Sub-Projects"],
+        "summary": "Update sub-project with a given ID",
+        "description": "",
+        "requestBody": {
+          "description": "Sub-Project Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubProject"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. Sub-Project not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Sub-Projects"],
+        "summary": "Delete sub-project with a given ID",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. Sub-Project not found"
           }
         }
       }
@@ -1029,6 +1156,25 @@
             "items": {
               "$ref": "#/definitions/Attachment"
             }
+          }
+        }
+      },
+      "SubProject": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "required": true,
+            "example": "Iringa Road Construction Part-A"
+          },
+          "description": {
+            "type": "string",
+            "example": "Some description for this sub-project goes here."
+          },
+          "parentProject": {
+            "type": "string",
+            "required": true,
+            "example": "project-id"
           }
         }
       },
