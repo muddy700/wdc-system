@@ -51,7 +51,7 @@ Keys:
     # -Permissions
     # -PIU
     # -Projects
-    -Sub-Project
+    # -Sub-Project
     - Contractor
     -Stakeholders
     -Stakeholder-Engagement-Plan
@@ -258,10 +258,10 @@ Keys:
         -description
         -piu: (id)
 
-    => Sub-Project:
-        -name,
-        -description
-        -parentProject: (id)
+    # => Sub-Project:
+    #     -name,
+    #     -description
+    #     -parentProject: (id)
 
     => Audit-Trail:
         -actor: user-id
@@ -273,6 +273,12 @@ Keys:
 
     => Project-Phase:
         -name
+        -description
+        -project: (id)
+
+    =>Stakeholder-Engagement-Level:
+        -stakeholder:(id)
+        -projectPhase: (id)
         - desired-level of engagement
         - current-level of engagement
 
