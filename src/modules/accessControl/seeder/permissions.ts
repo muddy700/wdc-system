@@ -60,6 +60,26 @@ export const PERMISSIONS = [
     displayName: "Can delete projects",
   },
   {
+    moduleName: "subProjects",
+    genericName: "create-subProjects",
+    displayName: "Can create subProjects",
+  },
+  {
+    moduleName: "subProjects",
+    genericName: "read-subProjects",
+    displayName: "Can view subProjects",
+  },
+  {
+    moduleName: "subProjects",
+    genericName: "update-subProjects",
+    displayName: "Can update subProjects",
+  },
+  {
+    moduleName: "subProjects",
+    genericName: "delete-subProjects",
+    displayName: "Can delete subProjects",
+  },
+  {
     moduleName: "access-control",
     genericName: "create-roles",
     displayName: "Can create roles",
@@ -111,6 +131,11 @@ export const rootPermissions = [
   "create-projects",
   "update-projects",
   "delete-projects",
+
+  "read-subProjects",
+  "create-subProjects",
+  "update-subProjects",
+  "delete-subProjects",
 
   "read-permissions",
 
