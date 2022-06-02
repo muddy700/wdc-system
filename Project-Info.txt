@@ -143,8 +143,8 @@ Keys:
 
     # => Stakeholder:
     # - For all types
-        # -project: (id)
         # -name
+        # -project: (id)
         # -scope: one-of-these => [internal, external]
         # -type: one-of-these => [positional, individual, organizational]
         - classification: one-of-these => [NGOs, private-sector, village-leader, community-representative, community-member]
@@ -183,14 +183,14 @@ Keys:
     #     -Agenda
     #     -channel: one-of-these => [email, phone, physical]
     
-    => Stakeholder-Engagement-Plan:
-        -project: (id)
-        -stakeholder:(id)
-        -activity
-        -frequency: one-of-these => [monthly, once, weekly, everyday, and other]
-        -channel: one-of-these => [email, phone, physical, zoom, whatsapp, and other]
-        -startingDate
-        -projectPhase: ie.. preparation, implementation
+    # => Stakeholder-Engagement-Plan:
+        # -project: (id)
+        # -stakeholder:(id)
+        # -activity
+        # -frequency: one-of-these => [monthly, once, weekly, everyday, and other]
+        # -channel: one-of-these => [email, phone, physical, zoom, whatsapp, and other]
+        # -startingDate
+        - projectPhase: ie.. preparation, implementation
 
     =>Event (Reminders and report on participants):
         -Title
