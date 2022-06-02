@@ -15,6 +15,7 @@ export enum LEVELS {
 export enum METHODS_OF_CONTACT {
   EMAIL = "email",
   PHONE = "phone",
+  PHYSICAL = "physical",
 }
 
 export enum STAKEHOLDER_ROLES {
