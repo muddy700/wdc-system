@@ -41,6 +41,10 @@
       "description": "REST API-Endpoints For Sub-Projects"
     },
     {
+      "name": "Engagement Plans",
+      "description": "REST API-Endpoints For Engagement Plans"
+    },
+    {
       "name": "Audit Trail",
       "description": "REST API-Endpoints For Audit Trail"
     }
@@ -598,6 +602,55 @@
         }
       }
     },
+    "/engagement-plans": {
+      "post": {
+        "tags": ["Engagement Plans"],
+        "summary": "Create new Engagement Plan",
+        "description": "Add Engagement Plan",
+        "requestBody": {
+          "description": "Engagement Plan Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EngagementPlan"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Engagement Plans"],
+        "summary": "List all Engagement Plans",
+        "description": "Get all Engagement Plans in system",
+        "parameters": [
+          {
+            "name": "searchQuery",
+            "in": "query",
+            "required": true,
+            "description": "activity of Engagement Plans that we want to match",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "500": {
+            "description": "Failed. Internal Server Error"
+          }
+        }
+      }
+    },
     "/sub-projects": {
       "post": {
         "tags": ["Sub-Projects"],
@@ -783,6 +836,76 @@
           },
           "404": {
             "description": "Failed. Project not found"
+          }
+        }
+      }
+    },
+    "/engagement-plans/{engagementPlanId}": {
+      "parameters": [
+        {
+          "name": "engagementPlanId",
+          "in": "path",
+          "required": true,
+          "description": "ID of Engagement Plan that we want to match",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": ["Engagement Plans"],
+        "summary": "Get Engagement Plan with a given ID",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. Engagement Plan not found"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Engagement Plans"],
+        "summary": "Update Engagement Plan with a given ID",
+        "description": "",
+        "requestBody": {
+          "description": "Engagement Plan Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EngagementPlan"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. Engagement Plan not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Engagement Plans"],
+        "summary": "Delete Engagement Plan with a given ID",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. Engagement Plan not found"
           }
         }
       }
@@ -1175,6 +1298,46 @@
             "type": "string",
             "required": true,
             "example": "project-id"
+          }
+        }
+      },
+      "EngagementPlan": {
+        "type": "object",
+        "properties": {
+          "project": {
+            "type": "string",
+            "required": true,
+            "example": "project-id"
+          },
+          "stakeholder": {
+            "type": "string",
+            "required": true,
+            "example": "stakeholder-id"
+          },
+          "activity": {
+            "type": "string",
+            "required": true,
+            "example": "Will provide salary advance to all day workers"
+          },
+          "frequency": {
+            "type": "string",
+            "required": true,
+            "example": "everyday | weekly | monthly"
+          },
+          "channel": {
+            "type": "string",
+            "required": true,
+            "example": "email | phone | physical"
+          },
+          "projectPhase": {
+            "type": "string",
+            "required": true,
+            "example": "preparation | implementation "
+          },
+          "startingDate": {
+            "type": "Date",
+            "required": true,
+            "example": "2022-6-15"
           }
         }
       },
