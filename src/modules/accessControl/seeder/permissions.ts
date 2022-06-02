@@ -100,6 +100,26 @@ export const PERMISSIONS = [
     displayName: "Can delete stakeholders",
   },
   {
+    moduleName: "engagementPlans",
+    genericName: "create-engagementPlans",
+    displayName: "Can create engagement Plans",
+  },
+  {
+    moduleName: "engagementPlans",
+    genericName: "read-engagementPlans",
+    displayName: "Can view engagement Plans",
+  },
+  {
+    moduleName: "engagementPlans",
+    genericName: "update-engagementPlans",
+    displayName: "Can update engagement Plans",
+  },
+  {
+    moduleName: "engagementPlans",
+    genericName: "delete-engagementPlans",
+    displayName: "Can delete engagement Plans",
+  },
+  {
     moduleName: "access-control",
     genericName: "create-roles",
     displayName: "Can create roles",
@@ -161,6 +181,11 @@ export const rootPermissions = [
   "create-stakeholders",
   "update-stakeholders",
   "delete-stakeholders",
+
+  "read-engagementPlans",
+  "create-engagementPlans",
+  "update-engagementPlans",
+  "delete-engagementPlans",
 
   "read-permissions",
 
