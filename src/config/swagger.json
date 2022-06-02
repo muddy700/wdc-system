@@ -37,6 +37,10 @@
       "description": "REST API-Endpoints For Projects"
     },
     {
+      "name": "Stakeholders",
+      "description": "REST API-Endpoints For Stakeholders"
+    },
+    {
       "name": "Sub-Projects",
       "description": "REST API-Endpoints For Sub-Projects"
     },
@@ -602,6 +606,55 @@
         }
       }
     },
+    "/stakeholders": {
+      "post": {
+        "tags": ["Stakeholders"],
+        "summary": "Create new stakeholder",
+        "description": "Add stakeholder",
+        "requestBody": {
+          "description": "Stakeholder Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Stakeholder"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Stakeholders"],
+        "summary": "List all stakeholders",
+        "description": "Get all stakeholders in system",
+        "parameters": [
+          {
+            "name": "searchQuery",
+            "in": "query",
+            "required": true,
+            "description": "Name of a stakeholder that we want to match",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "500": {
+            "description": "Failed. Internal Server Error"
+          }
+        }
+      }
+    },
     "/engagement-plans": {
       "post": {
         "tags": ["Engagement Plans"],
@@ -836,6 +889,76 @@
           },
           "404": {
             "description": "Failed. Project not found"
+          }
+        }
+      }
+    },
+    "/stakeholders/{stakeholderId}": {
+      "parameters": [
+        {
+          "name": "stakeholderId",
+          "in": "path",
+          "required": true,
+          "description": "ID of a stakeholder that we want to match",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": ["Stakeholders"],
+        "summary": "Get stakeholder with a given ID",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. stakeholder not found"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Stakeholders"],
+        "summary": "Update stakeholder with a given ID",
+        "description": "",
+        "requestBody": {
+          "description": "Stakeholder Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Stakeholder"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. Stakeholder not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Stakeholders"],
+        "summary": "Delete stakeholder with a given ID",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. Stakeholder not found"
           }
         }
       }
@@ -1138,9 +1261,16 @@
     "ContactPerson": {
       "type": "object",
       "properties": {
-        "gender": { "type": "string", "example": "M", "required": true },
-        "position": { "type": "string", "example": "CEO", "required": true },
-        "disability": { "type": "string", "example": "None" },
+        "gender": { "type": "string", "example": "M | F", "required": true },
+        "position": {
+          "type": "string",
+          "example": "CEO | COO | Sales Manager",
+          "required": true
+        },
+        "disability": {
+          "type": "string",
+          "example": "None | physical disability | deaf | vision Impairment "
+        },
         "email": {
           "type": "string",
           "example": "user@mail.test",
@@ -1148,12 +1278,44 @@
         },
         "name": {
           "type": "string",
-          "example": "Temeke, Tanzania",
+          "example": "Sasha Maganga",
           "required": true
         },
         "phoneNumber": { "type": "string", "example": "255789101112" },
         "physicalAddress": { "type": "string", "example": "123 Kibaha Pwani" },
         "description": { "type": "string", "example": "some description here" }
+      }
+    },
+    "Company": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "ABC Group"
+        },
+        "logo": {
+          "type": "string",
+          "example": "url-to-cloud-image"
+        },
+        "websiteLink": {
+          "type": "string",
+          "example": "www.ipfsoftwares.com"
+        },
+        "email": {
+          "type": "string",
+          "required": true,
+          "example": "jd@gmail.com"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "required": true,
+          "example": "255789101112"
+        },
+        "stakeholderPosition": {
+          "type": "string",
+          "example": "CEO | COO | Sales Manager",
+          "required": true
+        }
       }
     },
     "ChangePasswordInfo": {
@@ -1301,6 +1463,112 @@
           }
         }
       },
+      "Stakeholder": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "required": true,
+            "example": "John Doe"
+          },
+          "description": {
+            "type": "string",
+            "example": "Some description about this stakeholder goes here."
+          },
+          "project": {
+            "type": "string",
+            "required": true,
+            "example": "project-id"
+          },
+          "scope": {
+            "type": "string",
+            "required": true,
+            "example": "internal | external"
+          },
+          "type": {
+            "type": "string",
+            "required": true,
+            "example": "individual | positional | organizational"
+          },
+          "role": {
+            "type": "string",
+            "required": true,
+            "example": "advisor | supplier | approver | beneficiary | contractor"
+          },
+          "levelOfInterest": {
+            "type": "string",
+            "required": true,
+            "example": "weak | medium | strong"
+          },
+          "levelOfInfluence": {
+            "type": "string",
+            "required": true,
+            "example": "weak | medium | strong"
+          },
+          "concern": {
+            "type": "string",
+            "example": "Concerns of a stakeholder about this project go here."
+          },
+          "goals": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "sectors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "address": {
+            "$ref": "#/definitions/Address",
+            "required": true
+          },
+          "location": {
+            "$ref": "#/definitions/Location",
+            "required": true
+          },
+          "email": {
+            "type": "string",
+            "required": true,
+            "example": "jd@gmail.com"
+          },
+          "phoneNumber": {
+            "type": "string",
+            "required": true,
+            "example": "255789101112"
+          },
+          "relationshipHolder": {
+            "$ref": "#/definitions/ContactPerson",
+            "required": true
+          },
+          "bestMethodOfContact": {
+            "type": "string",
+            "example": "phone | email | physical"
+          },
+          "contactPerson": {
+            "$ref": "#/definitions/ContactPerson",
+            "required": true
+          },
+          "logo": {
+            "type": "string",
+            "example": "url-to-cloud-image"
+          },
+          "websiteLink": {
+            "type": "string",
+            "example": "www.ipfsoftwares.com"
+          },
+          "gender": { "type": "string", "example": "M | F" },
+          "disability": {
+            "type": "string",
+            "example": "None | physical disability | deaf | vision Impairment "
+          },
+          "company": {
+            "$ref": "#/definitions/Company"
+          }
+        }
+      },
       "EngagementPlan": {
         "type": "object",
         "properties": {
@@ -1359,9 +1627,9 @@
           "phoneNumber": {
             "type": "string",
             "required": true,
-            "example": "0789101112"
+            "example": "255789101112"
           },
-          "gender": { "type": "string", "example": "M" },
+          "gender": { "type": "string", "example": "M | F" },
           "password": {
             "type": "string",
             "required": true,
