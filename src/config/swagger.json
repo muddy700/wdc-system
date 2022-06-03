@@ -37,6 +37,10 @@
       "description": "REST API-Endpoints For Projects"
     },
     {
+      "name": "Project-Phases",
+      "description": "REST API-Endpoints For Project-Phases"
+    },
+    {
       "name": "Stakeholders",
       "description": "REST API-Endpoints For Stakeholders"
     },
@@ -45,12 +49,12 @@
       "description": "REST API-Endpoints For Sub-Projects"
     },
     {
-      "name": "Engagement Plans",
-      "description": "REST API-Endpoints For Engagement Plans"
+      "name": "Engagement-Plans",
+      "description": "REST API-Endpoints For Engagement-Plans"
     },
     {
-      "name": "Audit Trail",
-      "description": "REST API-Endpoints For Audit Trail"
+      "name": "Audit-Trail",
+      "description": "REST API-Endpoints For Audit-Trail"
     }
   ],
   "consumes": ["application/json"],
@@ -346,7 +350,7 @@
     },
     "/audit-trail": {
       "get": {
-        "tags": ["Audit Trail"],
+        "tags": ["Audit-Trail"],
         "summary": "List all system logs",
         "description": "Get all system logs of all users",
         "responses": {
@@ -657,11 +661,11 @@
     },
     "/engagement-plans": {
       "post": {
-        "tags": ["Engagement Plans"],
-        "summary": "Create new Engagement Plan",
-        "description": "Add Engagement Plan",
+        "tags": ["Engagement-Plans"],
+        "summary": "Create new Engagement-Plan",
+        "description": "Add Engagement-Plan",
         "requestBody": {
-          "description": "Engagement Plan Object",
+          "description": "Engagement-Plan Object",
           "required": true,
           "content": {
             "application/json": {
@@ -682,15 +686,15 @@
         }
       },
       "get": {
-        "tags": ["Engagement Plans"],
-        "summary": "List all Engagement Plans",
-        "description": "Get all Engagement Plans in system",
+        "tags": ["Engagement-Plans"],
+        "summary": "List all Engagement-Plans",
+        "description": "Get all Engagement-Plans in system",
         "parameters": [
           {
             "name": "searchQuery",
             "in": "query",
             "required": true,
-            "description": "activity of Engagement Plans that we want to match",
+            "description": "activity of Engagement-Plans that we want to match",
             "type": "string"
           }
         ],
@@ -740,6 +744,55 @@
             "in": "query",
             "required": true,
             "description": "Name of a Sub-Project that we want to match",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "500": {
+            "description": "Failed. Internal Server Error"
+          }
+        }
+      }
+    },
+    "/project-phases": {
+      "post": {
+        "tags": ["Project-Phases"],
+        "summary": "Create new Project-Phase",
+        "description": "Add Project-Phase",
+        "requestBody": {
+          "description": "Project-Phase Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectPhase"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Project-Phases"],
+        "summary": "List all Project-Phases",
+        "description": "Get all Project-Phases in system",
+        "parameters": [
+          {
+            "name": "searchQuery",
+            "in": "query",
+            "required": true,
+            "description": "Name of a Project-Phase that we want to match",
             "type": "string"
           }
         ],
@@ -969,13 +1022,13 @@
           "name": "engagementPlanId",
           "in": "path",
           "required": true,
-          "description": "ID of Engagement Plan that we want to match",
+          "description": "ID of Engagement-Plan that we want to match",
           "type": "string"
         }
       ],
       "get": {
-        "tags": ["Engagement Plans"],
-        "summary": "Get Engagement Plan with a given ID",
+        "tags": ["Engagement-Plans"],
+        "summary": "Get Engagement-Plan with a given ID",
         "description": "",
         "responses": {
           "200": {
@@ -985,16 +1038,16 @@
             "description": "Failed. Bad post data"
           },
           "404": {
-            "description": "Failed. Engagement Plan not found"
+            "description": "Failed. Engagement-Plan not found"
           }
         }
       },
       "patch": {
-        "tags": ["Engagement Plans"],
-        "summary": "Update Engagement Plan with a given ID",
+        "tags": ["Engagement-Plans"],
+        "summary": "Update Engagement-Plan with a given ID",
         "description": "",
         "requestBody": {
-          "description": "Engagement Plan Object",
+          "description": "Engagement-Plan Object",
           "required": true,
           "content": {
             "application/json": {
@@ -1012,13 +1065,13 @@
             "description": "Failed. Bad post data"
           },
           "404": {
-            "description": "Failed. Engagement Plan not found"
+            "description": "Failed. Engagement-Plan not found"
           }
         }
       },
       "delete": {
-        "tags": ["Engagement Plans"],
-        "summary": "Delete Engagement Plan with a given ID",
+        "tags": ["Engagement-Plans"],
+        "summary": "Delete Engagement-Plan with a given ID",
         "description": "",
         "responses": {
           "200": {
@@ -1028,7 +1081,7 @@
             "description": "Failed. Bad post data"
           },
           "404": {
-            "description": "Failed. Engagement Plan not found"
+            "description": "Failed. Engagement-Plan not found"
           }
         }
       }
@@ -1169,6 +1222,76 @@
           },
           "404": {
             "description": "Failed. PIU not found"
+          }
+        }
+      }
+    },
+    "/project-phases/{projectPhaseId}": {
+      "parameters": [
+        {
+          "name": "projectPhaseId",
+          "in": "path",
+          "required": true,
+          "description": "ID of a Project-Phase that we want to match",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": ["Project-Phases"],
+        "summary": "Get Project-Phase with a given ID",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. Project-Phase not found"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Project-Phases"],
+        "summary": "Update Project-Phase with a given ID",
+        "description": "",
+        "requestBody": {
+          "description": "Project-Phase Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectPhase"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. Project-Phase not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Project-Phases"],
+        "summary": "Delete Project-Phase with a given ID",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. Project-Phase not found"
           }
         }
       }
@@ -1441,6 +1564,25 @@
             "items": {
               "$ref": "#/definitions/Attachment"
             }
+          }
+        }
+      },
+      "ProjectPhase": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "required": true,
+            "example": "Preparation"
+          },
+          "description": {
+            "type": "string",
+            "example": "Some description for this project-phase goes here."
+          },
+          "project": {
+            "type": "string",
+            "required": true,
+            "example": "project-id"
           }
         }
       },
