@@ -120,6 +120,26 @@ export const PERMISSIONS = [
     displayName: "Can delete engagement Plans",
   },
   {
+    moduleName: "projectPhases",
+    genericName: "create-projectPhases",
+    displayName: "Can create project phases",
+  },
+  {
+    moduleName: "projectPhases",
+    genericName: "read-projectPhases",
+    displayName: "Can view project phases",
+  },
+  {
+    moduleName: "projectPhases",
+    genericName: "update-projectPhases",
+    displayName: "Can update project phases",
+  },
+  {
+    moduleName: "projectPhases",
+    genericName: "delete-projectPhases",
+    displayName: "Can delete project phases",
+  },
+  {
     moduleName: "access-control",
     genericName: "create-roles",
     displayName: "Can create roles",
@@ -171,6 +191,11 @@ export const rootPermissions = [
   "create-projects",
   "update-projects",
   "delete-projects",
+
+  "read-projectPhases",
+  "create-projectPhases",
+  "update-projectPhases",
+  "delete-projectPhases",
 
   "read-subProjects",
   "create-subProjects",
