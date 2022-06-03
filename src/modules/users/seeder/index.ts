@@ -1,6 +1,6 @@
+import { faker } from "@faker-js/faker";
 import { User, IUser } from "../user.model";
 import { Role } from "../../accessControl/role.model";
-import { faker } from "@faker-js/faker";
 
 export const seedTestingUsers = async (usersPerRole: number) => {
   try {
@@ -76,10 +76,10 @@ export const errorResponse = (error: any) => {
   //Formatting Response
 
   return {
+    data: null,
     success: false,
     message: "Operation failed!.",
-    data: null,
-    userMessage: "Oops... Something went wrong, contact the admin...",
     developerMessage: error.message,
+    userMessage: "Oops... Something went wrong, contact the admin...",
   };
 };

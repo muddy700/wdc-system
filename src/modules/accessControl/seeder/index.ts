@@ -103,7 +103,7 @@ export const createUser = async (user: any) => {
   }
 };
 
-const assignRolePermission = async (roleId: string, permissions: string[]) => {
+export const assignRolePermission = async (roleId: string, permissions: string[]) => {
   try {
     for (let i = 0; i < permissions.length; i++) {
       const permission = await Permission.findOne({
