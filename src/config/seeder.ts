@@ -17,11 +17,11 @@ export const seedInitialData = async () => {
 
       await seedTestingUser();
 
-      await seedTestingPius(2);
+      // await seedTestingPius(2);
 
-      await seedTestingProjects(2);
+      // await seedTestingProjects(2);
 
-      await seedTestingStakeholders(2);
+      // await seedTestingStakeholders(2);
     }
   } catch (e) {
     return {
