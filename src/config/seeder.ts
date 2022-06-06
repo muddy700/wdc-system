@@ -1,5 +1,5 @@
 import { constants } from "./constants";
-import { seedTestingPius } from "../modules/pius/seeder";
+// import { seedTestingPius } from "../modules/pius/seeder";
 import { seedTestingUser } from "../modules/users/seeder";
 import { seedUser } from "../modules/accessControl/seeder/";
 import { seedTestingProjects } from "../modules/projects/seeder";
