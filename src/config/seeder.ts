@@ -4,6 +4,7 @@ import { seedUser } from "../modules/accessControl/seeder/";
 import { seedTestingPius } from "../modules/pius/seeder/index";
 import { seedTestingProjects } from "../modules/projects/seeder/index";
 import { seedInitialRoles } from "../modules/accessControl/seeder/role.seeder";
+import { seedTestingStakeholders } from "../modules/stakeholders/seeder/stakeholder.seeder";
 
 export const seedInitialData = async () => {
   try {
@@ -19,6 +20,8 @@ export const seedInitialData = async () => {
       await seedTestingPius(2);
 
       await seedTestingProjects(2);
+
+      await seedTestingStakeholders(2);
     }
   } catch (e) {
     return {

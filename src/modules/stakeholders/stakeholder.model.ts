@@ -22,6 +22,7 @@ export enum STAKEHOLDER_ROLES {
   ADVISOR = "advisor",
   APPROVER = "approver",
   SUPPLIER = "supplier",
+  CONTRACTOR = "contractor",
   BENEFICIARY = "beneficiary",
 }
 
@@ -54,6 +55,7 @@ export interface IStakeholder extends Document {
   contactPerson: object;
   sectors: Array<string>;
   levelOfInterest: string;
+  levelOfInfluence: string;
   project: IProject["_id"];
   relationshipHolder: object;
   bestMethodOfContact: string;
