@@ -16,7 +16,7 @@ export const rootUser: IUser = {
 
 export const seedUser = async () => {
   try {
-    console.log("Seeding Users...");
+    // console.log("Seeding Users...");
 
     const users = [
       {
@@ -36,7 +36,7 @@ export const seedUser = async () => {
       await createRole(user.role, user.info, user.permissions);
     });
 
-    console.log("User Seeding Completed.");
+    // console.log("User Seeding Completed.");
   } catch (e) {
     return {
       developerMessage: e.message,

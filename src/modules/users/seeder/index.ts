@@ -3,7 +3,7 @@ import { User, IUser, USER_TYPES } from "../user.model";
 
 export const seedTestingUser = async () => {
   try {
-    console.log("Seeding Test User...");
+    // console.log("Seeding Test User...");
 
     const role = await Role.findOne({ name: "System Tester" });
 
