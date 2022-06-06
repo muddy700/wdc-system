@@ -12,6 +12,7 @@ import { StakeholderRoutes } from "./stakeholders/stakeholder.routes";
 import { ProjectPhaseRoutes } from "./projectPhases/projectPhase.routes";
 import { AccessControlRoutes } from "./accessControl/accessControl.routes";
 import { EngagementPlanRoutes } from "./EngagementPlans/engagementPlan.routes";
+import { EngagementLevelRoutes } from "./EngagementLevels/engagementLevel.routes";
 
 // Currently not used routes
 import { OtpRoutes } from "./otp/otp.routes";
@@ -29,6 +30,7 @@ export const initializeRoutes = (app: express.Application) => {
   app.use("/api/v1/access-control/", isAuthenticated, AccessControlRoutes);
   app.use("/api/v1/doc", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
   app.use("/api/v1/engagement-plans/", isAuthenticated, EngagementPlanRoutes);
+  app.use("/api/v1/engagement-levels/", isAuthenticated, EngagementLevelRoutes);
 
   // Currently not used routes
   app.use("/api/v1/otp/", OtpRoutes);
