@@ -61,7 +61,14 @@ const ProjectSchema = new Schema<IProject>(
     description: String,
     abbreviation: String,
     attachments: [AttachmentSchema],
-    piu: { type: Schema.Types.ObjectId, ref: "Piu", required: true },
+
+    piu: {
+      ref: "Piu",
+      index: true,
+      required: true,
+      type: Schema.Types.ObjectId,
+    },
+
     name: { type: String, required: [true, "Project name is required!"] },
   },
   { timestamps: true }

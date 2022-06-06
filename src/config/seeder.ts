@@ -1,8 +1,8 @@
 import { constants } from "./constants";
-// import { seedTestingPius } from "../modules/pius/seeder";
 import { seedTestingUser } from "../modules/users/seeder";
 import { seedUser } from "../modules/accessControl/seeder/";
-// import { seedTestingProjects } from "../modules/projects/seeder";
+import { seedTestingPius } from "../modules/pius/seeder/index";
+import { seedTestingProjects } from "../modules/projects/seeder/index";
 import { seedInitialRoles } from "../modules/accessControl/seeder/role.seeder";
 
 export const seedInitialData = async () => {
@@ -12,13 +12,13 @@ export const seedInitialData = async () => {
     await seedUser();
 
     if (constants.NODE_ENV === "dev") {
-      // await seedInitialRoles();
+      await seedInitialRoles();
 
-      // await seedTestingUser();
+      await seedTestingUser();
 
-      // await seedTestingPius(2);
+      await seedTestingPius(2);
 
-      // await seedTestingProjects(1);
+      await seedTestingProjects(2);
     }
   } catch (e) {
     return {
