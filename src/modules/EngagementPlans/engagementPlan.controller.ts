@@ -73,7 +73,7 @@ export const deleteEngagementPlan = async (req: Request, res: Response) => {
   }
 };
 
-export const getengagementPlanById = async (req: Request, res: Response) => {
+export const getEngagementPlanById = async (req: Request, res: Response) => {
   try {
     const { engagementPlanId } = req.params;
     const engagementPlan = await EngagementPlanService.getEngagementPlanById(

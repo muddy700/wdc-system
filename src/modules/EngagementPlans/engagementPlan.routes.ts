@@ -18,7 +18,7 @@ router.put(
 router.get(
   "/:engagementPlanId",
   checkPermission("engagementPlans", "read-engagementPlans"),
-  EngagementPlanController.getengagementPlanById
+  EngagementPlanController.getEngagementPlanById
 );
 
 router.delete(

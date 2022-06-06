@@ -18,11 +18,12 @@ export const seedTestingUser = async () => {
         console.log(
           "Created User: " + systemTester.email + " with role: " + role.name
         );
-      } else {
-        console.log(
-          "User with email: " + systemTester.email + " already exist."
-        );
       }
+      // else {
+      //   console.log(
+      //     "User with email: " + systemTester.email + " already exist."
+      //   );
+      // }
     } else {
       console.log("No role found with name: System Tester");
     }
