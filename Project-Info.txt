@@ -54,11 +54,13 @@ Keys:
     # -Sub-Project
     - Contractor
     # -Stakeholders
-    -Stakeholder-Engagement-Plan
-    -Meetings
+    # -Stakeholder-Engagement-Plan
+    -Event
     -Commitments
     -Grievances
     -Department
+    # -Engagement-Level
+    # -Project-Phase
     # -Audit-Trail
 
 2.  Properties/Fields(for each table):
@@ -263,24 +265,24 @@ Keys:
     #     -description
     #     -parentProject: (id)
 
-    => Audit-Trail:
-        -actor: user-id
-        -activity
-        -browser
-        -operatingSystem
-        -ipAddress
-        -request
+    # => Audit-Trail:
+    #     -actor: user-id
+    #     -activity
+    #     -browser
+    #     -operatingSystem
+    #     -ipAddress
+    #     -request
 
-    => Project-Phase:
-        -name
-        -description
-        -project: (id)
+    # => Project-Phase:
+    #     -name
+    #     -description
+    #     -project: (id)
 
-    =>Stakeholder-Engagement-Level:
-        -stakeholder:(id)
-        -projectPhase: (id)
-        - desired-level of engagement
-        - current-level of engagement
+    # => Engagement-Level:
+    #     -stakeholder:(id)
+    #     -projectPhase: (id)
+    #     -desired-level
+    #     -current-level
 
 <===== Queries =====>
 
@@ -293,6 +295,6 @@ Keys:
   - (b-coz fetching them in the system as they occur it's very rare)
 //6. Is there any possibility for a project to have more than one contractor?
 
-1. add relationshipHolder
-- 2. add project phase
+# 1. add relationshipHolder
+# 2. add project phase
 3. 
