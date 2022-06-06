@@ -120,6 +120,26 @@ export const PERMISSIONS = [
     displayName: "Can delete engagement Plans",
   },
   {
+    moduleName: "engagementLevels",
+    genericName: "create-engagementLevels",
+    displayName: "Can create engagement levels",
+  },
+  {
+    moduleName: "engagementLevels",
+    genericName: "read-engagementLevels",
+    displayName: "Can view engagement levels",
+  },
+  {
+    moduleName: "engagementLevels",
+    genericName: "update-engagementLevels",
+    displayName: "Can update engagement levels",
+  },
+  {
+    moduleName: "engagementLevels",
+    genericName: "delete-engagementLevels",
+    displayName: "Can delete engagement levels",
+  },
+  {
     moduleName: "projectPhases",
     genericName: "create-projectPhases",
     displayName: "Can create project phases",
@@ -211,6 +231,11 @@ export const rootPermissions = [
   "create-engagementPlans",
   "update-engagementPlans",
   "delete-engagementPlans",
+
+  "read-engagementLevels",
+  "create-engagementLevels",
+  "update-engagementLevels",
+  "delete-engagementLevels",
 
   "read-permissions",
 
