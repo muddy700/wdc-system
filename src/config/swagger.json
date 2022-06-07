@@ -3,7 +3,7 @@
   "info": {
     "version": "1.0.0",
     "title": "SE-GRMS APIs",
-    "description": "APIs for Stakeholder Engagement and Grievances redress Mechanism System"
+    "description": "APIs for Stakeholder Engagement and Grievances Redress Mechanism System"
   },
   "servers": [
     {
@@ -51,6 +51,18 @@
     {
       "name": "Engagement-Plans",
       "description": "REST API-Endpoints For Engagement-Plans"
+    },
+    {
+      "name": "Engagement-Levels",
+      "description": "REST API-Endpoints For Engagement-Levels"
+    },
+    {
+      "name": "Commitments",
+      "description": "REST API-Endpoints For Commitments"
+    },
+    {
+      "name": "Departments",
+      "description": "REST API-Endpoints For Departments"
     },
     {
       "name": "Audit-Trail",
@@ -708,6 +720,55 @@
         }
       }
     },
+    "/engagement-levels": {
+      "post": {
+        "tags": ["Engagement-Levels"],
+        "summary": "Create new Engagement-Level",
+        "description": "Add Engagement-Level",
+        "requestBody": {
+          "description": "Engagement-Level Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EngagementLevel"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Engagement-Levels"],
+        "summary": "List all Engagement-Levels",
+        "description": "Get all Engagement-Levels in system",
+        "parameters": [
+          {
+            "name": "searchQuery",
+            "in": "query",
+            "required": true,
+            "description": "Current-Level of Engagement-Levels that we want to match",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "500": {
+            "description": "Failed. Internal Server Error"
+          }
+        }
+      }
+    },
     "/sub-projects": {
       "post": {
         "tags": ["Sub-Projects"],
@@ -902,7 +963,7 @@
           }
         }
       },
-      "patch": {
+      "put": {
         "tags": ["Projects"],
         "summary": "Update project with a given ID",
         "description": "",
@@ -972,7 +1033,7 @@
           }
         }
       },
-      "patch": {
+      "put": {
         "tags": ["Stakeholders"],
         "summary": "Update stakeholder with a given ID",
         "description": "",
@@ -1042,7 +1103,7 @@
           }
         }
       },
-      "patch": {
+      "put": {
         "tags": ["Engagement-Plans"],
         "summary": "Update Engagement-Plan with a given ID",
         "description": "",
@@ -1086,6 +1147,76 @@
         }
       }
     },
+    "/engagement-levels/{engagementLevelId}": {
+      "parameters": [
+        {
+          "name": "engagementLevelId",
+          "in": "path",
+          "required": true,
+          "description": "ID of Engagement-Level that we want to match",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": ["Engagement-Levels"],
+        "summary": "Get Engagement-Level with a given ID",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. Engagement-Level not found"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Engagement-Levels"],
+        "summary": "Update Engagement-Level with a given ID",
+        "description": "",
+        "requestBody": {
+          "description": "Engagement-Level Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EngagementLevel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. Engagement-Level not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Engagement-Levels"],
+        "summary": "Delete Engagement-Level with a given ID",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. Engagement-Level not found"
+          }
+        }
+      }
+    },
     "/sub-projects/{subProjectId}": {
       "parameters": [
         {
@@ -1112,7 +1243,7 @@
           }
         }
       },
-      "patch": {
+      "put": {
         "tags": ["Sub-Projects"],
         "summary": "Update sub-project with a given ID",
         "description": "",
@@ -1182,7 +1313,7 @@
           }
         }
       },
-      "patch": {
+      "put": {
         "tags": ["PIUs"],
         "summary": "Update PIU with a given ID",
         "description": "",
@@ -1252,7 +1383,7 @@
           }
         }
       },
-      "patch": {
+      "put": {
         "tags": ["Project-Phases"],
         "summary": "Update Project-Phase with a given ID",
         "description": "",
@@ -1708,6 +1839,31 @@
           },
           "company": {
             "$ref": "#/definitions/Company"
+          }
+        }
+      },
+      "EngagementLevel": {
+        "type": "object",
+        "properties": {
+          "stakeholder": {
+            "type": "string",
+            "required": true,
+            "example": "stakeholder-id"
+          },
+          "projectPhase": {
+            "type": "string",
+            "required": true,
+            "example": "projectPhase-id"
+          },
+          "desiredLevel": {
+            "type": "string",
+            "required": true,
+            "example": "Resilient | Resistant"
+          },
+          "currentLevel": {
+            "type": "string",
+            "required": true,
+            "example": "Resilient | Resistant"
           }
         }
       },
