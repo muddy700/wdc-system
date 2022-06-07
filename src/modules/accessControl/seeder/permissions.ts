@@ -180,6 +180,26 @@ export const PERMISSIONS = [
     displayName: "Can delete departments",
   },
   {
+    moduleName: "commitments",
+    genericName: "create-commitments",
+    displayName: "Can create commitments",
+  },
+  {
+    moduleName: "commitments",
+    genericName: "read-commitments",
+    displayName: "Can view commitments",
+  },
+  {
+    moduleName: "commitments",
+    genericName: "update-commitments",
+    displayName: "Can update commitments",
+  },
+  {
+    moduleName: "commitments",
+    genericName: "delete-commitments",
+    displayName: "Can delete commitments",
+  },
+  {
     moduleName: "access-control",
     genericName: "create-roles",
     displayName: "Can create roles",
@@ -236,6 +256,11 @@ export const rootPermissions = [
   "create-projectPhases",
   "update-projectPhases",
   "delete-projectPhases",
+
+  "read-commitments",
+  "create-commitments",
+  "update-commitments",
+  "delete-commitments",
 
   "read-subProjects",
   "create-subProjects",
