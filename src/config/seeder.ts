@@ -15,9 +15,9 @@ export const seedInitialData = async () => {
     if (constants.NODE_ENV === "dev") {
       await seedInitialRoles();
 
-      await seedTestingUser();
+      // await seedTestingUser();
 
-      // await seedTestingPius(2);
+      // await seedTestingPius(3);
 
       // await seedTestingProjects(2);
 
