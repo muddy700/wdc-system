@@ -622,6 +622,55 @@
         }
       }
     },
+    "/departments": {
+      "post": {
+        "tags": ["Departments"],
+        "summary": "Create new Department",
+        "description": "Add Department",
+        "requestBody": {
+          "description": "Department Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Department"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Departments"],
+        "summary": "List all Departments",
+        "description": "Get all Departments in system",
+        "parameters": [
+          {
+            "name": "searchQuery",
+            "in": "query",
+            "required": true,
+            "description": "Name of a Department that we want to match",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "500": {
+            "description": "Failed. Internal Server Error"
+          }
+        }
+      }
+    },
     "/stakeholders": {
       "post": {
         "tags": ["Stakeholders"],
@@ -1003,6 +1052,76 @@
           },
           "404": {
             "description": "Failed. Project not found"
+          }
+        }
+      }
+    },
+    "/departments/{departmentId}": {
+      "parameters": [
+        {
+          "name": "departmentId",
+          "in": "path",
+          "required": true,
+          "description": "ID of a department that we want to match",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": ["Departments"],
+        "summary": "Get Department with a given ID",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. Department not found"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Departments"],
+        "summary": "Update Department with a given ID",
+        "description": "",
+        "requestBody": {
+          "description": "Department Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Department"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. Department not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Departments"],
+        "summary": "Delete Department with a given ID",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. Department not found"
           }
         }
       }
@@ -1864,6 +1983,25 @@
             "type": "string",
             "required": true,
             "example": "Resilient | Resistant"
+          }
+        }
+      },
+      "Department": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "required": true,
+            "example": "Finance"
+          },
+          "description": {
+            "type": "string",
+            "example": "some description about this department"
+          },
+          "piu": {
+            "type": "string",
+            "required": true,
+            "example": "piu-id"
           }
         }
       },
