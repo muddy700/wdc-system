@@ -31,7 +31,8 @@ export interface IProject extends Document {
   attachments: Array<IAttachment>;
 }
 
-const AttachmentSchema = new Schema<IAttachment>(
+//This schema has been imported in: commitment-model
+export const AttachmentSchema = new Schema<IAttachment>(
   {
     description: String,
 
