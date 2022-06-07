@@ -52,13 +52,12 @@ Keys:
     # -PIU
     # -Projects
     # -Sub-Project
-    - Contractor
     # -Stakeholders
     # -Stakeholder-Engagement-Plan
     -Event
-    -Commitments
+    # -Commitments
     -Grievances
-    -Department
+    # -Department
     # -Engagement-Level
     # -Project-Phase
     # -Audit-Trail
@@ -214,24 +213,24 @@ Keys:
         -setReminder: boolean
         -notifyParticipants: boolean
 
-    => Commitment: (With Email remainder. Also we can get summary like in grievances)
-        -actor: one-of-these => [stakeholder-id, user-id, contractor-id ]
-        -project: (id)
-        -activity
-	    -projectPhase
-        -description
-        -fromMeeting: meeting-id
-        -startDate
-        -endDate
-        -status: one-of-these => [pending, inprogress, delivered]
-        -completedOn
-        -attachments: array [{
-          type..ie image / pdf, title, description, url
-        }]
-        -comments: array [{
-          -author / commentor / user / stakeholder / contractor,
-          -message
-          }]
+    # => Commitment: (With Email remainder. Also we can get summary like in grievances)
+        # -actor: one-of-these => [stakeholder-id, user-id ]
+        # -project: (id)
+        # -activity
+	    # -projectPhase
+        - description
+        - fromMeeting: meeting-id
+        # -startDate
+        # -endDate
+        # -status: one-of-these => [pending, inprogress, delivered]
+        # -completedOn
+        # -attachments: array [{
+        #   type..ie image / pdf, title, description, url
+        # }]
+        # -comments: array [{
+        #   -author / commentor / user / stakeholder
+        #   -message
+        #   }]
         
     => Grievance:
         -project: (id)
@@ -255,10 +254,10 @@ Keys:
         -estimatedResolveDate
         -resolvedOn
 
-    => Department:
-        -name
-        -description
-        -piu: (id)
+    # => Department:
+    #     -name
+    #     -description
+    #     -piu: (id)
 
     # => Sub-Project:
     #     -name,
