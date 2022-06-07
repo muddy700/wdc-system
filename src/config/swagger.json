@@ -622,6 +622,55 @@
         }
       }
     },
+    "/commitments": {
+      "post": {
+        "tags": ["Commitments"],
+        "summary": "Create new Commitment",
+        "description": "Add Commitment",
+        "requestBody": {
+          "description": "Commitment Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Commitment"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Commitments"],
+        "summary": "List all Commitments",
+        "description": "Get all Commitments in system",
+        "parameters": [
+          {
+            "name": "searchQuery",
+            "in": "query",
+            "required": true,
+            "description": "Activity of a Project that we want to match",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "500": {
+            "description": "Failed. Internal Server Error"
+          }
+        }
+      }
+    },
     "/departments": {
       "post": {
         "tags": ["Departments"],
@@ -1052,6 +1101,76 @@
           },
           "404": {
             "description": "Failed. Project not found"
+          }
+        }
+      }
+    },
+    "/commitments/{commitmentId}": {
+      "parameters": [
+        {
+          "name": "commitmentId",
+          "in": "path",
+          "required": true,
+          "description": "ID of a Commitment that we want to match",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": ["Commitments"],
+        "summary": "Get Commitment with a given ID",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. Commitment not found"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Commitments"],
+        "summary": "Update Commitment with a given ID",
+        "description": "",
+        "requestBody": {
+          "description": "Commitment Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Commitment"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. Commitment not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Commitments"],
+        "summary": "Delete Commitment with a given ID",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. Commitment not found"
           }
         }
       }
@@ -2002,6 +2121,83 @@
             "type": "string",
             "required": true,
             "example": "piu-id"
+          }
+        }
+      },
+      "Commitment": {
+        "type": "object",
+        "properties": {
+          "activity": {
+            "type": "string",
+            "required": true,
+            "example": "To plant trees in all area affected by the project"
+          },
+          "description": {
+            "type": "string",
+            "example": "some description about this department"
+          },
+          "project": {
+            "type": "string",
+            "required": true,
+            "example": "project-id"
+          },
+          "projectPhase": {
+            "type": "string",
+            "required": true,
+            "example": "projectPhase-id"
+          },
+          "actor": {
+            "type": "string",
+            "required": true,
+            "example": "stakeholder-id | user-id"
+          },
+          "onModel": {
+            "type": "string",
+            "required": true,
+            "example": "Stakeholder | User"
+          },
+          "status": {
+            "type": "string",
+            "required": true,
+            "example": "pending | inprogress | delivered"
+          },
+          "startDate": {
+            "type": "Date",
+            "required": true,
+            "example": "2022-6-15"
+          },
+          "endDate": {
+            "type": "Date",
+            "required": true,
+            "example": "2022-6-15"
+          },
+          "completedOn": {
+            "type": "Date",
+            "example": "2022-6-15"
+          },
+          "attachments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Attachment"
+            }
+          },
+          "comments": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "authorName": {
+                  "type": "string",
+                  "required": true,
+                  "example": "John Doe"
+                },
+                "message": {
+                  "type": "string",
+                  "required": true,
+                  "example": "Some comment goes here."
+                }
+              }
+            }
           }
         }
       },
