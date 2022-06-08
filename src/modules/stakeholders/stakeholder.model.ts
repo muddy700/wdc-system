@@ -7,23 +7,25 @@ import { Schema, Document, model } from "mongoose";
 import { IProject } from "../projects/project.model";
 
 export enum LEVELS {
-  WEAK = "weak",
-  MEDIUM = "medium",
-  STRONG = "strong",
+  WEAK = "Weak",
+  MEDIUM = "Medium",
+  STRONG = "Strong",
 }
 
 export enum METHODS_OF_CONTACT {
-  EMAIL = "email",
-  PHONE = "phone",
-  PHYSICAL = "physical",
+  EMAIL = "Email",
+  PHONE = "Phone",
+  ZOOM = "Zoom Meeting",
+  PHYSICAL = "Physical",
+  WHATSAPP = "Whatsapp",
 }
 
 export enum STAKEHOLDER_ROLES {
-  ADVISOR = "advisor",
-  APPROVER = "approver",
-  SUPPLIER = "supplier",
-  CONTRACTOR = "contractor",
-  BENEFICIARY = "beneficiary",
+  ADVISOR = "Advisor",
+  APPROVER = "Approver",
+  SUPPLIER = "Supplier",
+  CONTRACTOR = "Contractor",
+  BENEFICIARY = "Beneficiary",
 }
 
 export interface ICompany extends Document {

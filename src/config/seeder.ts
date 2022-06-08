@@ -6,6 +6,7 @@ import { seedTestingProjects } from "../modules/projects/seeder/index";
 import { seedInitialRoles } from "../modules/accessControl/seeder/role.seeder";
 import { seedProjectPhases } from "../modules/projectPhases/seeder/projectPhase.seeder";
 import { seedTestingStakeholders } from "../modules/stakeholders/seeder/stakeholder.seeder";
+import { seedEngagementPlans } from "../modules/engagementPlans/seeder/engagementPlan.seeder";
 
 export const seedInitialData = async () => {
   try {
@@ -16,7 +17,7 @@ export const seedInitialData = async () => {
     if (constants.NODE_ENV === "dev") {
       await seedInitialRoles();
 
-      // await seedTestingUser();
+      // await seedTestingUser();Commitments
 
       // await seedTestingPius(3);
 
@@ -25,6 +26,8 @@ export const seedInitialData = async () => {
       // await seedTestingStakeholders(2);
 
       // await seedProjectPhases(2)
+
+      // await seedEngagementPlans(2);
     }
   } catch (e) {
     return {

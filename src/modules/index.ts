@@ -9,12 +9,12 @@ import * as swaggerDocument from "../config/swagger.json";
 import { AuditTrailRoutes } from "./auditTrail/auditTrail.routes";
 import { DepartmentRoutes } from "./departments/department.routes";
 import { SubProjectRoutes } from "./subProjects/subProject.routes";
-import { CommitmentRoutes } from "./Commitments/commitment.routes";
+import { CommitmentRoutes } from "./commitments/commitment.routes";
 import { StakeholderRoutes } from "./stakeholders/stakeholder.routes";
 import { ProjectPhaseRoutes } from "./projectPhases/projectPhase.routes";
 import { AccessControlRoutes } from "./accessControl/accessControl.routes";
-import { EngagementPlanRoutes } from "./EngagementPlans/engagementPlan.routes";
-import { EngagementLevelRoutes } from "./EngagementLevels/engagementLevel.routes";
+import { EngagementPlanRoutes } from "./engagementPlans/engagementPlan.routes";
+import { EngagementLevelRoutes } from "./engagementLevels/engagementLevel.routes";
 
 // Currently not used routes
 import { OtpRoutes } from "./otp/otp.routes";
