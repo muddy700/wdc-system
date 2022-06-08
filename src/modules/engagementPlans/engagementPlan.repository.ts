@@ -4,7 +4,9 @@ export const createEngagementPlan = async (body: IEngagementPlan) => {
   try {
     const engagementPlan = await EngagementPlan.create(body);
 
-    return engagementPlan.populate("project stakeholder").execPopulate();
+    return engagementPlan
+      .populate("project stakeholder projectPhase")
+      .execPopulate();
   } catch (e) {
     throw new Error(e.message);
   }
@@ -17,7 +19,7 @@ export const getEngagementPlans = async (keyword: string) => {
     // TODO: Add activity, channel, frequency and startingDate in regex
     const engagementPlans = EngagementPlan.find({
       activity: { $regex: search },
-    }).populate("project stakeholder");
+    }).populate("project stakeholder projectPhase");
 
     return engagementPlans;
   } catch (e) {
@@ -29,7 +31,7 @@ export const getEngagementPlanById = async (engagementPlanId: string) => {
   try {
     const engagementPlan = await EngagementPlan.findOne({
       _id: engagementPlanId,
-    }).populate("project stakeholder");
+    }).populate("project stakeholder projectPhase");
 
     return engagementPlan;
   } catch (e) {
@@ -46,7 +48,7 @@ export const updateEngagementPlan = async (
       { _id: engagementPlanId },
       { ...body },
       { new: true }
-    ).populate("project stakeholder");
+    ).populate("project stakeholder projectPhase");
 
     return engagementPlan;
   } catch (e) {

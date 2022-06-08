@@ -4,23 +4,25 @@ import {
 } from "../stakeholders/stakeholder.model";
 import { Schema, Document, model } from "mongoose";
 import { IProject } from "../projects/project.model";
+import { IProjectPhase } from "../projectPhases/projectPhase.model";
 
 export interface IEngagementPlan extends Document {
   channel: string;
   activity: string;
   frequency: string;
   startingDate: Date;
-  projectPhase: string;
   project: IProject["_id"];
   stakeholder: IStakeholder["_id"];
+  projectPhase: IProjectPhase["_id"];
 }
 
 const EngagementPlanSchema = new Schema<IEngagementPlan>(
   {
     projectPhase: {
       index: true,
-      type: String,
       required: true,
+      ref: "ProjectPhase",
+      type: Schema.Types.ObjectId,
     },
 
     channel: {
@@ -46,7 +48,7 @@ const EngagementPlanSchema = new Schema<IEngagementPlan>(
     frequency: {
       type: String,
       required: true,
-      enum: ["everyday", "weekly", "monthly"],
+      enum: ["Everyday", "Weekly", "Monthly", "Once every 2 months"],
     },
 
     activity: {
