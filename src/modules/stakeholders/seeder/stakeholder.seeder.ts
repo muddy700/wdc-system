@@ -67,11 +67,19 @@ const getStakeholdersPayload = (project: IProject, count: number) => {
   const stakeholderList: Array<IStakeholder> = [];
 
   const roles: Array<string> = [
-    "advisor",
-    "supplier",
-    "approver",
-    "contractor",
-    "beneficiary",
+    "Advisor",
+    "Supplier",
+    "Approver",
+    "Contractor",
+    "Beneficiary",
+  ];
+
+  const channels: Array<string> = [
+    "Phone",
+    "Email",
+    "Physical",
+    "Whatsapp",
+    "Zoom Meeting",
   ];
 
   const disabilities: Array<string> = [
@@ -81,15 +89,14 @@ const getStakeholdersPayload = (project: IProject, count: number) => {
     "Physical Disability",
   ];
 
-  const scopes: Array<string> = ["internal", "external"];
-  const levels: Array<string> = ["weak", "medium", "strong"];
-  const channels: Array<string> = ["phone", "email", "physical"];
+  const scopes: Array<string> = ["Internal", "External"];
+  const levels: Array<string> = ["Weak", "Medium", "Strong"];
   const sectors: Array<string> = ["Education", "Health", "Social"];
-  const types: Array<string> = ["individual", "positional", "organizational"];
+  const types: Array<string> = ["Individual", "Positional", "Organizational"];
 
   for (let i = 0; i < count; i++) {
     const stakeholderInfo: IStakeholder = {
-      type: types[0],
+      type: types[1],
       project: project._id,
       address: getAddress(),
       location: getLocation(),

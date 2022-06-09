@@ -16,6 +16,12 @@ router.put(
 );
 
 router.get(
+  "/by-query",
+  checkPermission("stakeholders", "read-stakeholders"),
+  StakeholderController.getStakeholdersByQuery
+);
+
+router.get(
   "/:stakeholderId",
   checkPermission("stakeholders", "read-stakeholders"),
   StakeholderController.getstakeholderById
@@ -32,11 +38,5 @@ router.get(
   checkPermission("stakeholders", "read-stakeholders"),
   StakeholderController.getStakeholders
 );
-
-// router.get(
-//   "/by-query",
-//   checkPermission("stakeholders", "read-stakeholders"),
-//   StakeholderController.getStakeholdersByQuery
-// );
 
 export const StakeholderRoutes = router;

@@ -1,6 +1,9 @@
+import { constants } from "../../config/constants";
 import { Request, RequestHandler, Response } from "express";
 import { logEvent } from "../auditTrail/auditTrail.service";
 import * as StakeholderService from "./stakeholder.service";
+
+const { PERPAGE } = constants;
 
 export const createStakeholder = async (req: any, res: Response) => {
   try {
@@ -31,7 +34,9 @@ export const getStakeholders: RequestHandler = async (req, res) => {
     const count = stakeholders.length;
     const message = "Stakeholders retrieved successfully.";
 
-    return res.status(200).json({ success: true, message, count, data: stakeholders });
+    return res
+      .status(200)
+      .json({ success: true, message, count, data: stakeholders });
   } catch (e) {
     return errorResponse(res, 400, e);
   }
@@ -40,12 +45,16 @@ export const getStakeholders: RequestHandler = async (req, res) => {
 export const deleteStakeholder = async (req: Request, res: Response) => {
   try {
     const { stakeholderId } = req.params;
-    const stakeholder = await StakeholderService.deleteStakeholder(stakeholderId);
+    const stakeholder = await StakeholderService.deleteStakeholder(
+      stakeholderId
+    );
 
     if (!stakeholder) {
       const message = `No Stakeholder found with id: ${stakeholderId}`;
 
-      return res.status(404).json({ success: false, message, data: stakeholder });
+      return res
+        .status(404)
+        .json({ success: false, message, data: stakeholder });
     }
 
     const message = "Stakeholder deleted successfully.";
@@ -64,12 +73,16 @@ export const deleteStakeholder = async (req: Request, res: Response) => {
 export const getstakeholderById = async (req: Request, res: Response) => {
   try {
     const { stakeholderId } = req.params;
-    const stakeholder = await StakeholderService.getStakeholderById(stakeholderId);
+    const stakeholder = await StakeholderService.getStakeholderById(
+      stakeholderId
+    );
 
     if (!stakeholder) {
       const message = `No Stakeholder found with id: ${stakeholderId}`;
 
-      return res.status(404).json({ success: false, message, data: stakeholder });
+      return res
+        .status(404)
+        .json({ success: false, message, data: stakeholder });
     }
 
     const message = "Stakeholder retrieved successfully.";
@@ -85,12 +98,17 @@ export const updateStakeholder = async (req: any, res: Response) => {
     const { body } = req;
     const { stakeholderId } = req.params;
 
-    const stakeholder = await StakeholderService.updateStakeholder(stakeholderId, body);
+    const stakeholder = await StakeholderService.updateStakeholder(
+      stakeholderId,
+      body
+    );
 
     if (!stakeholder) {
       const message = `No Stakeholder found with id: ${stakeholderId}`;
 
-      return res.status(404).json({ success: false, message, data: stakeholder });
+      return res
+        .status(404)
+        .json({ success: false, message, data: stakeholder });
     }
 
     const message = "Stakeholder updated successfully.";
@@ -118,52 +136,62 @@ const errorResponse = (res: Response, statusCode: number, error: any) => {
   });
 };
 
-// TODO: Add stakeholder-filter  by query
-// export const getStakeholdersByQuery: RequestHandler = async (req, res) => {
-//   try {
-//     let searchQuery: Object = appendSearchKeywords(req);
+export const getStakeholdersByQuery: RequestHandler = async (req, res) => {
+  try {
+    let searchQuery: Object = appendSearchKeywords(req);
+    const currentPage = (req.query.currentPage as unknown as number) || 1;
 
-//     const stakeholders = await StakeholderService.getStakeholdersByQuery(searchQuery);
+    const perPage = parseInt(PERPAGE);
+    const offset = perPage * currentPage - perPage;
 
-//     const count = stakeholders.length;
-//     const message = "Stakeholders retrieved successfully.";
+    const { data, totalRows } = await StakeholderService.getStakeholdersByQuery(
+      offset,
+      perPage,
+      searchQuery
+    );
 
-//     return res
-//       .status(200)
-//       .json({ success: true, message, count, data: stakeholders });
-//   } catch (e) {
-//     return errorResponse(res, 400, e);
-//   }
-// };
+    const count = data.length;
+    const message = "Stakeholders retrieved successfully.";
 
-// const appendSearchKeywords = (req: Request) => {
-//   let searchQuery: Object = {};
-//   const {
-//     status,
-//     assignee,
-//     metric,
-//     type,
-//     contact,
-//     minValue,
-//     maxValue,
-//     dateCreated,
-//     startDate,
-//     endDate,
-//   } = req.query;
+    const pagination = {
+      currentPage,
+      perPage,
+      totalPages: Math.ceil(totalRows / perPage) || 1,
+      totalRows,
+    };
 
-//   //Assign properties into search-query iff they have values
-//   searchQuery = {
-//     ...(type && { type }),
-//     ...(status && { status }),
-//     ...(metric && { metric }),
-//     ...(contact && { contact }),
-//     ...(minValue && { minValue }),
-//     ...(maxValue && { maxValue }),
-//     ...(assignee && { assignee }),
-//     ...(startDate && { startDate }),
-//     ...(endDate && { endDate }),
-//     ...(dateCreated && { dateCreated }),
-//   };
+    return res
+      .status(200)
+      .json({ success: true, message, count, pagination, data });
+  } catch (e) {
+    return errorResponse(res, 400, e);
+  }
+};
 
-//   return searchQuery;
-// };
+const appendSearchKeywords = (req: Request) => {
+  let searchQuery: Object = {};
+  const {
+    role,
+    type,
+    scope,
+    email,
+    project,
+    phoneNumber,
+    levelOfInterest,
+    levelOfInfluence,
+  } = req.query;
+
+  //Assign properties into search-query iff they have values
+  searchQuery = {
+    ...(type && { type }),
+    ...(role && { role }),
+    ...(scope && { scope }),
+    ...(email && { email }),
+    ...(project && { project }),
+    ...(phoneNumber && { phoneNumber }),
+    ...(levelOfInterest && { levelOfInterest }),
+    ...(levelOfInfluence && { levelOfInfluence }),
+  };
+
+  return searchQuery;
+};

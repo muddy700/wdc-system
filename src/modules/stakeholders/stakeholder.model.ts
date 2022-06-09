@@ -127,7 +127,7 @@ const StakeholderSchema = new Schema<IStakeholder>(
       index: true,
       type: String,
       required: true,
-      enum: ["internal", "external"],
+      enum: ["Internal", "External"],
     },
 
     project: {
@@ -147,7 +147,7 @@ const StakeholderSchema = new Schema<IStakeholder>(
       index: true,
       type: String,
       required: true,
-      enum: ["individual", "organizational", "positional"],
+      enum: ["Individual", "Organizational", "Positional"],
     },
 
     phoneNumber: {

@@ -66,24 +66,51 @@ export const deleteStakeholder = async (stakeholderId: string) => {
   }
 };
 
-// TODO: Add stakeholder-filter  by query
-// export const getStakeholdersByQuery = async (searchQuery: object) => {
-//   console.log("SearchQuery: ", searchQuery);
+export const getStakeholdersByQuery = async (
+  offset: number,
+  perPage: number,
+  searchQuery: object
+) => {
+  console.log("SearchQuery: ", searchQuery);
 
-//   const stakeholders = await Stakeholder.aggregate([
-//     {
-//       $addFields: {
-//         dateCreated: {
-//           $dateToString: { format: "%Y-%m-%d", date: "$createdAt" },
-//         },
-//       },
-//     },
-//     { $match: { ...searchQuery } },
-//     { $sort: { createdAt: -1 } },
-//     { $facet: { metadata: [{ $count: "total" }], data: [] } },
-//   ]);
+  const stakeholders = await Stakeholder.aggregate([
+    {
+      $lookup: {
+        from: "projects",
+        localField: "project",
+        foreignField: "_id",
+        as: "project",
+      },
+    },
+    {
+      $addFields: {
+        dateCreated: {
+          $dateToString: { format: "%Y-%m-%d", date: "$createdAt" },
+        },
+      },
+    },
+    {
+      $unwind: {
+        path: "$project",
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+    { $match: { ...searchQuery } },
+    { $sort: { createdAt: -1 } },
+    {
+      $facet: {
+        metadata: [{ $count: "total" }],
+        data: [{ $skip: offset }, { $limit: perPage }],
+      },
+    },
+  ]);
 
-//   return stakeholders[0].data;
+  if (stakeholders[0].data.length === 0) {
+    return { data: [], totalRows: 0 };
+  }
 
-//   //   return Stakeholder.find().populate("contact assignee lastActivity");
-// };
+  return {
+    data: stakeholders[0].data,
+    totalRows: stakeholders[0].metadata[0].total,
+  };
+};
