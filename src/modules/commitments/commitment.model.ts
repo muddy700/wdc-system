@@ -47,7 +47,7 @@ const CommitmentSchema = new Schema<ICommitment>(
     status: {
       type: String,
       default: "pending",
-      enum: ["pending", "inprogress", "delivered"],
+      enum: ["Pending", "Inprogress", "Delivered"],
     },
 
     project: {
