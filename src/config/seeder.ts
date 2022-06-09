@@ -7,6 +7,7 @@ import { seedInitialRoles } from "../modules/accessControl/seeder/role.seeder";
 import { seedProjectPhases } from "../modules/projectPhases/seeder/projectPhase.seeder";
 import { seedTestingStakeholders } from "../modules/stakeholders/seeder/stakeholder.seeder";
 import { seedEngagementPlans } from "../modules/engagementPlans/seeder/engagementPlan.seeder";
+import { seedEngagementLevels } from "../modules/engagementLevels/seeder/engagementLevel.seeder";
 
 export const seedInitialData = async () => {
   try {
@@ -28,6 +29,8 @@ export const seedInitialData = async () => {
       // await seedProjectPhases(2)
 
       // await seedEngagementPlans(2);
+
+      // await seedEngagementLevels()
     }
   } catch (e) {
     return {

@@ -28,13 +28,13 @@ const EngagementLevelSchema = new Schema<IEngagementLevel>(
     desiredLevel: {
       type: String,
       required: true,
-      enum: ["Resistant", "Resilient"],
+      enum: ["Leading", "Neutral", "Unaware", "Resistant", "Supportive"],
     },
 
     currentLevel: {
       type: String,
       required: true,
-      enum: ["Resistant", "Resilient"],
+      enum: ["Leading", "Neutral", "Unaware", "Resistant", "Supportive"],
     },
   },
   { timestamps: true }
