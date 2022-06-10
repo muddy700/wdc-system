@@ -1315,6 +1315,58 @@
         }
       }
     },
+    "/stakeholders/by-query": {
+      "get": {
+        "tags": ["Stakeholders"],
+        "summary": "List Stakeholders using multiple filters",
+        "description": "Get all Stakeholders which match the given query parameters",
+        "parameters": [
+          {
+            "name": "project",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "role",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "scope",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "levelOfInterest",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "levelOfInfluence",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "500": {
+            "description": "Failed. Internal Server Error"
+          }
+        }
+      }
+    },
     "/engagement-plans/{engagementPlanId}": {
       "parameters": [
         {
@@ -2004,7 +2056,7 @@
           "role": {
             "type": "string",
             "required": true,
-            "example": "advisor | supplier | approver | beneficiary | contractor"
+            "example": "Advisor | Supplier | Approver | Beneficiary | Contractor"
           },
           "levelOfInterest": {
             "type": "string",
