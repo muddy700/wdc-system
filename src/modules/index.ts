@@ -6,6 +6,7 @@ import { UserRoutes } from "./users/user.routes";
 import { isAuthenticated } from "./auth/auth.controller";
 import { ProjectRoutes } from "./projects/project.routes";
 import * as swaggerDocument from "../config/swagger.json";
+import { GrievanceRoutes } from "./grievances/grievance.routes";
 import { AuditTrailRoutes } from "./auditTrail/auditTrail.routes";
 import { DepartmentRoutes } from "./departments/department.routes";
 import { SubProjectRoutes } from "./subProjects/subProject.routes";
@@ -25,6 +26,7 @@ export const initializeRoutes = (app: express.Application) => {
   app.use("/api/v1/pius/", isAuthenticated, PiuRoutes);
   app.use("/api/v1/users/", isAuthenticated, UserRoutes);
   app.use("/api/v1/projects/", isAuthenticated, ProjectRoutes);
+  app.use("/api/v1/grievances/", isAuthenticated, GrievanceRoutes);
   app.use("/api/v1/commitments/", isAuthenticated, CommitmentRoutes);
   app.use("/api/v1/departments/", isAuthenticated, DepartmentRoutes);
   app.use("/api/v1/audit-trail/", isAuthenticated, AuditTrailRoutes);
