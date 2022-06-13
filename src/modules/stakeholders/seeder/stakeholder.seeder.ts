@@ -118,7 +118,7 @@ const getStakeholdersPayload = (project: IProject, count: number) => {
       disability: getRandomElement(disabilities),
       logo: faker.image.business(300, 300, true),
       bestMethodOfContact: getRandomElement(channels),
-      phoneNumber: faker.phone.phoneNumber("+255 ### ### ###"),
+      phoneNumber: faker.phone.phoneNumber("2557########"),
       sectors: [getRandomElement(sectors), getRandomElement(sectors)],
       goals: [getString(), getString(), getString(), getString(), getString()],
     } as unknown as IStakeholder;
@@ -140,7 +140,7 @@ const getStakeholderCompany = () => {
     websiteLink: faker.internet.url(),
     stakeholderPosition: faker.name.jobType(),
     logo: faker.image.business(300, 300, true),
-    phoneNumber: faker.phone.phoneNumber("+255 ### ### ###"),
+    phoneNumber: faker.phone.phoneNumber("2557########"),
   };
 };
 

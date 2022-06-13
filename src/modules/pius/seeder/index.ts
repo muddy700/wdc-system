@@ -42,7 +42,7 @@ export const seedTestingPius = async (count: number) => {
           { address: getAddress(), location: getLocation() },
         ],
 
-        phoneNumber: faker.phone.phoneNumber("+255 ### ### ###"),
+        phoneNumber: faker.phone.phoneNumber("2557########"),
         registrationNumber: `TZ-PIU-2022-${faker.random.numeric(4)}`,
       } as unknown as IPiu;
 
@@ -101,7 +101,7 @@ export const getPerson = () => {
     gender: faker.name.gender(true),
     description: faker.lorem.sentences(5),
     physicalAddress: faker.address.streetAddress(true),
-    phoneNumber: faker.phone.phoneNumber("+255 ### ### ###"),
+    phoneNumber: faker.phone.phoneNumber("2557########"),
   };
 };
 
