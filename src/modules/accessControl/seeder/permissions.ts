@@ -180,6 +180,26 @@ export const PERMISSIONS = [
     displayName: "Can delete departments",
   },
   {
+    moduleName: "grievances",
+    genericName: "create-grievances",
+    displayName: "Can create grievances",
+  },
+  {
+    moduleName: "grievances",
+    genericName: "read-grievances",
+    displayName: "Can view grievances",
+  },
+  {
+    moduleName: "grievances",
+    genericName: "update-grievances",
+    displayName: "Can update grievances",
+  },
+  {
+    moduleName: "grievances",
+    genericName: "delete-grievances",
+    displayName: "Can delete grievances",
+  },
+  {
     moduleName: "commitments",
     genericName: "create-commitments",
     displayName: "Can create commitments",
@@ -251,6 +271,11 @@ export const rootPermissions = [
   "create-projects",
   "update-projects",
   "delete-projects",
+
+  "read-grievances",
+  "create-grievances",
+  "update-grievances",
+  "delete-grievances",
 
   "read-projectPhases",
   "create-projectPhases",
