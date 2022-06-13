@@ -160,6 +160,26 @@ export const PERMISSIONS = [
     displayName: "Can delete project phases",
   },
   {
+    moduleName: "projectEvents",
+    genericName: "create-projectEvents",
+    displayName: "Can create project events",
+  },
+  {
+    moduleName: "projectEvents",
+    genericName: "read-projectEvents",
+    displayName: "Can view project events",
+  },
+  {
+    moduleName: "projectEvents",
+    genericName: "update-projectEvents",
+    displayName: "Can update project events",
+  },
+  {
+    moduleName: "projectEvents",
+    genericName: "delete-projectEvents",
+    displayName: "Can delete project events",
+  },
+  {
     moduleName: "departments",
     genericName: "create-departments",
     displayName: "Can create departments",
@@ -281,6 +301,11 @@ export const rootPermissions = [
   "create-projectPhases",
   "update-projectPhases",
   "delete-projectPhases",
+
+  "read-projectEvents",
+  "create-projectEvents",
+  "update-projectEvents",
+  "delete-projectEvents",
 
   "read-commitments",
   "create-commitments",
