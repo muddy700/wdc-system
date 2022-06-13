@@ -12,6 +12,7 @@ import { DepartmentRoutes } from "./departments/department.routes";
 import { SubProjectRoutes } from "./subProjects/subProject.routes";
 import { CommitmentRoutes } from "./commitments/commitment.routes";
 import { StakeholderRoutes } from "./stakeholders/stakeholder.routes";
+import { ProjectEventRoutes } from "./projectEvents/projectEvent.routes";
 import { ProjectPhaseRoutes } from "./projectPhases/projectPhase.routes";
 import { AccessControlRoutes } from "./accessControl/accessControl.routes";
 import { EngagementPlanRoutes } from "./engagementPlans/engagementPlan.routes";
@@ -33,6 +34,7 @@ export const initializeRoutes = (app: express.Application) => {
   app.use("/api/v1/sub-projects/", isAuthenticated, SubProjectRoutes);
   app.use("/api/v1/stakeholders/", isAuthenticated, StakeholderRoutes);
   app.use("/api/v1/project-phases/", isAuthenticated, ProjectPhaseRoutes);
+  app.use("/api/v1/project-events/", isAuthenticated, ProjectEventRoutes);
   app.use("/api/v1/access-control/", isAuthenticated, AccessControlRoutes);
   app.use("/api/v1/doc", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
   app.use("/api/v1/engagement-plans/", isAuthenticated, EngagementPlanRoutes);
