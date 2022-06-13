@@ -193,27 +193,27 @@ Keys:
         # -startingDate
         - projectPhase: ie.. preparation, implementation
 
-    =>Event (Reminders and report on participants):
-        -Title
-        -description
-        -type: one-of-these => [seminar, workshop, Meeting]
-        -mainAgenda
-        -otherAgendas: array []
+    - =>Event (Reminders and report on participants):
+        # -Title
+        # -description
+        # -type: one-of-these => [seminar, workshop, Meeting]
+        # -mainAgenda
+        # -otherAgendas: array []
         - grievances: array[grievance-ids]
-        -participants: array [stakeholder-ids, contractor-ids, user-ids]
-        -date
-        -startingTime
-        -endingTime
-        - extraTime(in-minutes)
-        -channel: one-of-these => [email, phone, physical, zoom,whatsapp]
-        -location: { name, latitude, longitude }
-        -attachments: array [{like photos-of-meeting, meeting-summary(qn & ans by whom in pdf)
-            type:..ie image / pdf, title, description, url
-        }]
-        -setReminder: boolean
-        -notifyParticipants: boolean
+        # -participants: array [stakeholder-ids, contractor-ids, user-ids]
+        # -date
+        # -startingTime
+        # -endingTime
+        # - extraTime(in-minutes)
+        # -channel: one-of-these => [email, phone, physical, zoom,whatsapp]
+        # -location: { name, latitude, longitude }
+        # -attachments: array [{like photos-of-meeting, meeting-summary(qn & ans by whom in pdf)
+        #     type:..ie image / pdf, title, description, url
+        # }]
+        - setReminder: boolean
+        - notifyParticipants: boolean
 
-    # => Commitment: (With Email remainder. Also we can get summary like in grievances)
+   -  => Commitment: (With Email remainder. Also we can get summary like in grievances)
         # -actor: one-of-these => [stakeholder-id, user-id ]
         # -project: (id)
         # -activity
@@ -232,27 +232,28 @@ Keys:
         #   -message
         #   }]
         
-    => Grievance:
-        -project: (id)
-        -reporter: one-of-these [stakeholder-id, user-id, contractor-id]
-        -complainer: {Full-Name, email, phoneNumber}
-        -nature: one-of-these => [discipline, demotion, classification-desputes, denial-of-benefits, and-other]
-        -department: department-id
+    - => Grievance:
+        # -project: (id)
+        # -reporter: one-of-these [stakeholder-id, user-id, contractor-id]
+        # -complainer: {Full-Name, email, phoneNumber}
+        # -nature: one-of-these => [discipline, demotion, classification-desputes, denial-of-benefits, and-other]
+        # -department: department-id
         - fromMeeting: array[meeting-ids]
-        -description
-        -frequencyOfIncident: one-of-these => [
-         1 => -one-time-incident(put-date), 
-         >1 => -happened-more-than-one(put frequency of occurance), 
-         0 -on-going(currently-experiencing-problem)
+        # -description
+        # -frequencyOfIncident: one-of-these => [
+        #  1 => -one-time-incident(put-date), 
+        #  >1 => -happened-more-than-one(put frequency of occurance), 
+        #  0 -on-going(currently-experiencing-problem)
         ]
-        -dateOfIncident
-        -complainerSuggestions
-        -attachments: array [{
-          type:..ie image / pdf, title, description, url
-        }]
-        -status: one-of-these => [received, under-investigation, resolution-inprogress, resolved]
-        -estimatedResolveDate
-        -resolvedOn
+        # -dateOfIncident
+        # incidentCount
+        # -complainerSuggestions
+        # -attachments: array [{
+        #   type:..ie image / pdf, title, description, url
+        # }]
+        # -status: one-of-these => [received, under-investigation, resolution-inprogress, resolved]
+        # -estimatedResolveDate
+        # -resolvedOn
 
     # => Department:
     #     -name
@@ -297,3 +298,16 @@ Keys:
 # 1. add relationshipHolder
 # 2. add project phase
 3. 
+
+
+=> Stakeholder Filters:
+
+#   name: In normal endpoint
+#   project
+#   role 
+#   type 
+#   scope 
+#   email 
+  - phoneNumber: Remove( + sign)
+#   levelOfInterest 
+#   levelOfInfluence 
