@@ -7,18 +7,18 @@ import { AttachmentSchema, IAttachment } from "../projects/project.model";
 export interface IGrievance extends Document {
   nature: string;
   status: number;
-  resolvedOn: Date;
+  resolvedOn?: Date;
   complainer: Object;
   description: string;
-  dateOfIncident: Date;
-  incidentCount: number;
+  dateOfIncident?: Date;
+  incidentCount?: number;
   reporter: IUser["_id"];
   project: IProject["_id"];
   estimatedResolveDate: Date;
-  frequencyOfIncident: number;
-  complainerSuggestions: string;
+  frequencyOfIncident?: number;
+  complainerSuggestions?: string;
   department: IDepartment["_id"];
-  attachments: Array<IAttachment>;
+  attachments?: Array<IAttachment>;
 }
 
 export enum GRIEVANCE_STATUSES {

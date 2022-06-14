@@ -61,6 +61,10 @@
       "description": "REST API-Endpoints For Commitments"
     },
     {
+      "name": "Grievances",
+      "description": "REST API-Endpoints For Grievances"
+    },
+    {
       "name": "Departments",
       "description": "REST API-Endpoints For Departments"
     },
@@ -622,6 +626,55 @@
         }
       }
     },
+    "/grievances": {
+      "post": {
+        "tags": ["Grievances"],
+        "summary": "Create new Grievance",
+        "description": "Add Grievance",
+        "requestBody": {
+          "description": "Grievance Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Grievance"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Grievances"],
+        "summary": "List all Grievances",
+        "description": "Get all Grievances in system",
+        "parameters": [
+          {
+            "name": "searchQuery",
+            "in": "query",
+            "required": true,
+            "description": "Nature of a Grievance that we want to match",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "500": {
+            "description": "Failed. Internal Server Error"
+          }
+        }
+      }
+    },
     "/commitments": {
       "post": {
         "tags": ["Commitments"],
@@ -1101,6 +1154,76 @@
           },
           "404": {
             "description": "Failed. Project not found"
+          }
+        }
+      }
+    },
+    "/grievances/{grievanceId}": {
+      "parameters": [
+        {
+          "name": "grievanceId",
+          "in": "path",
+          "required": true,
+          "description": "ID of a Grievance that we want to match",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": ["Grievances"],
+        "summary": "Get Grievance with a given ID",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. Grievance not found"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Grievances"],
+        "summary": "Update Grievance with a given ID",
+        "description": "",
+        "requestBody": {
+          "description": "Grievance Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Grievance"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. Grievance not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Grievances"],
+        "summary": "Delete Grievance with a given ID",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. Grievance not found"
           }
         }
       }
@@ -1979,6 +2102,86 @@
           "endDate": {
             "type": "date",
             "example": "2023-02-08"
+          },
+          "attachments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Attachment"
+            }
+          }
+        }
+      },
+      "Grievance": {
+        "type": "object",
+        "properties": {
+          "project": {
+            "type": "string",
+            "required": true,
+            "example": "project-id"
+          },
+          "department": {
+            "type": "string",
+            "required": true,
+            "example": "department-id"
+          },
+          "nature": {
+            "type": "string",
+            "required": true,
+            "example": "Demotion | Discipline | Denial of benefits | Classification Desputes | Other"
+          },
+          "status": {
+            "type": "number",
+            "required": true,
+            "example": "0: Received | 1: Under Investigation | 2: On Progress | 3: Resolved"
+          },
+          "complainer": {
+            "type": "object",
+            "properties": {
+              "fullName": {
+                "type": "string",
+                "required": true,
+                "example": "John Doe"
+              },
+              "email": {
+                "type": "string",
+                "example": "jd@gmail.com"
+              },
+              "phoneNumber": {
+                "type": "string",
+                "example": "255789101112"
+              }
+            }
+          },
+          "estimatedResolveDate": {
+            "type": "date",
+            "required": true,
+            "example": "2022-06-15"
+          },
+          "resolvedOn": {
+            "type": "date",
+            "example": "2022-06-15"
+          },
+          "frequencyOfIncident": {
+            "type": "number",
+            "required": true,
+            "example": "0: One time | 1: On going | 2: Repeatedly"
+          },
+          "dateOfIncident": {
+            "type": "date",
+            "example": "2022-06-15"
+          },
+          "incidentCount": {
+            "type": "number",
+            "example": "20"
+          },
+          "description": {
+            "type": "string",
+            "required": true,
+            "example": "Here goes the description of the grievance."
+          },
+          "complainerSuggestions": {
+            "type": "string",
+            "example": "Here goes the suggestions for the grievance."
           },
           "attachments": {
             "type": "array",
