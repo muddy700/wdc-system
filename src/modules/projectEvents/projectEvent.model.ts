@@ -25,7 +25,7 @@ const ParticipantSchema = new Schema(
     gender: String,
     phoneNumber: String,
     notify: { type: Boolean, default: true },
-    remind: { type: Boolean, default: true },
+    reminder: { type: Boolean, default: true },
     fullName: { type: String, required: true },
     type: { type: String, enum: ["individual", "group"] },
   },

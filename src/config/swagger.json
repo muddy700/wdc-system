@@ -57,6 +57,10 @@
       "description": "REST API-Endpoints For Engagement-Levels"
     },
     {
+      "name": "Project-Events",
+      "description": "REST API-Endpoints For Project-Events"
+    },
+    {
       "name": "Commitments",
       "description": "REST API-Endpoints For Commitments"
     },
@@ -822,6 +826,55 @@
         }
       }
     },
+    "/project-events": {
+      "post": {
+        "tags": ["Project-Events"],
+        "summary": "Create new Project-Event",
+        "description": "Add Project-Event",
+        "requestBody": {
+          "description": "Project-Event Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectEvent"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Project-Events"],
+        "summary": "List all Project-Events",
+        "description": "Get all Project-Events in system",
+        "parameters": [
+          {
+            "name": "searchQuery",
+            "in": "query",
+            "required": true,
+            "description": "Title of a Project-Event that we want to match",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "500": {
+            "description": "Failed. Internal Server Error"
+          }
+        }
+      }
+    },
     "/engagement-plans": {
       "post": {
         "tags": ["Engagement-Plans"],
@@ -1154,6 +1207,76 @@
           },
           "404": {
             "description": "Failed. Project not found"
+          }
+        }
+      }
+    },
+    "/project-events/{projectEventId}": {
+      "parameters": [
+        {
+          "name": "projectEventId",
+          "in": "path",
+          "required": true,
+          "description": "ID of a Project-Event that we want to match",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": ["Project-Events"],
+        "summary": "Get Project-Event with a given ID",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. Project-Event not found"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Project-Events"],
+        "summary": "Update Project-Event with a given ID",
+        "description": "",
+        "requestBody": {
+          "description": "Project-Event Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectEvent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. Project-Event not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Project-Events"],
+        "summary": "Delete Project-Event with a given ID",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. Project-Event not found"
           }
         }
       }
@@ -2226,6 +2349,106 @@
             "type": "string",
             "required": true,
             "example": "project-id"
+          }
+        }
+      },
+      "ProjectEvent": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "required": true,
+            "example": "Event title goes here"
+          },
+          "type": {
+            "type": "string",
+            "required": true,
+            "example": "Seminar | Workshop | Meeting"
+          },
+          "channel": {
+            "type": "string",
+            "required": true,
+            "example": "Email | Phone | Physical | Whatsapp | Zoom Meeting"
+          },
+          "mainAgenda": {
+            "type": "string",
+            "required": true,
+            "example": "Event main agenda goes here"
+          },
+          "description": {
+            "type": "string",
+            "required": true,
+            "example": "Event description goes here"
+          },
+          "otherAgendas": {
+            "type": "array",
+            "items": { "type": "string", "example": "sub-agenda" }
+          },
+          "date": {
+            "type": "date",
+            "example": "2020-06-15"
+          },
+          "location": {
+            "$ref": "#/definitions/Location",
+            "required": true
+          },
+          "startingTime": {
+            "type": "number",
+            "required": true,
+            "example": "1430"
+          },
+          "endingTime": {
+            "type": "number",
+            "required": true,
+            "example": "1630"
+          },
+          "extraTime": {
+            "type": "number",
+            "example": "in minutes ie.. 1250 | 30 | 10"
+          },
+          "attachments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Attachment"
+            }
+          },
+          "participants": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "fullName": {
+                  "type": "string",
+                  "required": true,
+                  "example": "John Doe"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "jd@gmail.com"
+                },
+                "phoneNumber": {
+                  "type": "string",
+                  "example": "255789101112"
+                },
+                "type": {
+                  "type": "string",
+                  "required": true,
+                  "example": "individual | group"
+                },
+                "gender": {
+                  "type": "string",
+                  "example": "M | F"
+                },
+                "notify": {
+                  "type": "boolean",
+                  "example": "1 | 0"
+                },
+                "reminder": {
+                  "type": "boolean",
+                  "example": "1 | 0"
+                }
+              }
+            }
           }
         }
       },
