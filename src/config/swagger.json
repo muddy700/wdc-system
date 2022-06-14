@@ -2355,6 +2355,11 @@
       "ProjectEvent": {
         "type": "object",
         "properties": {
+          "project": {
+            "type": "string",
+            "required": true,
+            "example": "project-id"
+          },
           "title": {
             "type": "string",
             "required": true,

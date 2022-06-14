@@ -1,5 +1,6 @@
 import { Schema, Document, model } from "mongoose";
 import { LocationSchema } from "../pius/piu.model";
+import { IProject } from "../projects/project.model";
 import { METHODS_OF_CONTACT } from "../stakeholders/stakeholder.model";
 import { IAttachment, AttachmentSchema } from "../projects/project.model";
 
@@ -14,6 +15,7 @@ export interface IProjectEvent extends Document {
   endingTime: number;
   description: string;
   startingTime: number;
+  project: IProject["_id"];
   participants: Array<Object>;
   otherAgendas: Array<string>;
   attachments: Array<IAttachment>;
@@ -48,6 +50,13 @@ const ProjectEventSchema = new Schema<IProjectEvent>(
     type: {
       type: String,
       enum: ["Seminar", "Workshop", "Meeting"],
+    },
+
+    project: {
+      index: true,
+      ref: "Project",
+      type: Schema.Types.ObjectId,
+      required: [true, "Project is required!."],
     },
 
     mainAgenda: {
