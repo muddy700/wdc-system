@@ -3,6 +3,7 @@ import { seedTestingUser } from "../modules/users/seeder";
 import { seedUser } from "../modules/accessControl/seeder/";
 import { seedTestingPius } from "../modules/pius/seeder/index";
 import { seedTestingProjects } from "../modules/projects/seeder/index";
+import { seedGrievances } from "../modules/grievances/seeder/grievance.seeder";
 import { seedInitialRoles } from "../modules/accessControl/seeder/role.seeder";
 import { seedCommitments } from "../modules/commitments/seeder/commitment.seeder";
 import { seedProjectPhases } from "../modules/projectPhases/seeder/projectPhase.seeder";
@@ -34,6 +35,8 @@ export const seedInitialData = async () => {
       // await seedEngagementLevels()
 
       // await seedCommitments(1)
+
+      // await seedGrievances(6)
     }
   } catch (e) {
     return {
