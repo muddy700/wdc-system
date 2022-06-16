@@ -5,8 +5,8 @@ import { IAttachment, AttachmentSchema } from "../projects/project.model";
 
 export interface ICommitment extends Document {
   actor: string;
-  status: string;
   endDate: Date;
+  status: string;
   onModel: string;
   startDate: Date;
   activity: string;

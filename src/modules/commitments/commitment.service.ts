@@ -1,7 +1,7 @@
 import * as CommitmentRepository from "./commitment.repository";
 import { ICommitment } from "./commitment.model";
-// import { Types } from "mongoose";
-// const ObjectId = Types.ObjectId;
+import { Types } from "mongoose";
+const ObjectId = Types.ObjectId;
 
 export const createCommitment = async (body: ICommitment) => {
   try {
@@ -63,18 +63,45 @@ export const deleteCommitment = async (commitmentId: string) => {
   }
 };
 
-// TODO: Add commitment-filter  by query
-// export const getCommitmentsByQuery = async (searchQuery: object) => {
-//   try {
-//     searchQuery = prepareSearchQuery(searchQuery);
+export const getCommitmentsByQuery = async (
+  offset: number,
+  perPage: number,
+  searchQuery: Object
+) => {
+  try {
+    searchQuery = prepareSearchQuery(searchQuery);
 
-//     const commitments = await CommitmentRepository.getCommitmentsByQuery(searchQuery);
+    const commitments = await CommitmentRepository.getCommitmentsByQuery(
+      offset,
+      perPage,
+      searchQuery
+    );
 
-//     return commitments;
-//   } catch (e) {
-//     throw new Error(e.message);
-//   }
-// };
+    return commitments;
+  } catch (e) {
+    throw new Error(e.message);
+  }
+};
+
+const prepareSearchQuery = (searchQuery: any) => {
+  //Loop through the searchQuery object-properties
+
+  Object.keys(searchQuery).forEach((key) => {
+    if (key === "actor") {
+      searchQuery.actor = ObjectId(searchQuery.actor);
+    }
+
+    if (key === "project") {
+      searchQuery.project = ObjectId(searchQuery.project);
+    }
+
+    if (key === "projectPhase") {
+      searchQuery.projectPhase = ObjectId(searchQuery.projectPhase);
+    }
+  });
+
+  return searchQuery;
+};
 
 // const prepareSearchQuery = (searchQuery: any) => {
 //   //Loop through the searchQuery object-properties
@@ -83,15 +110,6 @@ export const deleteCommitment = async (commitmentId: string) => {
 //     if (key === "status") {
 //       searchQuery.status = parseInt(searchQuery.status);
 //     }
-
-//     if (key === "assignee") {
-//       searchQuery.assignee = ObjectId(searchQuery.assignee);
-//     }
-
-//     if (key === "contact") {
-//       searchQuery.contact = ObjectId(searchQuery.contact);
-//     }
-
 //     //TODO: Review this(date-filter) logic
 //     if (key === "dateCreated") {
 //       searchQuery.dateCreated = { $eq: searchQuery.dateCreated };

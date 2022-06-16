@@ -16,6 +16,12 @@ router.put(
 );
 
 router.get(
+  "/by-query",
+  checkPermission("commitments", "read-commitments"),
+  CommitmentController.getCommitmentsByQuery
+);
+
+router.get(
   "/:commitmentId",
   checkPermission("commitments", "read-commitments"),
   CommitmentController.getCommitmentById
@@ -32,11 +38,5 @@ router.get(
   checkPermission("commitments", "read-commitments"),
   CommitmentController.getCommitments
 );
-
-// router.get(
-//   "/by-query",
-//   checkPermission("commitments", "read-commitments"),
-//   CommitmentController.getCommitmentsByQuery
-// );
 
 export const CommitmentRoutes = router;
