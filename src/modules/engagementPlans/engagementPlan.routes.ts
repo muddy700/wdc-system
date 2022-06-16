@@ -16,6 +16,12 @@ router.put(
 );
 
 router.get(
+  "/by-query",
+  checkPermission("engagementPlans", "read-engagementPlans"),
+  EngagementPlanController.getEngagementPlansByQuery
+);
+
+router.get(
   "/:engagementPlanId",
   checkPermission("engagementPlans", "read-engagementPlans"),
   EngagementPlanController.getEngagementPlanById
@@ -32,11 +38,5 @@ router.get(
   checkPermission("engagementPlans", "read-engagementPlans"),
   EngagementPlanController.getEngagementPlans
 );
-
-// router.get(
-//   "/by-query",
-//   checkPermission("engagementPlans", "read-engagementPlans"),
-//   EngagementPlanController.getEngagementPlansByQuery
-// );
 
 export const EngagementPlanRoutes = router;

@@ -1,6 +1,9 @@
+import { constants } from "../../config/constants";
 import { Request, RequestHandler, Response } from "express";
 import { logEvent } from "../auditTrail/auditTrail.service";
 import * as EngagementPlanService from "./engagementPlan.service";
+
+const { PERPAGE } = constants;
 
 export const createEngagementPlan = async (req: any, res: Response) => {
   try {
@@ -143,52 +146,49 @@ const errorResponse = (res: Response, statusCode: number, error: any) => {
   });
 };
 
-// TODO: Add engagementPlan-filter  by query
-// export const getEngagementPlansByQuery: RequestHandler = async (req, res) => {
-//   try {
-//     let searchQuery: Object = appendSearchKeywords(req);
+export const getEngagementPlansByQuery: RequestHandler = async (req, res) => {
+  try {
+    let searchQuery: Object = appendSearchKeywords(req);
+    const currentPage = (req.query.currentPage as unknown as number) || 1;
 
-//     const engagementPlans = await EngagementPlanService.getEngagementPlansByQuery(searchQuery);
+    const perPage = parseInt(PERPAGE);
+    const offset = perPage * currentPage - perPage;
 
-//     const count = engagementPlans.length;
-//     const message = "EngagementPlans retrieved successfully.";
+    const { data, totalRows } =
+      await EngagementPlanService.getEngagementPlansByQuery(
+        offset,
+        perPage,
+        searchQuery
+      );
 
-//     return res
-//       .status(200)
-//       .json({ success: true, message, count, data: engagementPlans });
-//   } catch (e) {
-//     return errorResponse(res, 400, e);
-//   }
-// };
+    const count = data.length;
+    const message = "Engagement Plans retrieved successfully.";
 
-// const appendSearchKeywords = (req: Request) => {
-//   let searchQuery: Object = {};
-//   const {
-//     status,
-//     assignee,
-//     metric,
-//     type,
-//     contact,
-//     minValue,
-//     maxValue,
-//     dateCreated,
-//     startDate,
-//     endDate,
-//   } = req.query;
+    const pagination = {
+      currentPage,
+      perPage,
+      totalPages: Math.ceil(totalRows / perPage) || 1,
+      totalRows,
+    };
 
-//   //Assign properties into search-query iff they have values
-//   searchQuery = {
-//     ...(type && { type }),
-//     ...(status && { status }),
-//     ...(metric && { metric }),
-//     ...(contact && { contact }),
-//     ...(minValue && { minValue }),
-//     ...(maxValue && { maxValue }),
-//     ...(assignee && { assignee }),
-//     ...(startDate && { startDate }),
-//     ...(endDate && { endDate }),
-//     ...(dateCreated && { dateCreated }),
-//   };
+    return res
+      .status(200)
+      .json({ success: true, message, count, pagination, data });
+  } catch (e) {
+    return errorResponse(res, 400, e);
+  }
+};
 
-//   return searchQuery;
-// };
+const appendSearchKeywords = (req: Request) => {
+  let searchQuery: Object = {};
+  const { project, stakeholder, projectPhase } = req.query;
+
+  //Assign properties into search-query iff they have values
+  searchQuery = {
+    ...(project && { project }),
+    ...(stakeholder && { stakeholder }),
+    ...(projectPhase && { projectPhase }),
+  };
+
+  return searchQuery;
+};

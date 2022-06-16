@@ -68,24 +68,79 @@ export const deleteEngagementPlan = async (engagementPlanId: string) => {
   }
 };
 
-// TODO: Add engagementPlan-filter  by query
-// export const getEngagementPlansByQuery = async (searchQuery: object) => {
-//   console.log("SearchQuery: ", searchQuery);
+export const getEngagementPlansByQuery = async (
+  offset: number,
+  perPage: number,
+  searchQuery: object
+) => {
+  console.log("SearchQuery: ", searchQuery);
 
-//   const engagementPlans = await EngagementPlan.aggregate([
-//     {
-//       $addFields: {
-//         dateCreated: {
-//           $dateToString: { format: "%Y-%m-%d", date: "$createdAt" },
-//         },
-//       },
-//     },
-//     { $match: { ...searchQuery } },
-//     { $sort: { createdAt: -1 } },
-//     { $facet: { metadata: [{ $count: "total" }], data: [] } },
-//   ]);
+  const engagementPlans = await EngagementPlan.aggregate([
+    { $match: { ...searchQuery } },
+    {
+      $lookup: {
+        from: "projects",
+        localField: "project",
+        foreignField: "_id",
+        as: "project",
+      },
+    },
+    {
+      $lookup: {
+        from: "projectphases",
+        localField: "projectPhase",
+        foreignField: "_id",
+        as: "projectPhase",
+      },
+    },
+    {
+      $lookup: {
+        from: "stakeholders",
+        localField: "stakeholder",
+        foreignField: "_id",
+        as: "stakeholder",
+      },
+    },
+    {
+      $addFields: {
+        dateCreated: {
+          $dateToString: { format: "%Y-%m-%d", date: "$createdAt" },
+        },
+      },
+    },
+    {
+      $unwind: {
+        path: "$project",
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+    {
+      $unwind: {
+        path: "$projectPhase",
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+    {
+      $unwind: {
+        path: "$stakeholder",
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+    { $sort: { createdAt: -1 } },
+    {
+      $facet: {
+        metadata: [{ $count: "total" }],
+        data: [{ $skip: offset }, { $limit: perPage }],
+      },
+    },
+  ]);
 
-//   return engagementPlans[0].data;
+  if (engagementPlans[0].data.length === 0) {
+    return { data: [], totalRows: 0 };
+  }
 
-//   //   return EngagementPlan.find().populate("contact assignee lastActivity");
-// };
+  return {
+    data: engagementPlans[0].data,
+    totalRows: engagementPlans[0].metadata[0].total,
+  };
+};
