@@ -52,7 +52,7 @@ const getCommitmentsPayload = async (
   count: number
 ) => {
   const commitmentsList: Array<ICommitment> = [];
-  const status = ["Pending", "Inprogress", "Delivered"];
+  const status = ["New", "Inprogress", "Completed", "Overdue"];
 
   const projectPhases = await ProjectPhase.find({
     project: stakeholder.project,
