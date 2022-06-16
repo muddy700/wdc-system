@@ -4,9 +4,7 @@ export const createEngagementLevel = async (body: IEngagementLevel) => {
   try {
     const engagementLevel = await EngagementLevel.create(body);
 
-    return engagementLevel
-      .populate("projectPhase stakeholder")
-      .execPopulate();
+    return engagementLevel.populate("projectPhase stakeholder").execPopulate();
   } catch (e) {
     throw new Error(e.message);
   }
@@ -68,24 +66,65 @@ export const deleteEngagementLevel = async (engagementLevelId: string) => {
   }
 };
 
-// TODO: Add engagementLevel-filter  by query
-// export const getEngagementLevelsByQuery = async (searchQuery: object) => {
-//   console.log("SearchQuery: ", searchQuery);
+export const getEngagementLevelsByQuery = async (
+  offset: number,
+  perPage: number,
+  searchQuery: object
+) => {
+  console.log("SearchQuery: ", searchQuery);
 
-//   const engagementLevels = await EngagementLevel.aggregate([
-//     {
-//       $addFields: {
-//         dateCreated: {
-//           $dateToString: { format: "%Y-%m-%d", date: "$createdAt" },
-//         },
-//       },
-//     },
-//     { $match: { ...searchQuery } },
-//     { $sort: { createdAt: -1 } },
-//     { $facet: { metadata: [{ $count: "total" }], data: [] } },
-//   ]);
+  const engagementLevels = await EngagementLevel.aggregate([
+    { $match: { ...searchQuery } },
+    {
+      $lookup: {
+        from: "projectphases",
+        localField: "projectPhase",
+        foreignField: "_id",
+        as: "projectPhase",
+      },
+    },
+    {
+      $lookup: {
+        from: "stakeholders",
+        localField: "stakeholder",
+        foreignField: "_id",
+        as: "stakeholder",
+      },
+    },
+    {
+      $addFields: {
+        dateCreated: {
+          $dateToString: { format: "%Y-%m-%d", date: "$createdAt" },
+        },
+      },
+    },
+    {
+      $unwind: {
+        path: "$projectPhase",
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+    {
+      $unwind: {
+        path: "$stakeholder",
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+    { $sort: { createdAt: -1 } },
+    {
+      $facet: {
+        metadata: [{ $count: "total" }],
+        data: [{ $skip: offset }, { $limit: perPage }],
+      },
+    },
+  ]);
 
-//   return engagementLevels[0].data;
+  if (engagementLevels[0].data.length === 0) {
+    return { data: [], totalRows: 0 };
+  }
 
-//   //   return EngagementLevel.find().populate("contact assignee lastActivity");
-// };
+  return {
+    data: engagementLevels[0].data,
+    totalRows: engagementLevels[0].metadata[0].total,
+  };
+};

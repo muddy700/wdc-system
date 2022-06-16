@@ -16,6 +16,12 @@ router.put(
 );
 
 router.get(
+  "/by-query",
+  checkPermission("engagementLevels", "read-engagementLevels"),
+  EngagementLevelController.getEngagementLevelsByQuery
+);
+
+router.get(
   "/:engagementLevelId",
   checkPermission("engagementLevels", "read-engagementLevels"),
   EngagementLevelController.getEngagementLevelById
@@ -32,11 +38,5 @@ router.get(
   checkPermission("engagementLevels", "read-engagementLevels"),
   EngagementLevelController.getEngagementLevels
 );
-
-// router.get(
-//   "/by-query",
-//   checkPermission("engagementLevels", "read-engagementLevels"),
-//   EngagementLevelController.getEngagementLevelsByQuery
-// );
 
 export const EngagementLevelRoutes = router;

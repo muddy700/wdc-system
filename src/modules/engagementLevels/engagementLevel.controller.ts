@@ -1,6 +1,9 @@
+import { constants } from "../../config/constants";
 import { Request, RequestHandler, Response } from "express";
 import { logEvent } from "../auditTrail/auditTrail.service";
 import * as EngagementLevelService from "./engagementLevel.service";
+
+const { PERPAGE } = constants;
 
 export const createEngagementLevel = async (req: any, res: Response) => {
   try {
@@ -149,6 +152,54 @@ export const updateEngagementLevel = async (req: any, res: Response) => {
   }
 };
 
+export const getEngagementLevelsByQuery: RequestHandler = async (req, res) => {
+  try {
+    let searchQuery: Object = appendSearchKeywords(req);
+    const currentPage = (req.query.currentPage as unknown as number) || 1;
+
+    const perPage = parseInt(PERPAGE);
+    const offset = perPage * currentPage - perPage;
+
+    const { data, totalRows } =
+      await EngagementLevelService.getEngagementLevelsByQuery(
+        offset,
+        perPage,
+        searchQuery
+      );
+
+    const count = data.length;
+    const message = "Engagement Levels retrieved successfully.";
+
+    const pagination = {
+      currentPage,
+      perPage,
+      totalPages: Math.ceil(totalRows / perPage) || 1,
+      totalRows,
+    };
+
+    return res
+      .status(200)
+      .json({ success: true, message, count, pagination, data });
+  } catch (e) {
+    return errorResponse(res, 400, e);
+  }
+};
+
+const appendSearchKeywords = (req: Request) => {
+  let searchQuery: Object = {};
+  const { stakeholder, projectPhase, desiredLevel, currentLevel } = req.query;
+
+  //Assign properties into search-query iff they have values
+  searchQuery = {
+    ...(stakeholder && { stakeholder }),
+    ...(projectPhase && { projectPhase }),
+    ...(desiredLevel && { desiredLevel }),
+    ...(currentLevel && { currentLevel }),
+  };
+
+  return searchQuery;
+};
+
 const errorResponse = (res: Response, statusCode: number, error: any) => {
   // Formulate response
 
@@ -160,53 +211,3 @@ const errorResponse = (res: Response, statusCode: number, error: any) => {
     userMessage: "Oops... Something went wrong, contact the admin...",
   });
 };
-
-// TODO: Add engagementLevel-filter  by query
-// export const getEngagementLevelsByQuery: RequestHandler = async (req, res) => {
-//   try {
-//     let searchQuery: Object = appendSearchKeywords(req);
-
-//     const engagementLevels = await EngagementLevelService.getEngagementLevelsByQuery(searchQuery);
-
-//     const count = engagementLevels.length;
-//     const message = "EngagementLevels retrieved successfully.";
-
-//     return res
-//       .status(200)
-//       .json({ success: true, message, count, data: engagementLevels });
-//   } catch (e) {
-//     return errorResponse(res, 400, e);
-//   }
-// };
-
-// const appendSearchKeywords = (req: Request) => {
-//   let searchQuery: Object = {};
-//   const {
-//     status,
-//     assignee,
-//     metric,
-//     type,
-//     contact,
-//     minValue,
-//     maxValue,
-//     dateCreated,
-//     startDate,
-//     endDate,
-//   } = req.query;
-
-//   //Assign properties into search-query iff they have values
-//   searchQuery = {
-//     ...(type && { type }),
-//     ...(status && { status }),
-//     ...(metric && { metric }),
-//     ...(contact && { contact }),
-//     ...(minValue && { minValue }),
-//     ...(maxValue && { maxValue }),
-//     ...(assignee && { assignee }),
-//     ...(startDate && { startDate }),
-//     ...(endDate && { endDate }),
-//     ...(dateCreated && { dateCreated }),
-//   };
-
-//   return searchQuery;
-// };
