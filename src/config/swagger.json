@@ -2629,7 +2629,7 @@
           },
           "description": {
             "type": "string",
-            "example": "some description about this department"
+            "example": "some description about this commitment"
           },
           "project": {
             "type": "string",
@@ -2654,7 +2654,7 @@
           "status": {
             "type": "string",
             "required": true,
-            "example": "pending | inprogress | delivered"
+            "example": "New | Inprogress | Completed | Overdue"
           },
           "startDate": {
             "type": "Date",

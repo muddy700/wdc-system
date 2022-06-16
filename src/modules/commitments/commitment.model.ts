@@ -11,6 +11,7 @@ export interface ICommitment extends Document {
   startDate: Date;
   activity: string;
   completedOn?: Date;
+  description: string;
   comments: Array<Object>;
   project: IProject["_id"];
   attachments: Array<IAttachment>;
@@ -72,6 +73,7 @@ const CommitmentSchema = new Schema<ICommitment>(
     ],
 
     completedOn: Date,
+    description: String,
     attachments: [AttachmentSchema],
     activity: { type: String, required: true },
   },

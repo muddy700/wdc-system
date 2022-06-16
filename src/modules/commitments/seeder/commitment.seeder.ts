@@ -73,7 +73,8 @@ const getCommitmentsPayload = async (
       endDate: faker.date.future(),
       startDate: faker.date.past(1),
       status: getRandomElement(status),
-      activity: faker.lorem.sentences(2),
+      activity: faker.lorem.sentence(5),
+      description: faker.lorem.sentences(3),
       //   completedOn: faker.date.future(),
       projectPhase: getRandomElement(projectPhases)._id,
     } as unknown as ICommitment;
