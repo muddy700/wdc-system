@@ -2,8 +2,8 @@
   "openapi": "3.0.0",
   "info": {
     "version": "1.0.0",
-    "title": "SE-GRMS APIs",
-    "description": "APIs for Stakeholder Engagement and Grievances Redress Mechanism System"
+    "title": "SE-GRMS API",
+    "description": "API endpoints for Stakeholder Engagement and Grievances Redress Mechanism System"
   },
   "servers": [
     {
@@ -13,6 +13,11 @@
     {
       "url": "http://localhost:3000/api/v1",
       "description": "Development Server"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
     }
   ],
   "tags": [
@@ -2162,6 +2167,13 @@
     }
   },
   "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
     "schemas": {
       "Role": {
         "type": "object",
