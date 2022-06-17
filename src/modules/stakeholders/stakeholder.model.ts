@@ -45,21 +45,21 @@ export interface IStakeholder extends Document {
   scope: string;
   email: string;
   gender: string;
-  address: object;
-  company: object;
+  address: Object;
+  company: Object;
   concern: string;
-  location: object;
+  location: Object;
   disability: string;
   phoneNumber: string;
-  description: string;
+  description: Object;
   websiteLink: string;
   goals: Array<string>;
-  contactPerson: object;
+  contactPerson: Object;
   sectors: Array<string>;
   levelOfInterest: string;
   levelOfInfluence: string;
   project: IProject["_id"];
-  relationshipHolder: object;
+  relationshipHolder: Object;
   bestMethodOfContact: string;
 }
 

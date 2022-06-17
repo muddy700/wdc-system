@@ -1,4 +1,14 @@
 import { Schema, Document, model } from "mongoose";
+// import { METHODS_OF_CONTACT } from "../stakeholders/stakeholder.model";
+
+// Todo: Import the following enum from Stakeholder
+enum METHODS_OF_CONTACT {
+  EMAIL = "Email",
+  PHONE = "Phone",
+  ZOOM = "Zoom Meeting",
+  PHYSICAL = "Physical",
+  WHATSAPP = "Whatsapp",
+}
 
 export interface ILocation extends Document {
   name: string;
@@ -16,13 +26,14 @@ export interface IAddress extends Document {
 
 export interface IContactPerson extends Document {
   name: string;
-  email: string;
+  email?: string;
   gender: string;
   position: string;
   disability?: string;
   phoneNumber?: string;
   description?: string;
   physicalAddress?: string;
+  communicationMedias: Array<Object>;
 }
 
 export interface IPiu extends Document {
@@ -69,11 +80,22 @@ export const ContactPersonSchema = new Schema<IContactPerson>(
     disability: String,
     description: String,
     phoneNumber: String,
+    email: { type: String },
     physicalAddress: String,
     name: { type: String, required: true },
-    email: { type: String, required: true },
     gender: { type: String, required: true },
     position: { type: String, required: true },
+
+    communicationMedias: [
+      {
+        value: String,
+        name: {
+          type: String,
+          required: true,
+          enum: [METHODS_OF_CONTACT],
+        },
+      },
+    ],
   },
   { timestamps: true }
 );
