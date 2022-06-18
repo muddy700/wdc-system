@@ -89,19 +89,19 @@ const getStakeholdersPayload = (project: IProject, count: number) => {
     "Physical Disability",
   ];
 
-  const scopes: Array<string> = ["Internal", "External"];
   const levels: Array<string> = ["Weak", "Medium", "Strong"];
   const sectors: Array<string> = ["Education", "Health", "Social"];
+  const scopes: Array<string> = ["Internal", "External", "Internal"];
   const types: Array<string> = ["Individual", "Positional", "Organizational"];
 
   for (let i = 0; i < count; i++) {
     const stakeholderInfo: IStakeholder = {
-      type: types[1],
       project: project._id,
       address: getAddress(),
       location: getLocation(),
       contactPerson: getPerson(),
       name: faker.name.findName(),
+      type: getRandomElement(types),
       email: faker.internet.email(),
 
       role: getRandomElement(roles),
