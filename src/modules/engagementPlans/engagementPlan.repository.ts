@@ -126,7 +126,21 @@ export const getEngagementPlansByQuery = async (
         preserveNullAndEmptyArrays: true,
       },
     },
-    { $sort: { createdAt: -1 } },
+    // { $sort: { createdAt: -1 } },
+    // {
+    //   $group: {
+    //     _id: "$stakeholder.name",
+    //     count: { $sum: 1 },
+    //     plans: { $push: "$$ROOT" },
+    //   },
+    // },
+    {
+      $group: {
+        _id: "$projectPhase.name",
+        count: { $sum: 1 },
+        stakeholders: { $push: "$$ROOT" },
+      },
+    },
     {
       $facet: {
         metadata: [{ $count: "total" }],
