@@ -74,12 +74,69 @@ const createPiu = async (data: IPiu) => {
   }
 };
 
+const getRandomElement = (itemList: Array<any>) => {
+  const randomInt: number = faker.datatype.number(itemList.length - 1);
+
+  return itemList[randomInt];
+};
+
 export const getLocation = () => {
-  return {
-    name: faker.address.streetAddress(true),
-    latitude: faker.address.latitude(10, -10, 3),
-    longitude: faker.address.longitude(10, -10, 3),
-  };
+  return getRandomElement(locations);
+};
+
+const locations = [
+  {
+    latitude: "-6.0466821",
+    longitude: "35.3387334",
+    name: "Makulu, Dodoma Region, Tanzania",
+  },
+  {
+    latitude: "-1.502866",
+    longitude: "33.80181186393872",
+    name: "Musoma Airport, Musoma, Tanzania",
+  },
+  {
+    latitude: "-3.2052704",
+    longitude: "33.5144048",
+    name: "Isaka  - Mwanza SGR, construction, Tanzania",
+  },
+  {
+    latitude: "-6.7942651000000005",
+    longitude: "39.21490247742334",
+    name: "Ubungo Plaza Limited, Dar es Salaam, Tanzania",
+  },
+  {
+    latitude: "-2.5813613",
+    longitude: "32.9178316",
+    name: "Nyegezi Corner, bus_station, Mwanza, Tanzania",
+  },
+  {
+    latitude: "-6.9148094",
+    longitude: "39.2689121",
+    name: "Moringe, Viwandani Street, Dar es Salaam, Tanzania",
+  },
+  {
+    latitude: "-8.7994919",
+    longitude: "39.3491502",
+    name: "Kilwa-Nangurukuru Road, secondary, Nangurukuru, Tanzania",
+  },
+];
+
+const getMedias = () => {
+  return [
+    {
+      name: "Email",
+      value: faker.internet.email().toLowerCase(),
+    },
+    {
+      name: "Phone",
+      value: faker.phone.phoneNumber("2557########"),
+    },
+    {
+      name: "Whatsapp",
+      value: faker.phone.phoneNumber("2557########"),
+    },
+  ];
 };
 
 export const getAddress = () => {
@@ -99,6 +156,7 @@ export const getPerson = () => {
     email: faker.internet.email(),
     position: faker.name.jobType(),
     gender: faker.name.gender(true),
+    communicationMedias: getMedias(),
     description: faker.lorem.sentences(5),
     physicalAddress: faker.address.streetAddress(true),
     phoneNumber: faker.phone.phoneNumber("2557########"),
