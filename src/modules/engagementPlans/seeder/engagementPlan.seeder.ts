@@ -13,9 +13,12 @@ import { IEngagementPlan, EngagementPlan } from "../engagementPlan.model";
 export const seedEngagementPlans = async (plansPerPhase: number) => {
   try {
     const stakeholders = await Stakeholder.find();
-    const totalPhases = await ProjectPhase.countDocuments({
-      project: stakeholders[0].project, // Each project has the same number of phases
-    });
+
+    // const totalPhases = await ProjectPhase.countDocuments({
+    //   project: stakeholders[0].project, // Each project has the same number of phases
+    // });
+
+    const totalPhases = 2;
 
     stakeholders.forEach(async (stakeholder) => {
       //Check counts before creating
