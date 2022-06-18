@@ -138,7 +138,7 @@ export const getEngagementPlansByQuery = async (
       $group: {
         _id: "$projectPhase.name",
         count: { $sum: 1 },
-        stakeholders: { $push: "$$ROOT" },
+        plans: { $push: "$$ROOT" },
       },
     },
     {
