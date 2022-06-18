@@ -51,7 +51,7 @@ export interface IStakeholder extends Document {
   location: Object;
   disability: string;
   phoneNumber: string;
-  description: Object;
+  description: string;
   websiteLink: string;
   goals: Array<string>;
   contactPerson: Object;
