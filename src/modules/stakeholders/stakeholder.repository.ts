@@ -96,7 +96,14 @@ export const getStakeholdersByQuery = async (
       },
     },
     { $match: { ...searchQuery } },
-    { $sort: { createdAt: -1 } },
+    // { $sort: { createdAt: -1 } },
+    {
+      $group: {
+        _id: "$scope",
+        count: { $sum: 1 },
+        stakeholders: { $push: "$$ROOT" },
+      },
+    },
     {
       $facet: {
         metadata: [{ $count: "total" }],
