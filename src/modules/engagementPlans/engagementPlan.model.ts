@@ -9,6 +9,7 @@ import { IProjectPhase } from "../projectPhases/projectPhase.model";
 export interface IEngagementPlan extends Document {
   channel: string;
   activity: string;
+  endingDate?: Date;
   frequency: string;
   startingDate: Date;
   project: IProject["_id"];
@@ -48,7 +49,13 @@ const EngagementPlanSchema = new Schema<IEngagementPlan>(
     frequency: {
       type: String,
       required: true,
-      enum: ["Everyday", "Weekly", "Monthly", "Once every 2 months"],
+      enum: [
+        "Only once",
+        "Everyday",
+        "Weekly",
+        "Monthly",
+        "Once every 2 months",
+      ],
     },
 
     activity: {
@@ -60,6 +67,11 @@ const EngagementPlanSchema = new Schema<IEngagementPlan>(
       type: Date,
       index: true,
       required: [true, "Starting date is required!."],
+    },
+
+    endingDate: {
+      type: Date,
+      index: true,
     },
   },
   { timestamps: true }
