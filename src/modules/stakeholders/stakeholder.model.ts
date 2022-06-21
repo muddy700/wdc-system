@@ -13,17 +13,17 @@ export enum LEVELS {
 }
 
 export enum METHODS_OF_CONTACT {
+  ZOOM = "Zoom",
   EMAIL = "Email",
   PHONE = "Phone",
-  ZOOM = "Zoom Meeting",
   PHYSICAL = "Physical",
   WHATSAPP = "Whatsapp",
 }
 
 export enum STAKEHOLDER_ROLES {
+  VENDOR = "Vendor",
   ADVISOR = "Advisor",
   APPROVER = "Approver",
-  SUPPLIER = "Supplier",
   CONTRACTOR = "Contractor",
   BENEFICIARY = "Beneficiary",
 }

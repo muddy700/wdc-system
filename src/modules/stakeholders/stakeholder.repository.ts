@@ -74,6 +74,7 @@ export const getStakeholdersByQuery = async (
   console.log("SearchQuery: ", searchQuery);
 
   const stakeholders = await Stakeholder.aggregate([
+    { $match: { ...searchQuery } },
     {
       $lookup: {
         from: "projects",
@@ -95,15 +96,14 @@ export const getStakeholdersByQuery = async (
         preserveNullAndEmptyArrays: true,
       },
     },
-    { $match: { ...searchQuery } },
     // { $sort: { createdAt: -1 } },
-    {
-      $group: {
-        _id: "$scope",
-        count: { $sum: 1 },
-        stakeholders: { $push: "$$ROOT" },
-      },
-    },
+    // {
+    //   $group: {
+    //     _id: "$scope",
+    //     count: { $sum: 1 },
+    //     stakeholders: { $push: "$$ROOT" },
+    //   },
+    // },
     {
       $facet: {
         metadata: [{ $count: "total" }],
