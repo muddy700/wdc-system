@@ -16,6 +16,12 @@ router.put(
 );
 
 router.get(
+  "/by-query",
+  checkPermission("projectPhases", "read-projectPhases"),
+  ProjectPhaseController.getProjectPhasesByQuery
+);
+
+router.get(
   "/:projectPhaseId",
   checkPermission("projectPhases", "read-projectPhases"),
   ProjectPhaseController.getProjectPhaseById
@@ -32,11 +38,5 @@ router.get(
   checkPermission("projectPhases", "read-projectPhases"),
   ProjectPhaseController.getProjectPhases
 );
-
-// router.get(
-//   "/by-query",
-//   checkPermission("projectPhases", "read-projectPhases"),
-//   ProjectPhaseController.getProjectPhasesByQuery
-// );
 
 export const ProjectPhaseRoutes = router;

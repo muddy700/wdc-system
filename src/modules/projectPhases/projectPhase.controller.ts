@@ -42,7 +42,9 @@ export const getProjectPhases: RequestHandler = async (req, res) => {
 export const deleteProjectPhase = async (req: Request, res: Response) => {
   try {
     const { projectPhaseId } = req.params;
-    const projectPhase = await ProjectPhaseService.deleteProjectPhase(projectPhaseId);
+    const projectPhase = await ProjectPhaseService.deleteProjectPhase(
+      projectPhaseId
+    );
 
     if (!projectPhase) {
       const message = `No Project-phase found with id: ${projectPhaseId}`;
@@ -68,7 +70,9 @@ export const deleteProjectPhase = async (req: Request, res: Response) => {
 export const getProjectPhaseById = async (req: Request, res: Response) => {
   try {
     const { projectPhaseId } = req.params;
-    const projectPhase = await ProjectPhaseService.getProjectPhaseById(projectPhaseId);
+    const projectPhase = await ProjectPhaseService.getProjectPhaseById(
+      projectPhaseId
+    );
 
     if (!projectPhase) {
       const message = `No Project-phase found with id: ${projectPhaseId}`;
@@ -129,52 +133,22 @@ const errorResponse = (res: Response, statusCode: number, error: any) => {
   });
 };
 
-// TODO: Add projectPhase-filter  by query
-// export const getProjectPhasesByQuery: RequestHandler = async (req, res) => {
-//   try {
-//     let searchQuery: Object = appendSearchKeywords(req);
+export const getProjectPhasesByQuery: RequestHandler = async (req, res) => {
+  try {
+    const { project } = req.query;
+    const searchQuery = { ...(project && { project }) };
 
-//     const projectPhases = await ProjectPhaseService.getProjectPhasesByQuery(searchQuery);
+    const projectPhases = await ProjectPhaseService.getProjectPhasesByQuery(
+      searchQuery
+    );
 
-//     const count = projectPhases.length;
-//     const message = "ProjectPhases retrieved successfully.";
+    const count = projectPhases.length;
+    const message = "Project-phases retrieved successfully.";
 
-//     return res
-//       .status(200)
-//       .json({ success: true, message, count, data: projectPhases });
-//   } catch (e) {
-//     return errorResponse(res, 400, e);
-//   }
-// };
-
-// const appendSearchKeywords = (req: Request) => {
-//   let searchQuery: Object = {};
-//   const {
-//     status,
-//     assignee,
-//     metric,
-//     type,
-//     contact,
-//     minValue,
-//     maxValue,
-//     dateCreated,
-//     startDate,
-//     endDate,
-//   } = req.query;
-
-//   //Assign properties into search-query iff they have values
-//   searchQuery = {
-//     ...(type && { type }),
-//     ...(status && { status }),
-//     ...(metric && { metric }),
-//     ...(contact && { contact }),
-//     ...(minValue && { minValue }),
-//     ...(maxValue && { maxValue }),
-//     ...(assignee && { assignee }),
-//     ...(startDate && { startDate }),
-//     ...(endDate && { endDate }),
-//     ...(dateCreated && { dateCreated }),
-//   };
-
-//   return searchQuery;
-// };
+    return res
+      .status(200)
+      .json({ success: true, message, count, data: projectPhases });
+  } catch (e) {
+    return errorResponse(res, 400, e);
+  }
+};

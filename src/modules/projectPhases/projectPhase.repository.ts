@@ -66,24 +66,17 @@ export const deleteProjectPhase = async (projectPhaseId: string) => {
   }
 };
 
-// TODO: Add projectPhase-filter  by query
-// export const getProjectPhasesByQuery = async (searchQuery: object) => {
-//   console.log("SearchQuery: ", searchQuery);
+// TODO: Change the filtering logic to use aggregate function if there's a need
+export const getProjectPhasesByQuery = async (searchQuery: Object) => {
+  try {
+    console.log("SearchQuery: ", searchQuery);
 
-//   const projectPhases = await ProjectPhase.aggregate([
-//     {
-//       $addFields: {
-//         dateCreated: {
-//           $dateToString: { format: "%Y-%m-%d", date: "$createdAt" },
-//         },
-//       },
-//     },
-//     { $match: { ...searchQuery } },
-//     { $sort: { createdAt: -1 } },
-//     { $facet: { metadata: [{ $count: "total" }], data: [] } },
-//   ]);
+    const projectPhases = ProjectPhase.find({ ...searchQuery }).populate(
+      "project"
+    );
 
-//   return projectPhases[0].data;
-
-//   //   return ProjectPhase.find().populate("contact assignee lastActivity");
-// };
+    return projectPhases;
+  } catch (e) {
+    throw new Error(e.message);
+  }
+};
