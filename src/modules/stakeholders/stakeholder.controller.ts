@@ -141,7 +141,8 @@ export const getStakeholdersByQuery: RequestHandler = async (req, res) => {
     let searchQuery: Object = appendSearchKeywords(req);
     const currentPage = (req.query.currentPage as unknown as number) || 1;
 
-    const perPage = parseInt(PERPAGE);
+    // const perPage = parseInt(PERPAGE);
+    const perPage = 30
     const offset = perPage * currentPage - perPage;
 
     const { data, totalRows } = await StakeholderService.getStakeholdersByQuery(
