@@ -911,6 +911,76 @@
           }
         }
       },
+      "Citizen": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "required": true,
+            "example": "John"
+          },
+          "middleName": { "type": "string", "example": "M" },
+          "lastName": { "type": "string", "required": true, "example": "Doe" },
+          "email": {
+            "type": "string",
+            "example": "jd@gmail.com"
+          },
+          "phoneNumber": {
+            "type": "string",
+            "example": "255789101112"
+          },
+          "gender": {
+            "type": "string",
+            "required": true,
+            "example": "M | F"
+          },
+          "religion": {
+            "type": "string",
+            "required": true,
+            "example": "Muslim | Christian | Others"
+          },
+          "region": {
+            "type": "string",
+            "required": true,
+            "example": "MDar"
+          },
+          "district": {
+            "type": "string",
+            "required": true,
+            "example": "Ubungo"
+          },
+          "street": {
+            "type": "string",
+            "required": true,
+            "example": "Kairuki"
+          },
+          "house": {
+            "type": "string",
+            "required": true,
+            "example": "house-id"
+          },
+          "title": {
+            "type": "string",
+            "required": true,
+            "example": "Developer"
+          },
+          "maritalStatus": {
+            "type": "string",
+            "required": true,
+            "example": "Single"
+          },
+          "dob": {
+            "type": "date",
+            "required": true,
+            "example": "2001-12-25"
+          },
+          "disability": {
+            "type": "string",
+            "required": true,
+            "example": "None"
+          }
+        }
+      },
       "User": {
         "type": "object",
         "properties": {
@@ -942,7 +1012,6 @@
           "lastLocation": { "type": "string", "example": "magomeni" },
           "status": { "type": "number", "example": 1 },
           "role": { "type": "string", "example": "role-id" }
-        
         }
       }
     }
