@@ -30,11 +30,19 @@ export const getCitizens = async (
 
     const citizens = await Citizen.aggregate([
       {
+        $addFields: {
+          semifullName: { $concat: ["$firstName", " ", "$lastName"] },
+          fullName: {
+            $concat: ["$firstName", " ", "$middleName", " ", "$lastName"],
+          },
+        },
+      },
+      {
         $match: {
           ...condition,
         },
       },
-      { $sort: { createdAt: -1 } },
+      { $sort: { fullName: 1 } },
       {
         $facet: {
           metadata: [{ $count: "total" }],
