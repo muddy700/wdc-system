@@ -8,9 +8,9 @@ export const rootUser: IUser = {
   firstName: "Root",
   lastName: "Admin",
   type: USER_TYPES.ROOT,
-  email: "root@worldbank.org",
-  phoneNumber: "+255713000000",
-  password: "root@worldbank",
+  email: "root@wdcs.co.tz",
+  phoneNumber: "255789101112",
+  password: "root@wdcs",
   status: 1,
 } as unknown as IUser;
 

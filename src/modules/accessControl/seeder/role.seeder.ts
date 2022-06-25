@@ -41,31 +41,12 @@ export const initialRoles = [
     name: "System Tester",
     description: "Some description about this role",
   },
-  {
-    name: "Project Manager",
-    description: "Some description about this role",
-  },
-  {
-    name: "PIU Staff",
-    description: "Some description about this role",
-  },
-  {
-    name: "Stakeholder",
-    description: "Some description about this role",
-  },
-  {
-    name: "Contractor",
-    description: "Some description about this role",
-  },
 ];
 
 /**
  * Permissions for each role
  */
 const rolePermissions: any = {
-  Contractor: ["read-users"],
-  Stakeholder: ["read-users"],
-  "PIU Staff": ["read-users"],
+  Staff: ["read-users"],
   "System Tester": rootPermissions,
-  "Project Manager": ["read-users"],
 };

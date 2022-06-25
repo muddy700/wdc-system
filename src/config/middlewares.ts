@@ -39,9 +39,9 @@ export const middlewaresConfig = (app: express.Application) => {
       success: true,
       message: "Connected Successfull. ✅✅ ",
       data: {
-        appName: "SE-GRMS",
+        appName: "WDC-SYSTEM",
         appDescription:
-          "Stakeholder Management and Grievance Redress Mechanism System",
+          "Ward Data COllection System",
       },
       hint: "Add '/api/v1/doc' on url to see documentation",
     });

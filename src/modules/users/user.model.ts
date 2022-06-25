@@ -1,6 +1,4 @@
 import bcrypt from "bcryptjs";
-import { IProject } from "../projects/project.model";
-import { IPiu, AddressSchema } from "../pius/piu.model";
 import { Schema, Document, model, Types } from "mongoose";
 
 export enum USER_TYPES {
@@ -28,8 +26,6 @@ export interface IUser extends Document {
   firstTimeLoginFlag: number;
   type?: string;
   token?: string;
-  project?: IProject["_id"];
-  piu?: IPiu["_id"];
   address: object;
   createdAt?: Date;
   updatedAt?: Date;
@@ -62,7 +58,6 @@ const UserSchema = new Schema<IUser>(
       //unique: true,
       index: true,
     },
-    address: { type: AddressSchema },
     email: {
       type: String,
       index: true,
@@ -141,8 +136,6 @@ UserSchema.methods = {
       gender: this.gender,
       email: this.email,
       role: this.role,
-      project: this.project,
-      piu: this.piu,
       phoneNumber: this.phoneNumber,
       type: this.type,
       status: this.status,
