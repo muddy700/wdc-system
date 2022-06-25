@@ -480,6 +480,196 @@
         }
       }
     },
+    "/users/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "ID of a user that we want to match",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get user with a given ID",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. User not found"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Users"],
+        "summary": "Update user with a given ID",
+        "description": "",
+        "requestBody": {
+          "description": "User Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. User not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Users"],
+        "summary": "Delete user with a given ID",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. User not found"
+          }
+        }
+      }
+    },
+    "/citizens": {
+      "post": {
+        "tags": ["Citizens"],
+        "summary": "Create a new citizen",
+        "description": "Add citizen",
+        "requestBody": {
+          "description": "Citizen Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Citizen"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Citizens"],
+        "summary": "List all citizens",
+        "description": "Get all citizens in system",
+        "parameters": [
+          {
+            "name": "searchQuery",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "500": {
+            "description": "Failed. Internal Server Error"
+          }
+        }
+      }
+    },
+    "/citizens/{citizenId}": {
+      "parameters": [
+        {
+          "name": "citizenId",
+          "in": "path",
+          "required": true,
+          "description": "ID of a citizen that we want to match",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": ["Citizens"],
+        "summary": "Get a citizen with a given ID",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "$ref": "#/components/schemas/Citizen"
+            }
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. Citizen not found"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Citizens"],
+        "summary": "Update a citizen with a given ID",
+        "description": "",
+        "requestBody": {
+          "description": "Citizen Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Citizen"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. Citizen not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Citizens"],
+        "summary": "Delete a citizen with a given ID",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          },
+          "404": {
+            "description": "Failed. Citizen not found"
+          }
+        }
+      }
+    },
     "/houses": {
       "post": {
         "tags": ["Houses"],
