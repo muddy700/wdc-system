@@ -71,7 +71,7 @@ export const getUsers = async (
           ...condition,
         },
       },
-      { $sort: { firstName: -1 } },
+      { $sort: { semifullName: -1 } },
       {
         $facet: {
           metadata: [{ $count: "total" }],
