@@ -34,8 +34,12 @@
       "description": "REST API-Endpoints For Users"
     },
     {
-      "name": "Departments",
-      "description": "REST API-Endpoints For Departments"
+      "name": "Houses",
+      "description": "REST API-Endpoints For Houses"
+    },
+    {
+      "name": "Citizens",
+      "description": "REST API-Endpoints For Citizens"
     },
     {
       "name": "Audit-Trail",
@@ -476,19 +480,59 @@
         }
       }
     },
-    "/departments/{departmentId}": {
+    "/houses": {
+      "post": {
+        "tags": ["Houses"],
+        "summary": "Create a new house",
+        "description": "Add house",
+        "requestBody": {
+          "description": "House Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/House"
+              }
+            }
+          }
+        },
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "400": {
+            "description": "Failed. Bad post data"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Houses"],
+        "summary": "List User houses",
+        "description": "Get all houses of a given User(Authenticated User)",
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "500": {
+            "description": "Failed. Internal Server Error"
+          }
+        }
+      }
+    },
+    "/houses/{houseId}": {
       "parameters": [
         {
-          "name": "departmentId",
+          "name": "houseId",
           "in": "path",
           "required": true,
-          "description": "ID of a department that we want to match",
+          "description": "ID of a house that we want to match",
           "type": "string"
         }
       ],
       "get": {
-        "tags": ["Departments"],
-        "summary": "Get Department with a given ID",
+        "tags": ["Houses"],
+        "summary": "Get House with a given ID",
         "description": "",
         "responses": {
           "200": {
@@ -498,21 +542,21 @@
             "description": "Failed. Bad post data"
           },
           "404": {
-            "description": "Failed. Department not found"
+            "description": "Failed. House not found"
           }
         }
       },
       "put": {
-        "tags": ["Departments"],
-        "summary": "Update Department with a given ID",
+        "tags": ["Houses"],
+        "summary": "Update House with a given ID",
         "description": "",
         "requestBody": {
-          "description": "Department Object",
+          "description": "House Object",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Department"
+                "$ref": "#/components/schemas/House"
               }
             }
           }
@@ -525,13 +569,13 @@
             "description": "Failed. Bad post data"
           },
           "404": {
-            "description": "Failed. Department not found"
+            "description": "Failed. House not found"
           }
         }
       },
       "delete": {
-        "tags": ["Departments"],
-        "summary": "Delete Department with a given ID",
+        "tags": ["Houses"],
+        "summary": "Delete House with a given ID",
         "description": "",
         "responses": {
           "200": {
@@ -541,7 +585,7 @@
             "description": "Failed. Bad post data"
           },
           "404": {
-            "description": "Failed. Department not found"
+            "description": "Failed. House not found"
           }
         }
       }
@@ -643,22 +687,37 @@
           }
         }
       },
-      "Department": {
+      "House": {
         "type": "object",
         "properties": {
-          "name": {
+          "identificationNumber": {
             "type": "string",
             "required": true,
-            "example": "Finance"
+            "example": "TZ-H-001"
           },
-          "description": {
-            "type": "string",
-            "example": "some description about this department"
-          },
-          "piu": {
-            "type": "string",
-            "required": true,
-            "example": "piu-id"
+          "owner": {
+            "type": "object",
+            "properties": {
+              "fullName": {
+                "type": "string",
+                "required": true,
+                "example": "John Doe "
+              },
+              "gender": {
+                "type": "string",
+                "required": true,
+                "example": "M | F "
+              },
+              "phoneNumber": {
+                "type": "string",
+                "required": true,
+                "example": "255789101112"
+              },
+              "email": {
+                "type": "string",
+                "example": "jd@gmail.test "
+              }
+            }
           }
         }
       },
