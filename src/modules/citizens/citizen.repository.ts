@@ -30,6 +30,20 @@ export const getCitizens = async (
 
     const citizens = await Citizen.aggregate([
       {
+        $lookup: {
+          from: "houses",
+          localField: "house",
+          foreignField: "_id",
+          as: "house",
+        },
+      },
+      {
+        $unwind: {
+          path: "$house",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
         $addFields: {
           semifullName: { $concat: ["$firstName", " ", "$lastName"] },
           fullName: {
