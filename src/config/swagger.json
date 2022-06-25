@@ -939,15 +939,10 @@
             "format": "password"
           },
           "type": { "type": "string", "example": "user" },
-          "company": { "type": "string", "example": "iPF" },
           "lastLocation": { "type": "string", "example": "magomeni" },
           "status": { "type": "number", "example": 1 },
-          "role": { "type": "string", "example": "role-id" },
-          "piu": { "type": "string", "example": "piu-id" },
-          "project": { "type": "string", "example": "project-id" },
-          "address": {
-            "$ref": "#/definitions/Address"
-          }
+          "role": { "type": "string", "example": "role-id" }
+        
         }
       }
     }
