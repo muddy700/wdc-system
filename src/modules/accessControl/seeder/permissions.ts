@@ -1,5 +1,46 @@
 export const PERMISSIONS = [
   {
+    moduleName: "citizens",
+    genericName: "create-citizens",
+    displayName: "Can create citizens",
+  },
+  {
+    moduleName: "citizens",
+    genericName: "read-citizens",
+    displayName: "Can view citizens",
+  },
+  {
+    moduleName: "citizens",
+    genericName: "update-citizens",
+    displayName: "Can update citizens",
+  },
+  {
+    moduleName: "citizens",
+    genericName: "delete-citizens",
+    displayName: "Can delete citizens",
+  },
+
+  {
+    moduleName: "houses",
+    genericName: "create-houses",
+    displayName: "Can create houses",
+  },
+  {
+    moduleName: "houses",
+    genericName: "read-houses",
+    displayName: "Can view houses",
+  },
+  {
+    moduleName: "houses",
+    genericName: "update-houses",
+    displayName: "Can update houses",
+  },
+  {
+    moduleName: "houses",
+    genericName: "delete-houses",
+    displayName: "Can delete houses",
+  },
+  {
     moduleName: "users",
     genericName: "create-users",
     displayName: "Can create users",
@@ -81,6 +122,16 @@ export const rootPermissions = [
   "create-users",
   "update-users",
   "delete-users",
+
+  "read-houses",
+  "create-houses",
+  "update-houses",
+  "delete-houses",
+
+  "read-citizens",
+  "create-citizens",
+  "update-citizens",
+  "delete-citizens",
 
   "read-departments",
   "create-departments",
