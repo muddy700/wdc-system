@@ -166,7 +166,12 @@ export const updateUser = async (userId: string, body: IUser) => {
 // };
 
 export const getUserByEmail = async (email: string) => {
-  return User.findOne({ email }).populate("role project piu");
+  return User.findOne({ email }).populate([
+    {
+      path: "role ",
+      populate: { path: "permissions" },
+    },
+  ]);
 };
 
 export const changeUserStatus = (userId: string, body: any) => {
