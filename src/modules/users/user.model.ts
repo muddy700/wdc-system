@@ -92,7 +92,7 @@ const UserSchema = new Schema<IUser>(
     firstTimeLoginFlag: {
       type: Number,
       enum: [0, 1],
-      default: 0,
+      default: 1,
       index: true,
     },
     project: {
