@@ -1,8 +1,8 @@
 import { Schema, Document, model } from "mongoose";
+import { House, IHouse } from "../houses/house.model";
 
 export interface ICitizen extends Document {
   dob: Date;
-  house: string;
   email?: string;
   title?: string;
   gender: string;
@@ -14,6 +14,7 @@ export interface ICitizen extends Document {
   firstName: string;
   disability: string;
   middleName?: string;
+  house: IHouse["_id"];
   phoneNumber?: string;
   maritalStatus?: string;
 }
@@ -55,7 +56,8 @@ const CitizenSchema = new Schema<ICitizen>(
 
     house: {
       index: true,
-      type: String,
+      ref: "House",
+      type: Schema.Types.ObjectId,
       required: [true, "House is required!"],
     },
 
