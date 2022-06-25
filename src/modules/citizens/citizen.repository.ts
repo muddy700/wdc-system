@@ -10,15 +10,44 @@ export const createCitizen = async (body: ICitizen) => {
   }
 };
 
-export const getCitizens = async (keyword: string) => {
+export const getCitizens = async (
+  offset: number,
+  perPage: number,
+  searchQuery: string
+) => {
   try {
-    const search = new RegExp(".*" + keyword + ".*", "i");
+    let condition: any = {};
 
-    const citizens = Citizen.find({ firstName: { $regex: search } }).populate(
-      "house"
-    );
+    const search = new RegExp(".*" + searchQuery + ".*", "i");
 
-    return citizens;
+    if (searchQuery !== undefined && searchQuery !== "") {
+      condition.$or = [
+        { lastName: { $regex: search } },
+        { firstName: { $regex: search } },
+        { middleName: { $regex: search } },
+      ];
+    }
+
+    const citizens = await Citizen.aggregate([
+      {
+        $match: {
+          ...condition,
+        },
+      },
+      { $sort: { createdAt: -1 } },
+      {
+        $facet: {
+          metadata: [{ $count: "total" }],
+          data: [{ $skip: offset }, { $limit: perPage }],
+        },
+      },
+    ]);
+
+    if (citizens[0].data.length === 0) {
+      return { citizens: [], count: 0 };
+    }
+
+    return { data: citizens[0].data, totalRows: citizens[0].metadata[0].total };
   } catch (e) {
     throw new Error(e.message);
   }

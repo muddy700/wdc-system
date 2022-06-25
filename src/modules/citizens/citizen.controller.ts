@@ -1,6 +1,9 @@
+import { constants } from "../../config/constants";
 import { Request, RequestHandler, Response } from "express";
 import { logEvent } from "../auditTrail/auditTrail.service";
 import * as CitizenService from "./citizen.service";
+
+const { PERPAGE } = constants;
 
 export const createCitizen = async (req: any, res: Response) => {
   try {
@@ -22,18 +25,33 @@ export const createCitizen = async (req: any, res: Response) => {
 
 export const getCitizens: RequestHandler = async (req, res) => {
   try {
-    const { searchQuery } = req.query;
+    let { totalRecords, searchQuery } = req.query;
+    const currentPage = (req.query.currentPage as unknown as number) || 1;
+    const perPage = totalRecords
+      ? (totalRecords as unknown as number)
+      : parseInt(PERPAGE);
+    const offset = perPage * currentPage - perPage;
 
-    const citizens = await CitizenService.getCitizens(
-      (searchQuery as unknown as string) ?? ""
+    const { data, totalRows } = await CitizenService.getCitizens(
+      offset,
+      perPage,
+      searchQuery as unknown as string
     );
 
-    const count = citizens.length;
+    const metadata = {};
+    const count = data ? data.length : 0;
+
     const message = "Citizens retrieved successfully.";
+    const pagination = {
+      currentPage,
+      perPage,
+      totalPages: Math.ceil(totalRows / perPage) || 1,
+      totalRows,
+    };
 
     return res
       .status(200)
-      .json({ success: true, message, count, data: citizens });
+      .json({ success: true, message, count, pagination, data });
   } catch (e) {
     return errorResponse(res, 400, e);
   }

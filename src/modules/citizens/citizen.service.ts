@@ -11,9 +11,17 @@ export const createCitizen = async (body: ICitizen) => {
   }
 };
 
-export const getCitizens = async (firstName: string) => {
+export const getCitizens = async (
+  offset: number,
+  perPage: number,
+  keyword: string
+) => {
   try {
-    const citizens = await CitizenRepository.getCitizens(firstName);
+    const citizens = await CitizenRepository.getCitizens(
+      offset,
+      perPage,
+      keyword
+    );
 
     return citizens;
   } catch (e) {
@@ -23,9 +31,7 @@ export const getCitizens = async (firstName: string) => {
 
 export const getCitizenById = async (citizenId: string) => {
   try {
-    const citizen = await CitizenRepository.getCitizenById(
-      citizenId
-    );
+    const citizen = await CitizenRepository.getCitizenById(citizenId);
 
     return citizen;
   } catch (e) {
@@ -33,15 +39,9 @@ export const getCitizenById = async (citizenId: string) => {
   }
 };
 
-export const updateCitizen = async (
-  citizenId: string,
-  body: ICitizen
-) => {
+export const updateCitizen = async (citizenId: string, body: ICitizen) => {
   try {
-    const citizen = await CitizenRepository.updateCitizen(
-      citizenId,
-      body
-    );
+    const citizen = await CitizenRepository.updateCitizen(citizenId, body);
 
     return citizen;
   } catch (e) {
@@ -51,9 +51,7 @@ export const updateCitizen = async (
 
 export const deleteCitizen = async (citizenId: string) => {
   try {
-    const citizen = await CitizenRepository.deleteCitizen(
-      citizenId
-    );
+    const citizen = await CitizenRepository.deleteCitizen(citizenId);
 
     return citizen;
   } catch (e) {
