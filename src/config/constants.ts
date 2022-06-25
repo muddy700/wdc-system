@@ -8,7 +8,9 @@ interface IConstants {
   JWT_SECRET: any;
   AUTHORIZATION_SCHEME: any;
   PERPAGE: any;
-  EMAIL_URL: any;
+  EMAIL_SERVICE: any;
+  EMAIL_PASSWORD: any;
+  EMAIL_USER: any;
   EMAIL_SENDER: any;
   APP_DESCRIPTION: any;
   BUGSNAG_API_KEY: any;
@@ -55,11 +57,17 @@ export const constants: IConstants = {
   PERPAGE: (process.env.PERPAGE as unknown as number) || 15,
 
   /** Email url from .env */
-  EMAIL_URL: process.env.EMAIL_URL,
+  EMAIL_SERVICE: process.env.EMAIL_SERVICE,
+
+  /** Email url from .env */
+  EMAIL_SENDER: process.env.EMAIL_SENDER,
+
+  /** Email url from .env */
+  EMAIL_PASSWORD: process.env.EMAIL_PASSWORD,
 
   /** Email sender from .env */
-  EMAIL_SENDER: process.env.EMAIL_SENDER,
-  
+  EMAIL_USER: process.env.EMAIL_USER,
+
   //Application Bugsnag API Key
   BUGSNAG_API_KEY: process.env.BUGSNAG_API_KEY,
 

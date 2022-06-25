@@ -5,7 +5,7 @@ import { getUserAuthToken } from "../auth/auth.service";
 import { sendEmail } from "../../services/email.service";
 import { USER_STATUSES, USER_TYPES } from "./user.model";
 
-const { EMAIL_URL, EMAIL_SENDER, APP_BASE_URL } = constants;
+const { APP_BASE_URL } = constants;
 
 export const createUser = async (body: any) => {
   const { email } = body;
