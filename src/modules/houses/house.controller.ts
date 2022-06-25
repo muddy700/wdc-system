@@ -28,7 +28,7 @@ export const getHouses: RequestHandler = async (req, res) => {
     let { totalRecords, searchQuery } = req.query;
     const currentPage = (req.query.currentPage as unknown as number) || 1;
     const perPage = totalRecords
-      ? (totalRecords as unknown as number)
+      ? parseInt(totalRecords as unknown as string)
       : parseInt(PERPAGE);
     const offset = perPage * currentPage - perPage;
 
@@ -41,7 +41,7 @@ export const getHouses: RequestHandler = async (req, res) => {
     const metadata = {};
     const count = data ? data.length : 0;
 
-    const message = "Hauses retrieved successfully.";
+    const message = "Houses retrieved successfully.";
     const pagination = {
       currentPage,
       perPage,
