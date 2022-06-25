@@ -309,19 +309,7 @@
         "tags": ["Access-Control"],
         "summary": "List all roles",
         "description": "Get all roles in system",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string",
-            "description": "Authorization scheme and access token"
-          },
-          {
-            "name": "searchQuery",
-            "in": "query",
-            "type": "string"
-          }
-        ],
+
         "responses": {
           "200": {
             "description": "Ok",
@@ -478,15 +466,6 @@
         "tags": ["Users"],
         "summary": "List all users",
         "description": "Get all users in system",
-        "parameters": [
-          {
-            "name": "searchQuery",
-            "in": "query",
-            "required": true,
-            "description": "user-name, role, or phone number of a user that we want to match",
-            "type": "string"
-          }
-        ],
         "responses": {
           "200": {
             "description": "Ok"
