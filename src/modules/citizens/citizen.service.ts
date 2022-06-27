@@ -37,6 +37,30 @@ export const getCitizens = async (
   }
 };
 
+export const getAllCitizens = async (
+  offset: number,
+  perPage: number,
+  userId: string
+) => {
+  try {
+    let condition: any = {};
+
+    if (userId !== undefined && userId !== "") {
+      condition.createdBy = ObjectId(userId);
+    }
+
+    const citizens = await CitizenRepository.getAllCitizens(
+      offset,
+      perPage,
+      condition
+    );
+
+    return citizens;
+  } catch (e) {
+    throw new Error(e.message);
+  }
+};
+
 export const getCitizenById = async (citizenId: string) => {
   try {
     const citizen = await CitizenRepository.getCitizenById(citizenId);

@@ -15,16 +15,22 @@ router.put(
   CitizenController.updateCitizen
 );
 
-router.get(
-  "/:citizenId",
-  checkPermission("citizens", "read-citizens"),
-  CitizenController.getCitizenById
-);
-
 router.delete(
   "/:citizenId",
   checkPermission("citizens", "delete-citizens"),
   CitizenController.deleteCitizen
+);
+
+router.get(
+  "/all",
+  checkPermission("citizens", "read-citizens"),
+  CitizenController.getAllCitizens
+);
+
+router.get(
+  "/:citizenId",
+  checkPermission("citizens", "read-citizens"),
+  CitizenController.getCitizenById
 );
 
 router.get(

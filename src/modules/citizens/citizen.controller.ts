@@ -61,6 +61,41 @@ export const getCitizens: RequestHandler = async (req: any, res: Response) => {
   }
 };
 
+export const getAllCitizens: RequestHandler = async (req: any, res: Response) => {
+  try {
+    let { totalRecords, userId } = req.query;
+    const currentPage = (req.query.currentPage as unknown as number) || 1;
+    const perPage = totalRecords
+      ? parseInt(totalRecords as unknown as string)
+      : parseInt(PERPAGE);
+    const offset = perPage * currentPage - perPage;
+
+    const { data, totalRows } = await CitizenService.getAllCitizens(
+      offset,
+      perPage,
+      userId as unknown as string
+    );
+    console.log(req.authUser);
+
+    const metadata = {};
+    const count = data ? data.length : 0;
+
+    const message = "Citizens retrieved successfully.";
+    const pagination = {
+      currentPage,
+      perPage,
+      totalPages: Math.ceil(totalRows / perPage) || 1,
+      totalRows,
+    };
+
+    return res
+      .status(200)
+      .json({ success: true, message, count, pagination, data });
+  } catch (e) {
+    return errorResponse(res, 400, e);
+  }
+};
+
 export const deleteCitizen = async (req: Request, res: Response) => {
   try {
     const { citizenId } = req.params;
