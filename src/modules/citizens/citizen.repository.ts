@@ -4,7 +4,7 @@ export const createCitizen = async (body: ICitizen) => {
   try {
     const citizen = await Citizen.create(body);
 
-    return citizen.populate("house").execPopulate();
+    return citizen.populate("house createdBy").execPopulate();
   } catch (e) {
     throw new Error(e.message);
   }
@@ -13,22 +13,17 @@ export const createCitizen = async (body: ICitizen) => {
 export const getCitizens = async (
   offset: number,
   perPage: number,
-  searchQuery: string
+  filter: any
 ) => {
   try {
-    let condition: any = {};
-
-    const search = new RegExp(".*" + searchQuery + ".*", "i");
-
-    if (searchQuery !== undefined && searchQuery !== "") {
-      condition.$or = [
-        { lastName: { $regex: search } },
-        { firstName: { $regex: search } },
-        { middleName: { $regex: search } },
-      ];
-    }
+    console.log(filter);
 
     const citizens = await Citizen.aggregate([
+      {
+        $match: {
+          ...filter,
+        },
+      },
       {
         $lookup: {
           from: "houses",
@@ -38,8 +33,22 @@ export const getCitizens = async (
         },
       },
       {
+        $lookup: {
+          from: "users",
+          localField: "createdBy",
+          foreignField: "_id",
+          as: "createdBy",
+        },
+      },
+      {
         $unwind: {
           path: "$house",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $unwind: {
+          path: "$createdBy",
           preserveNullAndEmptyArrays: true,
         },
       },
@@ -49,11 +58,6 @@ export const getCitizens = async (
           fullName: {
             $concat: ["$firstName", " ", "$middleName", " ", "$lastName"],
           },
-        },
-      },
-      {
-        $match: {
-          ...condition,
         },
       },
       { $sort: { fullName: 1 } },
@@ -77,7 +81,9 @@ export const getCitizens = async (
 
 export const getCitizenById = async (citizenId: string) => {
   try {
-    const citizen = await Citizen.findOne({ _id: citizenId }).populate("house");
+    const citizen = await Citizen.findOne({ _id: citizenId }).populate(
+      "house createdBy"
+    );
 
     return citizen;
   } catch (e) {
@@ -91,7 +97,7 @@ export const updateCitizen = async (citizenId: string, body: ICitizen) => {
       { _id: citizenId },
       { ...body },
       { new: true }
-    ).populate("house");
+    ).populate("house createdBy");
 
     return citizen;
   } catch (e) {

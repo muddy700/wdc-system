@@ -1,14 +1,17 @@
 import { constants } from "../../config/constants";
+import * as CitizenService from "./citizen.service";
 import { Request, RequestHandler, Response } from "express";
 import { logEvent } from "../auditTrail/auditTrail.service";
-import * as CitizenService from "./citizen.service";
 
 const { PERPAGE } = constants;
 
 export const createCitizen = async (req: any, res: Response) => {
   try {
-    const { body } = req;
-    const citizen = await CitizenService.createCitizen(body);
+    const { body, authUser } = req;
+    const citizen = await CitizenService.createCitizen({
+      ...body,
+      createdBy: authUser._id,
+    });
 
     const message = "Citizen created successfully.";
 
@@ -23,9 +26,9 @@ export const createCitizen = async (req: any, res: Response) => {
   }
 };
 
-export const getCitizens: RequestHandler = async (req, res) => {
+export const getCitizens: RequestHandler = async (req: any, res: Response) => {
   try {
-    let { totalRecords, searchQuery } = req.query;
+    let { totalRecords, userId } = req.query;
     const currentPage = (req.query.currentPage as unknown as number) || 1;
     const perPage = totalRecords
       ? parseInt(totalRecords as unknown as string)
@@ -35,8 +38,9 @@ export const getCitizens: RequestHandler = async (req, res) => {
     const { data, totalRows } = await CitizenService.getCitizens(
       offset,
       perPage,
-      searchQuery as unknown as string
+      userId as unknown as string
     );
+    console.log(req.authUser);
 
     const metadata = {};
     const count = data ? data.length : 0;

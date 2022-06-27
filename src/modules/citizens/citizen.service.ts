@@ -1,5 +1,7 @@
 import * as CitizenRepository from "./citizen.repository";
 import { ICitizen } from "./citizen.model";
+import { Types } from "mongoose";
+const ObjectId = Types.ObjectId;
 
 export const createCitizen = async (body: ICitizen) => {
   try {
@@ -14,13 +16,19 @@ export const createCitizen = async (body: ICitizen) => {
 export const getCitizens = async (
   offset: number,
   perPage: number,
-  keyword: string
+  userId: string
 ) => {
   try {
+    let condition: any = {};
+
+    if (userId !== undefined && userId !== "") {
+      condition.createdBy = ObjectId(userId);
+    }
+
     const citizens = await CitizenRepository.getCitizens(
       offset,
       perPage,
-      keyword
+      condition
     );
 
     return citizens;

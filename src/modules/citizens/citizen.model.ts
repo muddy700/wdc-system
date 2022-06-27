@@ -1,3 +1,4 @@
+import { IUser } from "../users/user.model";
 import { Schema, Document, model } from "mongoose";
 import { House, IHouse } from "../houses/house.model";
 
@@ -17,6 +18,7 @@ export interface ICitizen extends Document {
   house: IHouse["_id"];
   phoneNumber?: string;
   maritalStatus?: string;
+  createdBy: IUser["_id"];
 }
 
 const CitizenSchema = new Schema<ICitizen>(
@@ -26,6 +28,12 @@ const CitizenSchema = new Schema<ICitizen>(
     middleName: String,
     phoneNumber: String,
     maritalStatus: String,
+
+    createdBy: {
+      index: true,
+      ref: "User",
+      type: Schema.Types.ObjectId,
+    },
 
     street: {
       type: String,
