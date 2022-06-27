@@ -7,7 +7,6 @@ import { isAuthenticated } from "./auth/auth.controller";
 import { CitizenRoutes } from "./citizens/citizen.routes";
 import * as swaggerDocument from "../config/swagger.json";
 import { AuditTrailRoutes } from "./auditTrail/auditTrail.routes";
-import { DepartmentRoutes } from "./departments/department.routes";
 import { AccessControlRoutes } from "./accessControl/accessControl.routes";
 
 // Currently not used routes
@@ -19,7 +18,6 @@ export const initializeRoutes = (app: express.Application) => {
   app.use("/api/v1/users/", isAuthenticated, UserRoutes);
   app.use("/api/v1/houses/", isAuthenticated, HouseRoutes);
   app.use("/api/v1/citizens/", isAuthenticated, CitizenRoutes);
-  app.use("/api/v1/departments/", isAuthenticated, DepartmentRoutes);
   app.use("/api/v1/audit-trail/", isAuthenticated, AuditTrailRoutes);
   app.use("/api/v1/access-control/", isAuthenticated, AccessControlRoutes);
   app.use("/api/v1/doc", swaggerUi.serve, swaggerUi.setup(swaggerDocument));

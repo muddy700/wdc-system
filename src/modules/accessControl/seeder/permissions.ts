@@ -61,26 +61,6 @@ export const PERMISSIONS = [
     displayName: "Can delete users",
   },
   {
-    moduleName: "departments",
-    genericName: "create-departments",
-    displayName: "Can create departments",
-  },
-  {
-    moduleName: "departments",
-    genericName: "read-departments",
-    displayName: "Can view departments",
-  },
-  {
-    moduleName: "departments",
-    genericName: "update-departments",
-    displayName: "Can update departments",
-  },
-  {
-    moduleName: "departments",
-    genericName: "delete-departments",
-    displayName: "Can delete departments",
-  },
-  {
     moduleName: "access-control",
     genericName: "create-roles",
     displayName: "Can create roles",
@@ -132,11 +112,6 @@ export const rootPermissions = [
   "create-citizens",
   "update-citizens",
   "delete-citizens",
-
-  "read-departments",
-  "create-departments",
-  "update-departments",
-  "delete-departments",
 
   "read-permissions",
 

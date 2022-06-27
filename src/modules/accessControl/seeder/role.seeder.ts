@@ -41,6 +41,10 @@ export const initialRoles = [
     name: "System Tester",
     description: "Some description about this role",
   },
+  {
+    name: "Executive",
+    description: "Some description about this role",
+  },
 ];
 
 /**
@@ -48,5 +52,6 @@ export const initialRoles = [
  */
 const rolePermissions: any = {
   Staff: ["read-users"],
+  Executive: rootPermissions,
   "System Tester": rootPermissions,
 };
