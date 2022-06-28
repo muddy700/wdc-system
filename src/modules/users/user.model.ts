@@ -5,6 +5,8 @@ export enum USER_TYPES {
   USER = "user",
   ROOT = "root",
   STAFF = "staff",
+  MESSENGER = "messenger",
+  EXECUTIVE = "executive",
 }
 
 export enum USER_STATUSES {
@@ -80,7 +82,7 @@ const UserSchema = new Schema<IUser>(
     type: {
       type: String,
       enum: [USER_TYPES],
-      default: USER_TYPES.USER,
+      default: USER_TYPES.MESSENGER,
       index: true,
     },
     status: {

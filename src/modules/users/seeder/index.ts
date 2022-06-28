@@ -42,11 +42,11 @@ export const seedTestingUser = async () => {
  */
 export const systemTester: IUser = {
   status: 1,
-  lastName: "Tester",
-  firstName: "System",
+  lastName: "John",
+  firstName: "Doe",
   password: "12345678",
-  type: USER_TYPES.USER,
-  email: "tester@mail.com",
+  type: USER_TYPES.MESSENGER,
+  email: "messenger@mail.com",
   phoneNumber: "255789101112",
 } as unknown as IUser;
 

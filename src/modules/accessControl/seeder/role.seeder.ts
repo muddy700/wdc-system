@@ -38,11 +38,11 @@ export const createRole = async (role: any, permissions: Array<string>) => {
  */
 export const initialRoles = [
   {
-    name: "System Tester",
+    name: "Executive",
     description: "Some description about this role",
   },
   {
-    name: "Executive",
+    name: "Messenger",
     description: "Some description about this role",
   },
 ];
@@ -51,7 +51,8 @@ export const initialRoles = [
  * Permissions for each role
  */
 const rolePermissions: any = {
-  Staff: ["read-users"],
+  // Staff: ["read-users"],
   Executive: rootPermissions,
-  "System Tester": rootPermissions,
+  Messenger: rootPermissions,
+  // "System Tester": rootPermissions,
 };
